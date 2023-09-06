@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Pei-Yu Tseng"
   avatar           : "profile.png"
-  bio              : "I am a Graduate Student at The Penn State University, where I attend the laboratory led by Liu Peng. My research focuses on Network and System Security, and Deep Learning. "
+  bio              : #"I am a Graduate Student at The Penn State University, where I attend the laboratory led by Liu Peng. My research focuses on Network and System Security, and Deep Learning. "
   location         : "PSU"
   employer         :
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
@@ -96,7 +96,7 @@ author:
   flickr           :
   facebook         :
   foursquare       :
-  github           : "https://github.com/PAIYUTSUTW"
+  github           : "PAIYUTSUTW"
   google_plus      :
   keybase          :
   instagram        :
