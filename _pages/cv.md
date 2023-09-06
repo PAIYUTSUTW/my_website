@@ -11,30 +11,52 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* B.S. in Taiwan, National Taichung University of Education, 2019
+* M.S. in Taiwan, National Chung Chang University, 2021
+* Ph.D in Unitied State, The Penn State University
+
+Research  experience
+======
+* Research Assistant
+  * Academia Sinica • 09.2021 - 2023
+    * Graph-based Neural Attack Behavior Detection and Alignment with Kernel Audit Logs for Advanced Persistent Threats
+      * Simulated APT attack on Linux and Windows
+      * Developed a theory for efficiently reducing kernel audit logs to ensure the high quality of behavior detection 
+      * Developed models leveraging graph embedding to correlate and mine suspicious behavior in audit logs
+    * Modeling Threat Representation through Building Cyber Threat Knowledge Base for Advanced Persistent Threats
+      * Developed models to extract semantic context from cyber threat intelligence platforms for generating provenance graphs
+    * Using Honeypot Logs and Packets for Identifying Network Attack Patterns and their Signature
+      * Utilizing  BERT-based models to analyze packets and logs from honeypots provided by Soft Bank
+* M.S.
+  * National Chung Cheng University • 09.2019- 07.2021
+    * Driving Behavior Recognition based on Generative Adversarial Networks
+      * Developed a redesigned model for identifying whether drivers are the owners of cars
+      * Developed a mechanism for ensuring the reliability of the detection system
+      * Evaluating the accuracy of several types of GAN in different situations
 
 Work experience
 ======
-* Summer 2015: Research Assistant
-  * Github University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+* Penetration tester 
+  * The Chiayi County Government • 05. 2020 - 12. 2020
+    * Identified security vulnerabilities and weaknesses in websites or IoT devices for  the Chiayi county  government  
+    * Designed and conducted simulated social engineering attacks
 
-* Fall 2015: Research Assistant
-  * Github University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* Network administrator
+  * College of Engineering in CCU•  09. 2019 - 09. 2020
+    * Maintained and administered the college's firewalls and network infrastructures
+    * Managed the college's services, such as websites, VPN, and DNS
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Python
+* TensorFlow
+* PyTorch
+* Bash scripting
+* Neo4J
+* Linux Shell
+* Java
+* C#
+* C
 
 Publications
 ======
@@ -42,7 +64,7 @@ Publications
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Talks
+<!-- Talks
 ======
   <ul>{% for post in site.talks %}
     {% include archive-single-talk-cv.html %}
@@ -56,4 +78,4 @@ Teaching
   
 Service and leadership
 ======
-* Currently signed in to 43 different slack teams
+* Currently signed in to 43 different slack teams -->
