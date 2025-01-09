@@ -9,10 +9,10 @@
 locale                   : "en-US"
 title                    : "Home"
 title_separator          : "-"
-name                     : &name "Pei-YuTseng"
-description              : &description "personal description"
-url                      : "https://paiyutsutw.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl                  : "/my_website" # the subpath of your site, e.g. "/my_website"
+name                     : &name "Pei-Yu Tseng"
+description              : &description "Ph.D. Student in Informatics at Penn State University"
+url                      : "https://paiyutsutw.github.io"
+baseurl                  : "/my_website"
 repository               : "PAIYUTSUTW/my_website"
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 breadcrumbs              : false # true, false (default)
@@ -82,39 +82,13 @@ analytics:
 author:
   name             : "Pei-Yu Tseng"
   avatar           : "profile.png"
-  bio              : #"I am a Graduate Student at The Penn State University, where I attend the laboratory led by Liu Peng. My research focuses on Network and System Security, and Deep Learning. "
-  location         : "PSU"
-  employer         :
-  pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
+  bio              : "Ph.D. Student in Informatics at Penn State University, focusing on threat intelligence and threat hunting using Large Language Models."
+  location         : "State College, PA"
+  employer         : "Penn State University"
   googlescholar    : "https://scholar.google.com/citations?user=GwHvncIAAAAJ&hl=zh-TW"
   email            : "jerry950909@gmail.com"
-  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
-  uri              :
-  bitbucket        :
-  codepen          :
-  dribbble         :
-  flickr           :
-  facebook         :
-  foursquare       :
   github           : "PAIYUTSUTW"
-  google_plus      :
-  keybase          :
-  instagram        :
-  impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
-  lastfm           :
-  linkedin         :
   orcid            : "https://orcid.org/0000-0001-9675-674X"
-  pinterest        :
-  soundcloud       :
-  stackoverflow    : # http://stackoverflow.com/users/123456/username
-  steam            :
-  tumblr           :
-  twitter          : #"replacethistwitterhandle"
-  vine             :
-  weibo            :
-  xing             :
-  youtube          :
-  wikipedia        :
 
 
 # Reading Files
