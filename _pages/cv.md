@@ -57,6 +57,9 @@ Skills
 * Java
 * C#
 * C
+* Cyber Threat Intelligence
+* Mitre att&ck framework
+* Large Language Models
 
 Publications
 ======
