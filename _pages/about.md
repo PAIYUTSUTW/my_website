@@ -31,7 +31,7 @@ Professional Experience
 ======
 * Research Assistant at Penn State University (2023-Present)
   * Leading research in LLM applications for threat intelligence
-  * Developing reinforcement learning models for cybersecurity
+  * Cybersecurity dataset generation
 
 * Research Assistant at Academia Sinica (2021-2023)
   * Developed APT detection systems using kernel audit logs
