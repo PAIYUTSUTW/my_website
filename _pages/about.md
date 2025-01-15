@@ -14,7 +14,7 @@ Research Focus
 ======
 * Using LLM for Threat Intelligence
   * Leading the development of AI agents for automating threat intelligence analysis
-  * Pioneering methods to reduce false positives/negatives in LLM outputs
+  * Pioneering methods to reduce hallucination in LLM outputs
   * Developing automated systems for threat indicator extraction
 
 * Reinforcement Learning for Advanced Persistent Threat

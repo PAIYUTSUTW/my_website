@@ -18,6 +18,11 @@ Education
 Research  experience
 ======
 * Research Assistant
+  * Pennsylvania State University -State College,PA• 08.2023 -Present
+    * Using LLM for Threat Intelligence
+    * Led the conceptualization of the operational workflow for an AI agent utilizing Large Language Models to advance threat intelligence applications
+    * Pioneered a method to significantly reduce hallucination in LLM outputs, directly enhancing the precision of the model's responses without the need for fine-tuning.
+    * Developed an automated system for generating regular expressions, enabling more eicient extraction and pinpointing of threat indicators from extensive, unstructured data sets.
   * Academia Sinica • 09.2021 - 2023
     * Graph-based Neural Attack Behavior Detection and Alignment with Kernel Audit Logs for Advanced Persistent Threats
       * Simulated APT attack on Linux and Windows
