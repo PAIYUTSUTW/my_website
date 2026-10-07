@@ -29,6 +29,7 @@ npm run preview
 - `site/src/pages/`: homepage, research index, publication list, printable CV,
   and generated project pages.
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.
+- `site/src/styles/tech.css`: dark technology theme, light accents, and orbit effects.
 - `site/src/components/AgentField.astro`: conceptual research-loop visualization.
 - `site/src/components/PipelineLab.astro`: before/after service-replacement diagram,
   with agent generation, a short animation, and disposable mock rebuilding.
@@ -38,6 +39,7 @@ npm run preview
 - `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
 - `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding
   publication metadata to confirm.
+- `docs/DESIGN_REFERENCES.md`: template inspiration, original implementation, and motion behavior.
 
 Publication venues and statuses are explicit. Ongoing projects are described as
 research rather than production deployments. The CV page has a **Print / Save

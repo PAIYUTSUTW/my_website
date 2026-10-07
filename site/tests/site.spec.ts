@@ -28,6 +28,13 @@ test('theme persists and research loop controls respond', async ({ page }) => {
   await page.getByRole('button', { name: '03 Evaluate' }).click();
   await expect(page.locator('.field-caption')).toHaveText('Inspect outcomes, not just model outputs.');
   await expect(page.getByRole('button', { name: '03 Evaluate' })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Pause motion', exact: true }).click();
+  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'paused');
+  await page.getByRole('button', { name: 'Resume motion', exact: true }).click();
+  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'running');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'paused');
+  await expect(page.locator('.field-motion')).toBeHidden();
 });
 
 test('research filters work and each project opens', async ({ page }) => {

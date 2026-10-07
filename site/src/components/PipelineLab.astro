@@ -2,13 +2,14 @@
 import { pipelineStages } from '../data/pipelineDemo';
 import { path } from '../data/profile';
 ---
-<section class="pipeline-lab" id="concept-demo" aria-labelledby="lab-heading" data-phase="after" data-playing="false" data-rebuilding="false">
+<section class="pipeline-lab" id="concept-demo" aria-labelledby="lab-heading" data-phase="after" data-playing="false" data-rebuilding="false" data-effects="paused">
   <div class="lab-intro">
     <span class="eyebrow">PIPELINE1 / THE CORE IDEA</span>
     <h2 id="lab-heading">Real service → <em>software mock.</em></h2>
     <p>Our agents generate the replacement: a low-cost, disposable software environment for testing LLM-generated playbooks.</p>
   </div>
   <div class="lab-comparison">
+    <svg class="lab-beams" aria-hidden="true" focusable="false"></svg>
     <div class="lab-route lab-before" role="group" aria-label="Before: connect to a real service">
       <div class="lab-route-label"><span>BEFORE</span><p>Connect to the real service</p></div>
       <div class="lab-route-flow">
@@ -52,7 +53,7 @@ import { path } from '../data/profile';
     <p class="lab-status" aria-live="polite" aria-atomic="true" data-status>{pipelineStages[2].description}</p>
     <p class="lab-motion-note" hidden>Reduced motion is on. Use Before / With Pipeline1 to compare.</p>
   </div>
-  <div class="lab-footnote"><p>Concept illustration. Lower cost and faster rebuilding are design goals.</p><a href={path('/pipeline1-concept.svg')} download>Download the diagram <span aria-hidden="true">↗</span></a></div>
+  <div class="lab-footnote"><p>Concept illustration. Lower cost and faster rebuilding are design goals.</p><button type="button" class="lab-effects" data-effects-toggle hidden>Pause light effects</button><a href={path('/pipeline1-concept.svg')} download>Download the diagram <span aria-hidden="true">↗</span></a></div>
 </section>
 
 <script>
@@ -64,6 +65,52 @@ import { path } from '../data/profile';
     const play = lab.querySelector<HTMLButtonElement>('[data-play]')!;
     const rebuild = lab.querySelector<HTMLButtonElement>('[data-rebuild]')!;
     const status = lab.querySelector<HTMLElement>('[data-status]')!;
+    const effectsButton = lab.querySelector<HTMLButtonElement>('[data-effects-toggle]')!;
+    const comparison = lab.querySelector<HTMLElement>('.lab-comparison')!;
+    const beams = lab.querySelector<SVGSVGElement>('.lab-beams')!;
+    let effectsPaused = false, inView = false;
+    const syncEffects = () => {
+      lab.dataset.effects = !effectsPaused && inView && !motion.matches && !document.hidden ? 'running' : 'paused';
+      effectsButton.textContent = effectsPaused ? 'Resume light effects' : 'Pause light effects';
+      effectsButton.hidden = motion.matches;
+    };
+    effectsButton.addEventListener('click', () => { effectsPaused = !effectsPaused; syncEffects(); });
+    // Measure the actual nodes, including the stacked mobile layout. No fixed canvas coordinates.
+    const drawBeams = () => {
+      const bounds = comparison.getBoundingClientRect();
+      const mobile = matchMedia('(max-width: 740px)').matches;
+      beams.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+      beams.replaceChildren();
+      const box = (selector: string) => {
+        const rect = comparison.querySelector(selector)!.getBoundingClientRect();
+        return { left: rect.left - bounds.left, right: rect.right - bounds.left, top: rect.top - bounds.top, bottom: rect.bottom - bounds.top, x: rect.left - bounds.left + rect.width / 2, y: rect.top - bounds.top + rect.height / 2 };
+      };
+      const add = (d: string, kind: string) => {
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('class', `beam-group beam-${kind}`);
+        for (const name of ['beam-track', 'beam-light']) {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', d); path.setAttribute('class', name); path.setAttribute('pathLength', '100');
+          group.append(path);
+        }
+        beams.append(group);
+      };
+      for (const route of ['before', 'after']) {
+        const nodes = ['playbook', 'connector', route === 'before' ? 'service' : 'mock'];
+        for (let i = 0; i < 2; i++) {
+          const a = box(`.lab-${route} .lab-${nodes[i]}`), b = box(`.lab-${route} .lab-${nodes[i + 1]}`);
+          add(mobile ? `M${a.x} ${a.bottom}L${b.x} ${b.top}` : `M${a.right} ${a.y}C${(a.right+b.left)/2} ${a.y} ${(a.right+b.left)/2} ${b.y} ${b.left} ${b.y}`, route);
+        }
+      }
+      const input = box('.lab-generation-input'), agent = box('.lab-agent'), mock = box('.lab-mock');
+      if (!mobile) add(`M${input.right} ${input.y}L${agent.left} ${agent.y}`, 'generation');
+      // The agent's output goes directly into the mock, along the outer gutter.
+      const gutter = bounds.width - (mobile ? 8 : 14), bend = 10, bottom = agent.bottom + 18;
+      add(`M${agent.x} ${agent.bottom}V${bottom-bend}Q${agent.x} ${bottom} ${agent.x+bend} ${bottom}H${gutter-bend}Q${gutter} ${bottom} ${gutter} ${bottom-bend}V${mock.y+bend}Q${gutter} ${mock.y} ${gutter-bend} ${mock.y}H${mock.right}`, 'generation');
+      lab.dataset.beams = 'ready';
+    };
+    new ResizeObserver(drawBeams).observe(comparison);
+    document.fonts.ready.then(drawBeams);
     let stage = 2, instance = 1;
     let playing = false, rebuilding = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -96,13 +143,14 @@ import { path } from '../data/profile';
     });
     const updateMotion = () => {
       pause();
+      syncEffects();
       if (motion.matches && rebuilding) { clearTimeout(rebuildTimer); instance++; rebuilding = false; render(); }
       play.hidden = motion.matches;
       lab.querySelector<HTMLElement>('.lab-motion-note')!.hidden = !motion.matches;
     };
     motion.addEventListener('change', updateMotion);
-    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
-    new IntersectionObserver(entries => { if (!entries[0].isIntersecting && playing) pause(); }).observe(lab);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); syncEffects(); });
+    new IntersectionObserver(entries => { inView = entries[0].isIntersecting; if (!inView && playing) pause(); syncEffects(); }).observe(lab);
     lab.querySelector<HTMLElement>('.lab-controls')!.hidden = false;
     updateMotion();
   }
@@ -120,4 +168,68 @@ import { path } from '../data/profile';
   @media(max-width:1100px){.lab-comparison{padding:23px}.lab-route{padding:16px}.lab-route-flow{grid-template-columns:1fr 28px 1.1fr 28px 1.6fr}.lab-node{padding:14px 12px;gap:9px}.lab-node h3{font-size:16px}.lab-node-icon{font-size:21px}.lab-service{column-gap:10px;grid-template-columns:29px 1fr}.lab-server-icon{width:29px}.lab-service h3{font-size:21px}.lab-mock-content{grid-template-columns:32px 1fr;column-gap:8px}.lab-code-icon{font-size:22px}.lab-mock h3{font-size:18px}.lab-generation{grid-template-columns:1fr 28px 1.1fr 50px 1.6fr;padding-inline:17px}.lab-agent{gap:8px;padding:14px 9px}.lab-agent h3{font-size:16px}.lab-agent-icon{font-size:22px}.lab-toolbar{gap:14px}.lab-intro h2{font-size:35px}}
   @media(max-width:740px){.lab-intro{padding:25px 22px}.lab-intro h2{font-size:31px}.lab-intro>p{font-size:13px}.lab-comparison{padding:18px}.lab-route{padding:16px}.lab-route-label{align-items:flex-start;gap:5px;flex-direction:column;margin-bottom:15px}.lab-route-label>span{font-size:9px}.lab-route-label>p{font-size:11px}.lab-route-flow{grid-template-columns:1fr;gap:0}.lab-node{min-height:0;padding:12px 15px;justify-content:center}.lab-node h3{font-size:16px;text-align:center}.lab-node-icon{font-size:20px}.lab-wire{height:19px;width:1px;justify-self:center}.lab-wire:after{right:-3px;top:auto;bottom:2px;transform:rotate(135deg)}.lab-wire i{display:none}.lab-service{display:grid;grid-template-columns:29px auto;column-gap:13px;justify-content:center;padding:17px}.lab-service h3{text-align:left;font-size:23px}.lab-service p{font-size:10px}.lab-cost{font-size:10px;line-height:1.8;margin-top:12px}.lab-replacement-label{padding:10px 0;justify-content:center;font-size:10px}.lab-mock{padding:21px 14px 15px;min-height:104px}.lab-mock-content{grid-template-columns:30px auto;justify-content:center;column-gap:12px}.lab-mock h3{font-size:20px;text-align:left}.lab-mock p{font-size:10px}.lab-benefits{justify-content:center;gap:5px;margin-top:12px}.lab-benefits span{font-size:9px;padding:4px 6px}.lab-generation{grid-template-columns:1fr 1fr;gap:13px;padding:19px 0 0}.lab-generation-input{grid-column:1;font-size:10px}.lab-generation-input p{font-size:10px}.lab-build-wire{display:none}.lab-agent{grid-column:2;grid-row:1;gap:7px;padding:13px 10px}.lab-agent h3{font-size:17px}.lab-agent-icon{display:none}.lab-agent .lab-micro-label{font-size:7px}.lab-generation-input:after{content:'read by →';font-size:10px;color:var(--lab-blue);display:block;margin-top:5px}.lab-generation-output{grid-column:1/-1;justify-content:center;border-top:1px solid var(--line);padding-top:12px}.lab-generation-output p{font-size:11px}.lab-generation-output p:before{content:'Agent generates ';color:var(--lab-blue)}.lab-generation-output strong{font-weight:500}.lab-generation-output>span{font-size:25px}.lab-controls{padding:18px}.lab-toolbar{gap:12px;justify-content:space-between}.lab-views{width:100%;justify-content:center}.lab-views button{flex:1;font-size:11px}.lab-play,.lab-rebuild{font-size:10px}.lab-rebuild{margin-left:0}.lab-status{font-size:11px;min-height:64px;margin-top:13px}.lab-footnote{padding:14px 20px;flex-direction:column;gap:8px}.lab-motion-note{font-size:10px}}
   @media print{.lab-controls,.lab-footnote a{display:none}.lab-comparison{background:none}.lab-route,.lab-generation{break-inside:avoid}.pipeline-lab{--lab-real:#555;--lab-real-bg:#eee;--lab-mock-bg:#eee;--lab-blue:#333}.lab-intro h2{font-size:28px}}
+  /* Beam paths use measured node positions, including the stacked mobile layout. */
+  .lab-comparison{position:relative;isolation:isolate}
+  .lab-beams{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:visible}
+  .lab-beams :global(.beam-group){fill:none;stroke:var(--accent);stroke-linecap:round;stroke-linejoin:round}
+  .lab-beams :global(.beam-before){stroke:var(--lab-real)}
+  .lab-beams :global(.beam-generation){stroke:var(--lab-blue)}
+  .lab-beams :global(.beam-track){stroke-width:1;opacity:.35}
+  .lab-beams :global(.beam-light){stroke-width:2;stroke-dasharray:14 86;stroke-dashoffset:100;animation:lab-beam-flow 3s linear infinite;filter:drop-shadow(0 0 4px var(--accent));opacity:0}
+  [data-phase=after] .lab-beams :global(.beam-after .beam-light),[data-phase=before] .lab-beams :global(.beam-before .beam-light),.lab-beams :global(.beam-generation .beam-light){opacity:1}
+  .lab-beams :global(.beam-generation .beam-light){animation-duration:4.5s;filter:drop-shadow(0 0 5px var(--lab-blue))}
+  [data-effects=paused] .lab-beams :global(.beam-light){animation-play-state:paused}
+  [data-beams=ready] .lab-wire{background:transparent!important}
+  [data-beams=ready] .lab-wire:after,[data-beams=ready] .lab-wire i{visibility:hidden}
+  .lab-node,.lab-agent,.lab-generation-input,.lab-generation-output{position:relative;z-index:3}
+  .lab-code-icon{white-space:nowrap}
+  .lab-effects{font-size:10px;color:var(--muted);padding:0;background:none;border:0;text-decoration:underline;text-underline-offset:4px;white-space:nowrap;margin-left:auto}
+  @keyframes lab-beam-flow{to{stroke-dashoffset:0}}
+  @media screen {
+    .pipeline-lab{--lab-real:#edbb9b;--lab-real-bg:#241c1a;--lab-mock-bg:#10251f;--lab-blue:#b4c7ff;border-radius:24px;box-shadow:0 25px 100px #00000020}
+    :global([data-theme=light]) .pipeline-lab{--lab-real:#814525;--lab-real-bg:#f5e8df;--lab-mock-bg:#deeee7;--lab-blue:#455ca0}
+    .lab-intro{padding:40px 40px 32px;position:relative;background:radial-gradient(ellipse at 95% 0%,#7bafff15,transparent 65%)}
+    .lab-intro:after{content:'01 / SERVICE REPLACEMENT';position:absolute;right:32px;top:39px;font:9px monospace;letter-spacing:.1em;color:var(--muted)}
+    .lab-intro h2{font-size:clamp(34px,3.7vw,52px);line-height:1.1;max-width:800px;font-weight:600;letter-spacing:-.05em}
+    .lab-intro h2 em{font-family:inherit;font-style:normal;font-weight:inherit}
+    .lab-intro>p{max-width:700px;font-size:14px;line-height:1.8;margin-top:18px}
+    .lab-comparison{padding:28px 34px 40px;background-image:radial-gradient(ellipse at 80% 60%,#70f9d509,transparent 70%),radial-gradient(var(--line) .6px,transparent .6px);background-size:auto,22px 22px}
+    .lab-route{border-radius:16px;padding:20px 24px;background:var(--bg);transition:box-shadow .4s,border-color .4s}
+    .lab-route-label{margin-bottom:20px}
+    .lab-route-label>span{font-family:monospace;font-size:9px;min-width:115px;letter-spacing:.07em;display:flex;align-items:center;gap:8px}
+    .lab-route-label>span:before{content:'';height:5px;width:5px;border-radius:50%;background:currentColor}
+    .lab-before .lab-route-label>span{color:var(--lab-real)}
+    .lab-route-label>p{font-size:13px;color:var(--text)}
+    .lab-node{border-radius:12px;min-height:112px;box-shadow:inset 0 1px #ffffff06}
+    .lab-node h3{font-size:17px;letter-spacing:-.03em}
+    .lab-node-icon{width:30px;height:34px;border:1px solid var(--line);border-radius:7px;display:grid;place-items:center;flex-shrink:0;font-size:20px}
+    .lab-service{border-color:color-mix(in srgb,var(--lab-real) 40%,var(--line))}
+    .lab-service h3{font-size:23px}
+    .lab-mock{border-style:solid;border-color:color-mix(in srgb,var(--accent) 65%,var(--line));background:radial-gradient(ellipse at 100% 0%,#98f4db12,transparent 65%),var(--lab-mock-bg)}
+    .lab-mock h3{font-size:20px}
+    .lab-instance{border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);border-radius:4px;padding:1px 5px;top:7px;right:8px;font-size:7px;line-height:1.3}
+    .lab-benefits span{border-radius:20px;padding:4px 10px;color:var(--accent);border-color:color-mix(in srgb,var(--accent) 25%,transparent)}
+    .lab-cost{font-size:11px;line-height:1.7}
+    .lab-replacement-label{font-family:monospace;font-size:10px;padding-block:14px}
+    .lab-generation{padding-top:28px;padding-bottom:12px}
+    .lab-generation-input{background:var(--surface-soft)}
+    .lab-agent{border-radius:12px;background:var(--surface);border-color:color-mix(in srgb,var(--lab-blue) 60%,var(--line));box-shadow:0 0 24px #9baeff0a}
+    .lab-agent-icon{font-size:32px}
+    .lab-agent h3{font-size:20px}
+    .lab-generation-output{background:var(--surface-soft);width:fit-content;justify-self:center;padding-inline:10px}
+    [data-phase=after] .lab-after{border-color:color-mix(in srgb,var(--accent) 65%,var(--line));box-shadow:0 0 35px #98f4db0b,inset 0 0 35px #98f4db03}
+    [data-phase=generate] .lab-agent{box-shadow:0 0 35px #b4c7ff30}
+    .lab-controls{padding:22px 34px}
+    .lab-views{border-radius:30px;padding:4px;background:var(--surface-soft)}
+    .lab-views button{border-radius:25px;padding:8px 16px}
+    .lab-rebuild{border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));padding:9px 14px;border-radius:30px}
+    .lab-status{color:var(--muted);font-size:12px;min-height:44px}
+    .lab-footnote{padding:17px 34px;align-items:center;gap:18px}
+  }
+  @media screen and (max-width:1100px){.lab-intro:after{display:none}.lab-node{padding-inline:12px}.lab-node h3{font-size:15px}.lab-service h3{font-size:21px}.lab-mock h3{font-size:18px}.lab-node-icon{width:24px;font-size:18px}.lab-agent h3{font-size:16px}.lab-agent-icon{font-size:25px}.lab-toolbar{gap:15px}}
+  @media screen and (max-width:740px){
+    .pipeline-lab{border-radius:18px}.lab-intro{padding:28px 22px}.lab-intro h2{font-size:34px}.lab-intro>p{font-size:13px}.lab-comparison{padding:18px 18px 32px}.lab-route{padding:16px 14px;border-radius:12px}.lab-node{min-height:0;padding:12px;border-radius:9px}.lab-node h3{font-size:15px}.lab-node-icon{height:25px}.lab-route-label>p{font-size:11px}.lab-route-label{gap:7px;margin-bottom:17px}.lab-service{padding:16px}.lab-service h3{font-size:22px}.lab-mock{min-height:118px;padding-top:27px}.lab-mock h3{font-size:19px}.lab-cost{font-size:10px}.lab-benefits span{font-size:9px;padding:4px 7px}.lab-replacement-label{font-size:9px}.lab-generation{padding-block:22px 10px;column-gap:10px}.lab-agent{min-height:76px;padding-inline:10px}.lab-generation-output{padding-top:12px}.lab-controls{padding:20px}.lab-toolbar{gap:12px}.lab-views button{font-size:11px}.lab-rebuild{font-size:10px;padding:7px 9px}.lab-play{font-size:10px}.lab-status{font-size:11px}.lab-footnote{padding:17px 22px;align-items:flex-start;gap:10px}.lab-effects{margin:0}.lab-mock-content{grid-template-columns:25px auto;gap:9px}
+  }
+  @media(prefers-reduced-motion:reduce){.lab-beams :global(.beam-light){display:none}}
+  @media print{.lab-beams,.lab-effects{display:none}}
 </style>

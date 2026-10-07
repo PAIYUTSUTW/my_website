@@ -8,7 +8,12 @@ const dist = resolve(siteRoot, 'dist');
 const output = resolve(process.argv[2] || resolve(siteRoot, '../.preview/Pipeline1-interactive.html'));
 const html = await readFile(resolve(dist, 'projects/stateful-evaluation/index.html'), 'utf8');
 let component = html.match(/<section\b[^>]*class="pipeline-lab"[\s\S]*?<\/section>/)?.[0];
-const scripts = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(match => match[1]).filter(script => script.includes('.pipeline-lab'));
+// Astro emits larger scripts as assets instead of inline modules. Embed either form.
+const scriptBodies = await Promise.all([...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].map(async match => {
+  const asset = match[1].match(/src="\/my_website\/([^\"]+)"/)?.[1];
+  return asset ? readFile(resolve(dist, asset), 'utf8') : match[2];
+}));
+const scripts = scriptBodies.filter(script => script.includes('.pipeline-lab'));
 if (!component || scripts.length !== 1) throw new Error('Build the site first; expected one PipelineLab component and script.');
 
 const cssPaths = [...html.matchAll(/<link[^>]*rel="stylesheet"[^>]*href="\/my_website\/([^\"]+)"[^>]*>/g)].map(match => match[1]);

@@ -1,7 +1,8 @@
-<div class="agent-field">
+<div class="agent-field" data-motion="paused">
   <div class="field-top"><span class="eyebrow">THE RESEARCH LOOP</span><span class="field-coordinate">01 / 03</span></div>
   <div class="field-visual" aria-hidden="true">
     <div class="field-grid"></div>
+    <div class="field-halo"></div><div class="field-orbit orbit-one"></div><div class="field-orbit orbit-two"></div>
     <canvas id="agent-canvas"></canvas>
     <span class="field-label label-context"><i></i>CONTEXT</span>
     <span class="field-label label-action"><i></i>ACTION</span>
@@ -14,15 +15,19 @@
     <button class="field-step" type="button" aria-pressed="false" data-stage="2"><span>03</span> Evaluate</button>
   </div>
   <p class="field-caption" aria-live="polite">Connect decisions to the right context.</p>
-  <span class="field-note">A conceptual view of my research</span>
+  <div class="field-bottom"><span class="field-note">A conceptual view of my research</span><button type="button" class="field-motion" hidden>Pause motion</button></div>
 </div>
 <script>
   const canvas = document.querySelector<HTMLCanvasElement>('#agent-canvas');
   const ctx = canvas?.getContext('2d');
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let stage = 0, rotation = 0, frame = 0, visible = true;
+  let stage = 0, rotation = 0, frame = 0, visible = true, paused = false;
   if (canvas && ctx) {
-    const colors = ['#c8f879', '#82cbd7', '#c1afff'];
+    const colors = ['#98f4db', '#8fcdff', '#c1afff'];
+    const field = canvas.closest<HTMLElement>('.agent-field')!;
+    const motionButton = field.querySelector<HTMLButtonElement>('.field-motion')!;
+    motionButton.hidden = false;
+    motionButton.addEventListener('click', () => { paused = !paused; updateAnimation(); });
     const captions = ['Connect decisions to the right context.', 'Translate security objectives into tool use.', 'Inspect outcomes, not just model outputs.'];
     let width = 500, height = 400;
     const resize = () => { const rect = canvas.getBoundingClientRect(); width = rect.width; height = rect.height; const dpr = Math.min(window.devicePixelRatio || 1, 2); canvas.width = width * dpr; canvas.height = height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw(); };
@@ -36,7 +41,7 @@
     function draw() {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
-      const color = document.documentElement.dataset.theme === 'light' ? ['#567526', '#397784', '#775f98'][stage] : colors[stage];
+      const color = document.documentElement.dataset.theme === 'light' ? ['#176550', '#286d9b', '#775f98'][stage] : colors[stage];
       for (let lat = 1; lat < 18; lat++) {
         const phi = lat / 18 * Math.PI;
         let previous: ReturnType<typeof project> | undefined;
@@ -56,8 +61,8 @@
       }
       ctx.globalAlpha = 1;
     }
-    function animate() { if (!visible || document.hidden || media.matches) { frame = 0; return; } rotation += 0.002; draw(); frame = requestAnimationFrame(animate); }
-    function updateAnimation() { if (frame) cancelAnimationFrame(frame); frame = 0; draw(); if (visible && !document.hidden && !media.matches) frame = requestAnimationFrame(animate); }
+    function animate() { if (!visible || document.hidden || media.matches || paused) { frame = 0; return; } rotation += 0.002; draw(); frame = requestAnimationFrame(animate); }
+    function updateAnimation() { field.dataset.motion = !paused && !media.matches && visible && !document.hidden ? 'running' : 'paused'; motionButton.textContent = paused ? 'Resume motion' : 'Pause motion'; motionButton.hidden = media.matches; if (frame) cancelAnimationFrame(frame); frame = 0; draw(); if (visible && !document.hidden && !media.matches && !paused) frame = requestAnimationFrame(animate); }
     document.querySelectorAll<HTMLButtonElement>('.field-step').forEach(button => button.addEventListener('click', () => {
       stage = Number(button.dataset.stage);
       document.querySelectorAll('.field-step').forEach(el => { el.classList.toggle('active', el === button); el.setAttribute('aria-pressed', String(el === button)); });

@@ -2,50 +2,50 @@
   <title id="title">Pipeline1 agents replace real-service dependencies with generated software mocks</title>
   <desc id="desc">Before: an LLM-generated playbook connects through SOAR and a real connector to a real service. With Pipeline1: the same playbook and connector connect to a disposable software-defined mock. Pipeline1 agents read connector source and documentation and generate that mock. Lower cost and quick rebuilding are design goals.</desc>
   <defs>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#c8f879" stroke-width="1.5"/></marker>
-    <marker id="real-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#e7b990" stroke-width="1.5"/></marker>
-    <marker id="agent-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#a0d8e3" stroke-width="1.5"/></marker>
-    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#f1f1e8}.muted{fill:#a5ad9d}.accent{fill:#c8f879}.label{font-size:13px;letter-spacing:1.6px}.body{font-size:19px}.small{font-size:16px}.node{font-size:23px;font-weight:600}.blue{fill:#a0d8e3}</style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#98f4db" stroke-width="1.5"/></marker>
+    <marker id="real-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#edbb9b" stroke-width="1.5"/></marker>
+    <marker id="agent-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#b4c7ff" stroke-width="1.5"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#edf3f8}.muted{fill:#a3afbd}.accent{fill:#98f4db}.label{font-size:13px;letter-spacing:1.6px}.body{font-size:19px}.small{font-size:16px}.node{font-size:23px;font-weight:600}.blue{fill:#b4c7ff}</style>
   </defs>
-  <path d="M0 0h1400v850H0z" fill="#111410"/>
+  <path d="M0 0h1400v850H0z" fill="#090c11"/>
   <text x="64" y="53" class="label accent">PIPELINE1 / THE CORE IDEA</text>
   <text x="64" y="117" font-size="53" font-weight="600" letter-spacing="-1.5">Real service <tspan class="muted">→</tspan><tspan class="accent"> software mock.</tspan></text>
   <text x="66" y="156" class="body muted">Our agents generate low-cost, disposable software environments for testing LLM-generated playbooks.</text>
-  <rect x="64" y="189" width="1272" height="190" rx="8" fill="#171a15" stroke="#32382d"/>
+  <rect x="64" y="189" width="1272" height="190" rx="18" fill="#0e141c" stroke="#2c3643"/>
   <text x="91" y="219" class="label muted">BEFORE</text>
   <text x="220" y="219" class="small muted">Connect to the real service</text>
-  <rect x="91" y="240" width="289" height="87" rx="5" fill="#111410" stroke="#32382d"/>
+  <rect x="91" y="240" width="289" height="87" rx="12" fill="#090c11" stroke="#2c3643"/>
   <text x="118" y="277" class="node">LLM-generated</text><text x="118" y="306" class="node">playbook</text>
-  <path d="M381 283h62" stroke="#e7b990" stroke-width="1.5" marker-end="url(#real-arrow)"/>
-  <rect x="455" y="240" width="300" height="87" rx="5" fill="#111410" stroke="#32382d"/>
+  <path d="M381 283h62" stroke="#edbb9b" stroke-width="1.5" marker-end="url(#real-arrow)"/>
+  <rect x="455" y="240" width="300" height="87" rx="12" fill="#090c11" stroke="#2c3643"/>
   <text x="481" y="277" class="node">SOAR +</text><text x="481" y="306" class="node">real connector</text>
-  <path d="M756 283h64" stroke="#e7b990" stroke-width="1.5" marker-end="url(#real-arrow)"/>
-  <rect x="833" y="240" width="476" height="87" rx="5" fill="#282119" stroke="#e7b990"/>
-  <g stroke="#e7b990" fill="none"><rect x="858" y="259" width="32" height="11" rx="1"/><rect x="858" y="277" width="32" height="11" rx="1"/><rect x="858" y="295" width="32" height="11" rx="1"/></g>
-  <text x="914" y="278" class="node" style="fill:#e7b990">Real service</text><text x="914" y="305" class="small muted">Access · Deploy · Maintain</text>
+  <path d="M756 283h64" stroke="#edbb9b" stroke-width="1.5" marker-end="url(#real-arrow)"/>
+  <rect x="833" y="240" width="476" height="87" rx="12" fill="#241c1a" stroke="#edbb9b"/>
+  <g stroke="#edbb9b" fill="none"><rect x="858" y="259" width="32" height="11" rx="1"/><rect x="858" y="277" width="32" height="11" rx="1"/><rect x="858" y="295" width="32" height="11" rx="1"/></g>
+  <text x="914" y="278" class="node" style="fill:#edbb9b">Real service</text><text x="914" y="305" class="small muted">Access · Deploy · Maintain</text>
   <text x="91" y="358" class="small muted">Service access and VM-based test deployments add setup, resource, and maintenance costs.</text>
-  <path d="M1070 384v29" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1070 384v29" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
   <text x="796" y="405" class="small accent">Replace the service dependency</text>
-  <rect x="64" y="429" width="1272" height="211" rx="8" fill="#171e13" stroke="#c8f879"/>
+  <rect x="64" y="429" width="1272" height="211" rx="18" fill="#0e1918" stroke="#98f4db"/>
   <text x="91" y="460" class="label accent">WITH PIPELINE1</text><text x="270" y="460" class="small muted">Connect to an agent-generated mock</text>
-  <rect x="91" y="480" width="289" height="94" rx="5" fill="#111410" stroke="#32382d"/>
+  <rect x="91" y="480" width="289" height="94" rx="12" fill="#090c11" stroke="#2c3643"/>
   <text x="118" y="535" class="node">Same playbook</text>
-  <path d="M381 527h62" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <rect x="455" y="480" width="300" height="94" rx="5" fill="#111410" stroke="#32382d"/>
+  <path d="M381 527h62" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="455" y="480" width="300" height="94" rx="12" fill="#090c11" stroke="#2c3643"/>
   <text x="481" y="519" class="node">Same SOAR +</text><text x="481" y="548" class="node">real connector</text>
-  <path d="M756 527h64" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <rect x="833" y="480" width="476" height="94" rx="5" fill="#1b2614" stroke="#c8f879" stroke-dasharray="5 4"/>
+  <path d="M756 527h64" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="833" y="480" width="476" height="94" rx="12" fill="#10251f" stroke="#98f4db" stroke-dasharray="5 4"/>
   <text x="855" y="538" font-family="monospace" font-size="31" class="accent">{ }</text>
   <text x="920" y="518" class="node accent">Software-defined mock</text><text x="920" y="547" class="small muted">Simulated responses + state</text>
   <text x="849" y="611" class="small accent">Low-cost by design · Disposable · Rebuildable</text>
   <text x="91" y="689" class="label muted">INPUT</text><text x="91" y="719" class="body">Connector source</text><text x="91" y="746" class="body">&amp; documentation</text>
-  <path d="M288 716h152" stroke="#a0d8e3" stroke-width="1.5" marker-end="url(#agent-arrow)"/>
+  <path d="M288 716h152" stroke="#b4c7ff" stroke-width="1.5" marker-end="url(#agent-arrow)"/>
   <text x="343" y="700" class="small muted">read</text>
-  <rect x="455" y="672" width="300" height="89" rx="6" fill="#151d1e" stroke="#a0d8e3"/>
+  <rect x="455" y="672" width="300" height="89" rx="6" fill="#151d1e" stroke="#b4c7ff"/>
   <text x="480" y="700" class="label blue">OUR AUTOMATION</text><text x="480" y="737" class="node">Pipeline1 agent</text>
-  <path d="M756 716h568V527h-12" fill="none" stroke="#a0d8e3" stroke-width="2" marker-end="url(#agent-arrow)"/>
+  <path d="M756 716h568V527h-12" fill="none" stroke="#b4c7ff" stroke-width="2" marker-end="url(#agent-arrow)"/>
   <text x="823" y="699" class="body blue">generates this mock</text>
-  <path d="M64 792h1272" stroke="#32382d"/>
+  <path d="M64 792h1272" stroke="#2c3643"/>
   <text x="64" y="820" font-size="13" class="muted">Concept illustration. Lower cost and faster rebuilding are design goals.</text>
   <text x="1102" y="820" font-size="13" class="muted">Pei-Yu Tseng · Penn State</text>
 </svg>

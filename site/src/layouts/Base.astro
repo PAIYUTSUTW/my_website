@@ -2,6 +2,7 @@
 import '@fontsource-variable/dm-sans';
 import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
+import '../styles/tech.css';
 import { profile, path } from '../data/profile';
 import Arrow from '../components/Arrow.astro';
 interface Props { title?: string; description?: string; }
@@ -17,7 +18,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#111410" />
+    <meta name="theme-color" content="#090c11" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={path('/favicon.svg')} type="image/svg+xml" />
     <meta property="og:type" content="website" />

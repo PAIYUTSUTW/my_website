@@ -10,6 +10,11 @@ test('service comparison is visible immediately and only the mock is rebuilt', a
   await expect(lab.locator('.lab-after')).toBeVisible();
   await expect(lab.locator('.lab-agent')).toContainText('Pipeline1 agent');
   await expect(lab.locator('.lab-generation')).toContainText('generates');
+  await lab.getByRole('button', { name: 'Pause light effects' }).click();
+  await expect(lab).toHaveAttribute('data-effects', 'paused');
+  await expect(lab.locator('.beam-generation .beam-light').last()).toHaveCSS('animation-play-state', 'paused');
+  await lab.getByRole('button', { name: 'Resume light effects' }).click();
+  await expect(lab).toHaveAttribute('data-effects', 'running');
   const originalPath = await lab.locator('.lab-before').innerText();
   const unchangedTools = await lab.locator('.lab-after .lab-playbook, .lab-after .lab-connector').allTextContents();
   await lab.getByRole('button', { name: 'Before', exact: true }).click();
@@ -55,6 +60,8 @@ test('comparison is accessible in both themes and reduced motion preserves contr
   await page.goto(route);
   const lab = page.locator('.pipeline-lab');
   await expect(lab.getByRole('button', { name: 'Watch the replacement' })).toBeHidden();
+  await expect(lab.locator('[data-effects-toggle]')).toBeHidden();
+  await expect(lab).toHaveAttribute('data-effects', 'paused');
   for (const theme of ['dark', 'light']) {
     if (theme === 'light') await page.getByRole('button', { name: 'Switch to light theme' }).click();
     for (const view of ['Before', 'With Pipeline1']) {
