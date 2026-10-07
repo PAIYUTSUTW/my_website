@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Arrow from '../../components/Arrow.astro';
 import ProjectArt from '../../components/ProjectArt.astro';
+import PipelineLab from '../../components/PipelineLab.astro';
 import PublicationList from '../../components/PublicationList.astro';
 import { projects, publications, path } from '../../data/profile';
 export function getStaticPaths() { return projects.map(project => ({ params: { slug: project.slug }, props: { project } })); }
@@ -10,5 +11,5 @@ const related = publications.filter(p => project.related.includes(p.id));
 const next = projects[(projects.findIndex(p => p.slug === project.slug) + 1) % projects.length];
 ---
 <Base title={project.subtitle} description={project.description}>
-  <article class="container project-detail"><a class="text-link back-link" href={path('/portfolio/')}><span>←</span> All research</a><div class="project-detail-heading"><span class="eyebrow">{project.kind} / {project.category}</span><h1>{project.title}</h1><p>{project.subtitle}</p><div class="tags">{project.tags.map(tag => <span>{tag}</span>)}</div></div><ProjectArt variant={project.visual} /><div class="project-story"><aside><span class="eyebrow">THE QUESTION</span><h2>{project.question}</h2></aside><div class="project-prose">{project.body.map(p => <p>{p}</p>)}<h3>Research approach</h3><ol>{project.approach.map(item => <li>{item}</li>)}</ol></div></div>{related.length > 0 && <section class="related-publications"><span class="eyebrow">RELATED PUBLICATIONS</span><PublicationList items={related} /></section>}<a class="next-project" href={path(`/projects/${next.slug}/`)}><span class="eyebrow">NEXT PROJECT</span><span>{next.title}<Arrow /></span></a></article>
+  <article class="container project-detail"><a class="text-link back-link" href={path('/portfolio/')}><span>←</span> All research</a><div class="project-detail-heading"><span class="eyebrow">{project.kind} / {project.category}</span><h1>{project.title}</h1><p>{project.subtitle}</p><div class="tags">{project.tags.map(tag => <span>{tag}</span>)}</div></div>{project.slug === 'stateful-evaluation' ? <PipelineLab /> : <ProjectArt variant={project.visual} />}<div class="project-story"><aside><span class="eyebrow">THE QUESTION</span><h2>{project.question}</h2></aside><div class="project-prose">{project.body.map(p => <p>{p}</p>)}<h3>Research approach</h3><ol>{project.approach.map(item => <li>{item}</li>)}</ol></div></div>{related.length > 0 && <section class="related-publications"><span class="eyebrow">RELATED PUBLICATIONS</span><PublicationList items={related} /></section>}<a class="next-project" href={path(`/projects/${next.slug}/`)}><span class="eyebrow">NEXT PROJECT</span><span>{next.title}<Arrow /></span></a></article>
 </Base>

@@ -1,0 +1,157 @@
+---
+import { pipelineSteps } from '../data/pipelineDemo';
+import { path } from '../data/profile';
+---
+<section class="pipeline-lab" id="concept-demo" aria-labelledby="lab-heading" data-phase="0" data-scenario="working" data-playing="false">
+  <div class="lab-intro">
+    <div><span class="eyebrow">PIPELINE1 / THE IDEA IN MOTION</span><h2 id="lab-heading">Room to test.<br /><em>Freedom to rebuild.</em></h2></div>
+    <p>A place to try generated playbooks before production—with lower setup costs and faster rebuilds as design goals.</p>
+  </div>
+  <div class="lab-cost-context">
+    <span class="lab-small-label">THE SETUP BURDEN</span>
+    <div class="lab-vm-rack" aria-hidden="true"><i></i><i></i><i></i></div>
+    <p>VM-based service environments</p>
+    <span class="lab-cost-chips"><span>Provision</span><span>Configure</span><span>Maintain & restore</span></span>
+  </div>
+  <div class="lab-workspace">
+    <div class="lab-toolbar">
+      <span class="lab-small-label"><i class="lab-led"></i> A DISPOSABLE SERVICE WORLD</span>
+      <div class="lab-scenarios" role="group" aria-label="Choose an illustrative playbook" hidden>
+        <button type="button" data-scenario-button="working" aria-pressed="true">Working playbook</button>
+        <button type="button" data-scenario-button="missed" aria-pressed="false">Missed action</button>
+      </div>
+    </div>
+    <div class="lab-flow">
+      <div class="lab-node lab-playbook">
+        <span class="lab-small-label">01 / GENERATED PLAN</span>
+        <div class="lab-node-icon" aria-hidden="true">✳</div>
+        <h3>LLM playbook</h3>
+        <p class="lab-goal">Disable a compromised account.</p>
+        <ol class="lab-code"><li>Find account</li><li data-plan-action>Disable account</li><li>Read account status</li></ol>
+      </div>
+      <div class="lab-wire" aria-hidden="true"><i></i><span>invoke</span></div>
+      <div class="lab-node lab-integration">
+        <span class="lab-small-label">02 / REAL INTEGRATION</span>
+        <div class="lab-integration-icon" aria-hidden="true"><span>↗</span><span>↘</span></div>
+        <h3>SOAR</h3>
+        <p class="lab-goal">Existing execution platform.</p>
+        <div class="lab-connector"><span class="lab-led"></span>Unmodified connector</div>
+        <span class="lab-node-note">Same action interface</span>
+      </div>
+      <div class="lab-wire" aria-hidden="true"><i></i><span>act / observe</span></div>
+      <div class="lab-node lab-environment">
+        <div class="lab-environment-label"><span class="lab-small-label">03 / GENERATED SERVICE</span><span class="lab-runtime-id" data-runtime-id>ENV 01</span></div>
+        <svg class="lab-world" viewBox="0 0 260 146" fill="none" aria-hidden="true">
+          <path class="lab-orbit" d="M17 105 130 47 243 105 130 163Z" />
+          <g class="lab-world-stack">
+            <g class="lab-world-base"><path d="m42 102 88-45 88 45-88 45Z"/><path d="M42 102v10l88 45 88-45v-10M130 147v10"/></g>
+            <g class="lab-world-middle"><path d="m42 76 88-45 88 45-88 45Z"/><path d="M42 76v10l88 45 88-45V76M130 121v10"/></g>
+            <g class="lab-world-top"><path d="m42 50 88-45 88 45-88 45Z"/><path d="M42 50v10l88 45 88-45V50M130 95v10"/><path class="lab-world-detail" d="m96 50 22-11 12 6 24-12M118 39l-10-5m22 11v13l20 10m-20-10-24 12"/><circle cx="96" cy="50" r="3"/><circle cx="154" cy="33" r="3"/><circle cx="150" cy="68" r="3"/><circle cx="106" cy="70" r="3"/></g>
+          </g>
+          <path class="lab-world-spark spark-one" d="M24 47v12m-6-6h12"/><path class="lab-world-spark spark-two" d="M235 74v10m-5-5h10"/>
+        </svg>
+        <h3>Directory service</h3>
+        <div class="lab-runtime-state"><span>Test account</span><strong data-account-state>Active</strong></div>
+        <div class="lab-seed"><span aria-hidden="true">↻</span><span>Seed baseline: <b>active</b></span></div>
+      </div>
+    </div>
+    <div class="lab-observation">
+      <div><span class="lab-small-label">EXPECTED</span><strong>Account disabled</strong></div>
+      <span class="lab-observation-arrow" aria-hidden="true">↔</span>
+      <div><span class="lab-small-label">OBSERVED</span><strong data-observed>Not run yet</strong></div>
+      <span class="lab-verdict" data-verdict>Ready to test</span>
+    </div>
+    <div class="lab-boundary"><svg width="15" height="17" viewBox="0 0 18 20" fill="none" aria-hidden="true"><path d="m9 1 7 3v6c0 4-7 8-7 8S2 14 2 10V4Z" stroke="currentColor"/><path d="m6 9 2 2 4-4" stroke="currentColor"/></svg><span>Production services stay outside this test loop.</span><span class="lab-boundary-side">Try → observe → rebuild</span></div>
+  </div>
+  <div class="lab-controls" hidden>
+    <div class="lab-steps" role="group" aria-label="Walkthrough steps">{pipelineSteps.map((step, i) => <button type="button" data-step={i} aria-label={`0${i + 1} ${step.label}`} aria-pressed={i === 0 ? 'true' : 'false'}><span>0{i + 1}</span>{step.label}</button>)}</div>
+    <div class="lab-narrative" aria-live="polite" aria-atomic="true"><span class="lab-step-number" data-step-number>01 / 05</span><div><h3 data-step-title>{pipelineSteps[0].title}</h3><p data-step-description>{pipelineSteps[0].description}</p></div></div>
+    <div class="lab-playback"><button class="button primary" type="button" data-play><span data-play-icon aria-hidden="true">▶</span><span data-play-label>Play walkthrough</span></button><button class="lab-restart" type="button" data-restart>↺ Start over</button><span class="lab-motion-note" hidden>Reduced motion: use the steps to explore.</span></div>
+  </div>
+  <noscript><ol class="lab-static-steps">{pipelineSteps.map(step => <li><strong>{step.label}.</strong> {step.description}</li>)}</ol></noscript>
+  <div class="lab-footnote"><p>Concept demonstration with simulated actions and outcomes.</p><a href={path('/pipeline1-concept.svg')} download>Download the diagram <span aria-hidden="true">↗</span></a></div>
+</section>
+
+<script>
+  import { pipelineSteps, missedActionExplanation } from '../data/pipelineDemo';
+  const lab = document.querySelector<HTMLElement>('.pipeline-lab');
+  if (lab) {
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const steps = lab.querySelectorAll<HTMLButtonElement>('[data-step]');
+    const scenarios = lab.querySelectorAll<HTMLButtonElement>('[data-scenario-button]');
+    const play = lab.querySelector<HTMLButtonElement>('[data-play]')!;
+    const narrative = lab.querySelector<HTMLElement>('.lab-narrative')!;
+    let phase = 0;
+    let missed = false;
+    let playing = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const setText = (selector: string, text: string) => { lab.querySelector<HTMLElement>(selector)!.textContent = text; };
+    const render = () => {
+      lab.dataset.phase = String(phase);
+      lab.dataset.scenario = missed ? 'missed' : 'working';
+      lab.dataset.playing = String(playing);
+      steps.forEach((button, i) => button.setAttribute('aria-pressed', String(i === phase)));
+      scenarios.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.scenarioButton === (missed ? 'missed' : 'working'))));
+      setText('[data-step-number]', `0${phase + 1} / 05`);
+      setText('[data-step-title]', phase === 3 && missed ? 'Catch the missed objective.' : pipelineSteps[phase].title);
+      setText('[data-step-description]', phase === 3 && missed ? missedActionExplanation : pipelineSteps[phase].description);
+      setText('[data-plan-action]', missed ? 'Check account details' : 'Disable account');
+      setText('[data-runtime-id]', phase === 4 ? 'ENV 02' : 'ENV 01');
+      setText('[data-account-state]', phase >= 2 && phase < 4 && !missed ? 'Disabled' : 'Active');
+      setText('[data-observed]', phase < 2 ? 'Not run yet' : phase === 4 ? 'Fresh baseline' : missed ? 'Account still active' : 'Account disabled');
+      setText('[data-verdict]', phase === 3 ? missed ? 'Goal missed' : 'Goal met' : phase === 4 ? 'Ready to retry' : phase === 2 ? 'Inspecting state' : 'Ready to test');
+      setText('[data-play-label]', playing ? 'Pause walkthrough' : phase === 4 ? 'Replay walkthrough' : 'Play walkthrough');
+      setText('[data-play-icon]', playing ? 'Ⅱ' : '▶');
+    };
+    const pause = () => { clearTimeout(timer); playing = false; render(); narrative.setAttribute('aria-live', 'polite'); };
+    const schedule = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (!playing) return;
+        phase++;
+        if (phase === pipelineSteps.length - 1) { pause(); return; }
+        render(); schedule();
+      }, 3400);
+    };
+    steps.forEach(button => button.addEventListener('click', () => { phase = Number(button.dataset.step); pause(); }));
+    scenarios.forEach(button => button.addEventListener('click', () => { missed = button.dataset.scenarioButton === 'missed'; phase = 0; pause(); }));
+    play.addEventListener('click', () => {
+      if (playing) { pause(); return; }
+      if (motion.matches) return;
+      if (phase === pipelineSteps.length - 1) phase = 0;
+      playing = true;
+      narrative.setAttribute('aria-live', 'off');
+      render(); schedule();
+    });
+    lab.querySelector('[data-restart]')!.addEventListener('click', () => { phase = 0; pause(); });
+    const updateMotion = () => {
+      pause();
+      play.hidden = motion.matches;
+      lab.querySelector<HTMLElement>('.lab-motion-note')!.hidden = !motion.matches;
+    };
+    motion.addEventListener('change', updateMotion);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+    new IntersectionObserver(entries => { if (!entries[0].isIntersecting && playing) pause(); }).observe(lab);
+    lab.querySelector<HTMLElement>('.lab-controls')!.hidden = false;
+    lab.querySelector<HTMLElement>('.lab-scenarios')!.hidden = false;
+    updateMotion();
+  }
+</script>
+
+<style>
+  .pipeline-lab{--lab-blue:#a0d8e3;--lab-red:#ffae9e;--lab-fill:#24351b;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-soft);scroll-margin-top:115px}
+  :global([data-theme=light]) .pipeline-lab{--lab-blue:#285e6c;--lab-red:#9b3021;--lab-fill:#dae7c9}
+  .lab-intro{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;padding:36px 38px;align-items:end}.lab-intro .eyebrow{color:var(--accent);font-size:9px;margin-bottom:16px}.lab-intro h2{font-size:42px;line-height:1.07}.lab-intro h2 em{color:var(--accent)}.lab-intro>p{font-size:14px;color:var(--muted);max-width:360px;line-height:1.8}
+  .lab-small-label{font-size:9px;letter-spacing:.09em;font-weight:600;line-height:1.5;color:var(--muted)}.lab-cost-context{display:flex;align-items:center;gap:20px;padding:17px 38px;border-block:1px solid var(--line);background:var(--surface)}.lab-cost-context>p{font-size:11px;color:var(--muted)}.lab-vm-rack{display:grid;gap:3px;width:29px;flex-shrink:0}.lab-vm-rack i{height:8px;border:1px solid var(--muted);border-radius:1px;position:relative}.lab-vm-rack i:before{content:'';height:2px;width:2px;background:var(--muted);position:absolute;left:3px;top:2px}.lab-cost-chips{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}.lab-cost-chips>span{border:1px solid var(--line);border-radius:3px;padding:3px 7px;font-size:9px;color:var(--muted)}
+  .lab-workspace{padding:24px 28px 0;background-image:radial-gradient(var(--line) .7px,transparent .7px);background-size:20px 20px}.lab-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:27px}.lab-toolbar>.lab-small-label{display:flex;gap:9px;align-items:center;color:var(--accent)}.lab-led{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}.lab-scenarios{display:flex;gap:3px;border:1px solid var(--line);padding:3px;border-radius:5px;background:var(--bg)}.lab-scenarios button{font-size:10px;line-height:1.4;padding:8px 10px;border:0;border-radius:3px;background:transparent;color:var(--muted)}.lab-scenarios button[aria-pressed=true]{color:var(--text);background:var(--surface)}
+  .lab-flow{display:grid;grid-template-columns:1fr 48px 1fr 48px 1.2fr;align-items:center}.lab-node{min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:20px 18px;position:relative;transition:border-color .3s,box-shadow .3s}.lab-node h3{font-size:23px;letter-spacing:-.04em}.lab-node-icon{font-size:41px;line-height:1;margin:17px 0;color:var(--accent)}.lab-goal{font-size:11px;line-height:1.7;color:var(--muted);margin-top:9px}.lab-code{padding:0;margin:20px 0 0;list-style:none;counter-reset:code;display:grid;gap:6px;font-family:monospace;font-size:10px}.lab-code li{counter-increment:code;color:var(--text);display:flex;gap:9px}.lab-code li:before{content:'0' counter(code);color:var(--muted)}.lab-integration-icon{height:47px;display:flex;align-items:center;margin:17px 0 11px;gap:4px}.lab-integration-icon span{width:29px;height:29px;border:1px solid var(--lab-blue);border-radius:4px;color:var(--lab-blue);display:grid;place-items:center;font-size:22px;line-height:1}.lab-connector{margin-top:22px;display:flex;align-items:center;gap:8px;padding:11px 8px;border:1px solid var(--line);font-size:10px;border-radius:4px;line-height:1.5}.lab-node-note{display:block;font-size:9px;color:var(--muted);margin-top:8px}.lab-wire{height:1px;background:var(--line);position:relative}.lab-wire:after{content:'';position:absolute;right:1px;top:-3px;width:6px;height:6px;border-top:1px solid var(--muted);border-right:1px solid var(--muted);transform:rotate(45deg)}.lab-wire>span{position:absolute;font-size:8px;line-height:1.3;white-space:nowrap;left:50%;top:-25px;transform:translateX(-50%);color:var(--muted);background:var(--surface-soft);padding:3px}.lab-wire i{width:5px;height:5px;position:absolute;left:0;top:-2px;background:var(--accent);border-radius:50%;opacity:0}
+  .lab-environment{border-style:dashed;border-color:var(--accent);background:color-mix(in srgb,var(--bg) 90%,var(--accent));padding-top:14px}.lab-environment-label{display:flex;justify-content:space-between;gap:6px;align-items:center}.lab-environment-label>.lab-small-label{font-size:8px}.lab-runtime-id{font-family:monospace;font-size:8px;color:var(--accent);white-space:nowrap}.lab-world{height:142px;width:100%;overflow:visible;margin:4px auto 12px}.lab-world-base{fill:var(--surface);stroke:var(--line);stroke-width:1.3}.lab-world-middle{fill:var(--lab-fill);stroke:var(--accent);stroke-opacity:.5}.lab-world-top{fill:var(--lab-fill);stroke:var(--accent);stroke-width:1.2}.lab-world-top circle{fill:var(--accent);stroke:none}.lab-world-detail{stroke-width:1.4;fill:none}.lab-orbit{stroke:var(--line);stroke-dasharray:3 5}.lab-world-spark{stroke:var(--accent);stroke-width:1;opacity:.6}.lab-environment h3{font-size:21px}.lab-runtime-state{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:13px;font-size:11px}.lab-runtime-state>span{color:var(--muted)}.lab-runtime-state strong{font-family:monospace;font-size:10px;letter-spacing:.025em;background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:3px 8px;color:var(--text)}.lab-seed{display:flex;gap:9px;align-items:center;margin-top:15px;border-top:1px solid var(--line);padding-top:11px;font-size:9px;color:var(--muted)}.lab-seed>span:first-child{font-size:18px;color:var(--accent);line-height:1}.lab-seed b{font-weight:500;color:var(--text)}
+  .lab-observation{display:flex;align-items:center;gap:22px;margin-top:26px;padding:17px 22px;background:var(--bg);border:1px solid var(--line);border-radius:5px}.lab-observation>div{display:grid;gap:3px}.lab-observation strong{font-weight:500;font-size:12px}.lab-observation-arrow{color:var(--muted);font-size:22px}.lab-verdict{margin-left:auto;font-family:monospace;font-size:10px;border:1px solid var(--line);color:var(--muted);padding:7px 11px;border-radius:4px;white-space:nowrap}.lab-boundary{display:flex;align-items:center;gap:8px;padding:17px 0;font-size:10px;color:var(--muted)}.lab-boundary svg{flex-shrink:0}.lab-boundary-side{margin-left:auto;font-family:monospace;font-size:9px}
+  .lab-controls{border-top:1px solid var(--line);padding:0 28px 24px;background:var(--bg)}.lab-steps{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line)}.lab-steps button{position:relative;background:none;border:0;text-align:left;padding:18px 9px;font-size:11px;color:var(--muted)}.lab-steps button>span{font-family:monospace;font-size:9px;margin-right:10px}.lab-steps button[aria-pressed=true]{color:var(--accent)}.lab-steps button[aria-pressed=true]:after{content:'';height:2px;background:var(--accent);position:absolute;bottom:-1px;left:9px;right:9px}.lab-narrative{display:flex;gap:25px;padding:23px 9px 18px;min-height:134px}.lab-step-number{font-family:monospace;font-size:10px;color:var(--accent);flex-shrink:0;padding-top:5px}.lab-narrative h3{font-size:23px;letter-spacing:-.035em}.lab-narrative p{font-size:12px;color:var(--muted);line-height:1.8;margin-top:8px;max-width:660px}.lab-playback{display:flex;gap:23px;align-items:center;padding-left:9px}.lab-playback .button{font-size:11px;padding:11px 17px;gap:12px}.lab-restart{background:none;border:0;padding:10px 0;color:var(--muted);font-size:11px}.lab-restart:hover{color:var(--text)}.lab-motion-note{font-size:11px;color:var(--muted)}.lab-footnote{padding:16px 37px;border-top:1px solid var(--line);display:flex;gap:18px;justify-content:space-between;font-size:10px;line-height:1.7;color:var(--muted)}.lab-footnote a{color:var(--text);text-decoration:underline;text-underline-offset:4px;flex-shrink:0}.lab-static-steps{font-size:13px;padding:20px 50px;color:var(--muted)}.lab-static-steps li{padding:7px 0}
+  [data-phase='0'] .lab-playbook,[data-phase='1'] .lab-environment,[data-phase='2'] .lab-integration,[data-phase='3'] .lab-observation,[data-phase='4'] .lab-environment{border-color:var(--accent);box-shadow:0 0 28px color-mix(in srgb,var(--accent) 5%,transparent)}
+  [data-phase='2'] .lab-wire i{opacity:1;animation:lab-packet 1.2s linear infinite}[data-phase='1'] .lab-world-stack{animation:lab-build .8s ease both}[data-phase='4'] .lab-world-stack{animation:lab-rebuild 1.05s ease both}[data-phase='2'][data-scenario=working] [data-account-state],[data-phase='3'][data-scenario=working] [data-account-state],[data-phase='3'][data-scenario=working] .lab-verdict{color:var(--accent);border-color:var(--accent)}[data-phase='3'][data-scenario=missed] .lab-verdict,[data-phase='3'][data-scenario=missed] [data-account-state]{color:var(--lab-red);border-color:var(--lab-red)}[data-phase='3'][data-scenario=missed] .lab-observation{border-color:var(--lab-red)}[data-scenario=missed] [data-plan-action]{color:var(--lab-red)}[data-playing=false] .lab-wire i{animation-play-state:paused}
+  @keyframes lab-packet{from{left:0}to{left:100%}}@keyframes lab-build{from{opacity:.1;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}@keyframes lab-rebuild{0%{opacity:1;transform:translateY(0)}35%{opacity:0;transform:translateY(-18px)}50%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+  @media(max-width:1000px){.lab-intro{padding:28px}.lab-intro h2{font-size:35px}.lab-cost-context{padding-inline:28px;gap:12px;flex-wrap:wrap}.lab-cost-chips{margin-left:0}.lab-flow{grid-template-columns:1fr 30px 1fr 30px 1.15fr}.lab-node{padding:16px 12px}.lab-wire>span{font-size:7px}.lab-connector{font-size:9px;padding-inline:6px}.lab-node h3{font-size:20px}.lab-environment-label{flex-wrap:wrap}.lab-small-label{font-size:8px}.lab-boundary-side{display:none}}
+  @media(max-width:700px){.lab-intro{grid-template-columns:1fr;gap:18px;padding:26px 22px}.lab-intro h2{font-size:36px}.lab-intro>p{font-size:13px}.lab-cost-context{padding:16px 22px;gap:10px}.lab-cost-context>.lab-small-label{width:100%}.lab-cost-context>p{font-size:10px}.lab-cost-chips{width:100%;margin-top:3px}.lab-workspace{padding:20px 18px 0}.lab-toolbar{flex-direction:column;align-items:flex-start;gap:16px}.lab-flow{grid-template-columns:1fr}.lab-node{padding:20px}.lab-node-icon{float:right;font-size:32px;margin:7px 0}.lab-node h3{font-size:23px;margin-top:12px}.lab-small-label{font-size:9px}.lab-goal{font-size:12px}.lab-code{font-size:11px;margin-top:15px;gap:5px}.lab-wire{width:1px;height:34px;justify-self:center}.lab-wire:after{right:-3px;top:auto;bottom:2px;transform:rotate(135deg)}.lab-wire>span{left:17px;top:8px;transform:none;font-size:8px}.lab-wire i{display:none}.lab-integration-icon{float:right;height:34px;margin:0}.lab-integration-icon span{width:25px;height:25px}.lab-connector{font-size:11px;margin-top:14px}.lab-environment{display:grid;grid-template-columns:1fr 1fr;column-gap:10px;align-items:center}.lab-environment-label{grid-column:1/-1;flex-wrap:nowrap}.lab-world{grid-column:1;grid-row:2/5;width:100%;height:135px;margin:10px 0}.lab-environment h3{font-size:18px;grid-column:2;margin-top:13px}.lab-runtime-state{grid-column:2;flex-wrap:wrap;font-size:10px;margin-top:10px}.lab-seed{grid-column:1/-1;margin-top:9px}.lab-observation{padding:16px 13px;gap:11px;flex-wrap:wrap;margin-top:18px}.lab-observation strong{font-size:10px}.lab-observation .lab-small-label{font-size:8px}.lab-verdict{width:100%;margin:3px 0 0;text-align:center}.lab-boundary{font-size:9px;align-items:flex-start}.lab-controls{padding:0 15px 20px}.lab-steps button{font-size:10px;text-align:center;padding:13px 1px}.lab-steps button>span{display:block;margin:0 0 5px;font-size:9px}.lab-narrative{gap:11px;padding:21px 5px;min-height:195px}.lab-step-number{font-size:8px;white-space:nowrap}.lab-narrative h3{font-size:22px;line-height:1.2}.lab-narrative p{font-size:12px}.lab-playback{gap:16px;padding-left:5px;flex-wrap:wrap}.lab-playback .button{font-size:10px;padding:11px 12px}.lab-restart{font-size:10px}.lab-footnote{padding:15px 22px;flex-direction:column;gap:8px}.lab-static-steps{padding-inline:35px}}
+  @media print{.lab-controls,.lab-scenarios,.lab-footnote a{display:none}.lab-node{break-inside:avoid}.lab-intro h2{font-size:28px}.lab-flow{grid-template-columns:1fr 25px 1fr 25px 1.2fr}.lab-workspace{background-image:none}.pipeline-lab{--lab-fill:#eee;--lab-blue:#333;--lab-red:#333}.lab-world{height:100px}}
+</style>

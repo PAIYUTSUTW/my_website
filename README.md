@@ -30,6 +30,11 @@ npm run preview
   and generated project pages.
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.
 - `site/src/components/AgentField.astro`: conceptual research-loop visualization.
+- `site/src/components/PipelineLab.astro`: interactive Pipeline1 concept with
+  play/pause, alternate outcomes, and a disposable-environment lifecycle.
+- `site/src/data/pipelineDemo.ts`: walkthrough narration; the demonstration
+  simulates outcomes and does not execute playbooks or contact security tools.
+- `site/public/pipeline1-concept.svg`: downloadable, standalone concept diagram.
 - `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
 - `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding
   publication metadata to confirm.
@@ -37,6 +42,17 @@ npm run preview
 Publication venues and statuses are explicit. Ongoing projects are described as
 research rather than production deployments. The CV page has a **Print / Save
 PDF** button and shares its content with the rest of the site.
+
+To export an offline, self-contained Pipeline1 walkthrough after building:
+
+```bash
+cd site
+node scripts/export-pipeline-demo.mjs
+```
+
+Open `.preview/Pipeline1-interactive.html` from the repository root in a browser.
+It embeds the component, fonts, scripts, and downloadable SVG, and needs no
+server or network access. An optional first argument selects the output path.
 
 ## Validate
 

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Pipeline1: disposable test environments for LLM-generated playbooks</title>
+  <desc id="desc">VM-based service deployments require provisioning, configuration, and maintenance. Pipeline1 aims to reduce this burden with generated, stateful service substitutes. A playbook runs through real SOAR and an unmodified connector into a disposable backend. Observe whether the account changes from active to disabled, then discard runtime and rebuild from seed. Production stays outside the test loop. Lower cost and faster rebuilding are design goals, not measured results.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#32382d"/></pattern>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#c8f879" stroke-width="1.5"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#f1f1e8}.muted{fill:#a5ad9d}.accent{fill:#c8f879}.label{font-size:13px;letter-spacing:2px}.body{font-size:19px}.small{font-size:15px}.title{font-size:30px;font-weight:600}.mono{font-family:monospace}</style>
+  </defs>
+  <path fill="#111410" d="M0 0h1440v1000H0z"/>
+  <text x="72" y="60" class="label accent">PIPELINE1 / RESEARCH CONCEPT</text>
+  <text x="72" y="128" font-size="57" font-weight="600" letter-spacing="-2">Room to test. Freedom to rebuild.</text>
+  <text x="74" y="172" class="body muted">Disposable, stateful environments for trying LLM-generated playbooks before production.</text>
+  <rect x="72" y="210" width="1296" height="83" rx="8" fill="#191d17" stroke="#32382d"/>
+  <text x="97" y="242" class="label muted">THE SETUP BURDEN</text>
+  <text x="97" y="270" class="body">VM-based service environments</text>
+  <text x="656" y="258" class="body muted">Provision</text><path d="M754 252h49" stroke="#a5ad9d"/>
+  <text x="827" y="258" class="body muted">Configure</text><path d="M938 252h49" stroke="#a5ad9d"/>
+  <text x="1011" y="258" class="body muted">Maintain &amp; restore</text>
+  <rect x="72" y="319" width="1296" height="517" rx="10" fill="#151913" stroke="#32382d"/>
+  <rect x="72" y="319" width="1296" height="517" rx="10" fill="url(#grid)"/>
+  <circle cx="102" cy="352" r="4" fill="#c8f879"/>
+  <text x="118" y="357" class="label accent">A DISPOSABLE SERVICE WORLD</text>
+  <text x="1160" y="357" class="small muted">CONCEPT DEMO</text>
+  <rect x="101" y="391" width="326" height="290" rx="8" fill="#111410" stroke="#32382d"/>
+  <text x="126" y="426" class="label muted">01 / GENERATE</text>
+  <text x="126" y="478" class="title">LLM playbook</text>
+  <text x="126" y="513" class="small muted">Goal: disable a compromised account.</text>
+  <text x="126" y="565" class="small mono accent">01</text><text x="164" y="565" class="small">Find account</text>
+  <text x="126" y="599" class="small mono accent">02</text><text x="164" y="599" class="small">Disable account</text>
+  <text x="126" y="633" class="small mono accent">03</text><text x="164" y="633" class="small">Read account status</text>
+  <path d="M428 533h87" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="442" y="516" class="small muted">invoke</text>
+  <rect x="527" y="391" width="326" height="290" rx="8" fill="#111410" stroke="#32382d"/>
+  <text x="552" y="426" class="label muted">02 / REAL INTEGRATION</text>
+  <text x="552" y="478" class="title">Splunk SOAR</text>
+  <text x="552" y="513" class="small muted">Existing execution platform.</text>
+  <rect x="551" y="555" width="276" height="55" rx="5" fill="#191d17" stroke="#32382d"/>
+  <circle cx="572" cy="582" r="4" fill="#c8f879"/>
+  <text x="590" y="589" class="body">Real connector</text>
+  <text x="552" y="643" class="small muted">Unmodified action interface</text>
+  <path d="M854 533h90" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="866" y="506" font-size="12" class="muted">act / observe</text>
+  <rect x="957" y="391" width="382" height="290" rx="8" fill="#182013" stroke="#c8f879" stroke-dasharray="5 4"/>
+  <text x="982" y="426" class="label accent">03 / GENERATED SERVICE</text>
+  <g transform="translate(1165 442) scale(.63)" fill="#24351b" stroke="#c8f879" stroke-width="1.4">
+    <path d="m0 80 95-47 95 47-95 47Z"/><path d="m0 53 95-47 95 47-95 47Z"/><path d="m0 26 95-47 95 47-95 47Z"/>
+    <path d="m60 25 30-15 28 14-28 14Z" fill="#c8f879"/>
+  </g>
+  <text x="982" y="483" class="title">Stateful</text><text x="982" y="520" class="title">backend</text>
+  <text x="982" y="563" class="small muted">Account state</text>
+  <text x="982" y="598" class="body">Active</text><path d="M1051 591h40" stroke="#c8f879" marker-end="url(#arrow)"/>
+  <text x="1107" y="598" class="body accent">Disabled</text>
+  <path d="M982 619h332" stroke="#32382d"/>
+  <text x="982" y="648" class="small muted">Seed baseline: active</text>
+  <path d="M1148 686v40H272v-35" fill="none" stroke="#c8f879" stroke-width="1.4" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+  <rect x="422" y="709" width="574" height="34" rx="5" fill="#151913"/>
+  <text x="438" y="732" class="small accent">04 Inspect the outcome</text>
+  <text x="660" y="732" class="small muted">→</text>
+  <text x="696" y="732" class="small accent">05 Discard &amp; rebuild from seed</text>
+  <path d="m107 771 10-5 10 5v9c0 7-10 12-10 12s-10-5-10-12Z" fill="none" stroke="#a5ad9d"/>
+  <text x="143" y="785" class="small muted">Production services stay outside this test loop.</text>
+  <text x="72" y="886" class="label accent">DESIGN GOALS</text>
+  <text x="72" y="922" class="body">Lower setup cost</text><circle cx="291" cy="915" r="2.5" fill="#a5ad9d"/>
+  <text x="319" y="922" class="body">Faster rebuilding</text><circle cx="530" cy="915" r="2.5" fill="#a5ad9d"/>
+  <text x="558" y="922" class="body">Repeatable state</text><circle cx="768" cy="915" r="2.5" fill="#a5ad9d"/>
+  <text x="796" y="922" class="body">Observable outcomes</text>
+  <text x="72" y="965" font-size="13" class="muted">Illustrative workflow. Cost and speed are design goals, not measured comparisons.</text>
+  <text x="1110" y="965" font-size="13" class="muted">Pei-Yu Tseng · Penn State</text>
+</svg>
