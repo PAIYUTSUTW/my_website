@@ -13,6 +13,20 @@
 - Current Pipeline1 and SOAR Playbook Graph project documentation supports the
   ongoing environment-building and workflow-evaluation research descriptions.
   Public descriptions omit internal operational details and run evidence.
+  - Pipeline1: `17_P3_BACKEND_ADAPTER_PASSING_STANDARD_V1.md` and
+    `17_P3_ACCEPTANCE_FIRST_SESSION_HANDOFF_ARCHITECTURE.md` support the action
+    and state-dependency analysis, provider/seed separation, resettable runtime,
+    real SOAR/connector execution path, and independent behavioral review.
+    The current knowledge-retrieval experiment supports an ongoing investigation,
+    not a claim of improved retrieval or fewer engineering retries.
+  - Current SOAR planning/RL direction: `minimal_information_50_brief_20260928.md`,
+    `information_richness_protocol_v1.md`,
+    `shared_dictionary_draft_report_20260927.md`, and
+    `minimal_information_50_progress_20261006.md` support source-grounded task
+    construction, four information axes, and situation/required/prohibited
+    behavior evaluation. The task collection and vocabulary are in development.
+    `training/README.md` distinguishes earlier SFT from RL; current public copy
+    describes foundations for post-training, not completed RL training or gains.
 - The old website supplies the portrait, email, Scholar ID, GitHub, and ORCID.
 - Publication metadata was checked against primary sources:
   - [JoVE protocol article](https://www.jove.com/t/71144/a-structured-workflow-for-transforming-cyber-threat-intelligence-into).
@@ -44,6 +58,9 @@
 - Audience: research collaboration and industry opportunities, as selected by
   the user. English site content preserves the existing site's language.
 - No invented production deployment, leadership, impact, or training claims.
+- Pipeline1 and current SOAR planning/RL work lead the featured research.
+  Workflow generation remains a distinct project; earlier RL work on APT
+  lateral movement remains labeled as research background.
 - IOCRegex-gen's numerical results appear only with their evaluation context
   and a link to the paper, not as personal productivity or production metrics.
 - The interactive research loop is explicitly conceptual, not a live system.

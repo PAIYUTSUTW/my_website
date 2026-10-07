@@ -33,13 +33,13 @@ test('theme persists and research loop controls respond', async ({ page }) => {
 test('research filters work and each project opens', async ({ page }) => {
   await page.goto('portfolio/');
   await page.getByRole('button', { name: 'Agents & evaluation', exact: true }).click();
-  await expect(page.locator('.project-card:visible')).toHaveCount(3);
-  await expect(page.locator('.filter-count')).toHaveText('3 projects');
+  await expect(page.locator('.project-card:visible')).toHaveCount(4);
+  await expect(page.locator('.filter-count')).toHaveText('4 projects');
   await page.getByRole('button', { name: 'Security & intelligence', exact: true }).click();
   await expect(page.locator('.project-card:visible')).toHaveCount(3);
   await page.getByRole('button', { name: 'All work', exact: true }).click();
   const links = await page.locator('.project-card-link').evaluateAll(anchors => anchors.map(a => (a as HTMLAnchorElement).href));
-  expect(links).toHaveLength(6);
+  expect(links).toHaveLength(7);
   for (const href of links) {
     await page.goto(href);
     await expect(page.locator('.project-prose')).toBeVisible();
@@ -77,7 +77,7 @@ test('core content works without JavaScript', async ({ browser }) => {
   await page.goto('http://localhost:4321/my_website/');
   await expect(page.getByRole('heading', { name: /Building agents/ })).toBeVisible();
   await page.getByRole('link', { name: 'Explore my research' }).click();
-  await expect(page.locator('.project-card')).toHaveCount(6);
+  await expect(page.locator('.project-card')).toHaveCount(7);
   await context.close();
 });
 

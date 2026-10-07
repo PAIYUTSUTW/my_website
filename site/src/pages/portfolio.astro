@@ -4,9 +4,9 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { projects } from '../data/profile';
 ---
 <Base title="Research">
-  <section class="page-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>Knowledge. Action.<br /><em>Evidence.</em></h1><p>Building AI agents for security operations—and studying what it takes to make their behavior useful, inspectable, and reliable.</p></section>
+  <section class="page-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>Knowledge. Action.<br /><em>Evidence.</em></h1><p>Building environments that make security actions testable, and studying how LLMs use knowledge to plan workflows that satisfy requirements and policy.</p></section>
   <section class="container research-content" aria-label="Research projects">
-    <div class="filter-bar" role="group" aria-label="Filter research by topic">{['All work', 'Agents & evaluation', 'Security & intelligence'].map((label, i) => <button type="button" class:list={['filter-button', { active: i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-filter={label}>{label}</button>)}<span class="filter-count" aria-live="polite">6 projects</span></div>
+    <div class="filter-bar" role="group" aria-label="Filter research by topic">{['All work', 'Agents & evaluation', 'Security & intelligence'].map((label, i) => <button type="button" class:list={['filter-button', { active: i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-filter={label}>{label}</button>)}<span class="filter-count" aria-live="polite">{projects.length} projects</span></div>
     <div class="project-grid">{projects.map(project => <ProjectCard project={project} />)}</div>
   </section>
   <script>
