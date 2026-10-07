@@ -20,13 +20,13 @@ export const profile = {
 export const projects = [
   {
     slug: 'stateful-evaluation', number: '01', featured: true, kind: 'Current research · Pipeline1', category: 'Agents & evaluation',
-    title: 'Test before you trust.', subtitle: 'Disposable test environments for LLM-generated playbooks',
-    description: 'Developing disposable, stateful environments to test LLM-generated playbooks, with lower setup costs and faster rebuilds as design goals.',
+    title: 'Generate the mock.', subtitle: 'Agent-generated software mocks for SOAR playbooks',
+    description: 'Replacing real-service dependencies with agent-generated, disposable software mocks, designed to make playbook testing cheaper and easier to repeat.',
     tags: ['Disposable environments', 'SOAR', 'Stateful evaluation'], visual: 'state',
     question: 'How can teams afford to test generated playbooks before they touch production?',
     body: [
       'LLMs can generate security playbooks, but teams need somewhere to try them before granting access to production systems. Provisioning and maintaining VM-based deployments of the external services under test adds infrastructure and engineering overhead, especially when experiments need fresh environments.',
-      'Pipeline1 explores a lower-cost approach: agents construct lightweight, stateful substitutes for those external services. The design goal is a disposable test environment that teams can create, experiment in, discard, and rebuild quickly, making repeated validation of generated playbooks more practical.',
+      'Pipeline1 explores a lower-cost approach: our agents generate software-defined mock environments that replace the real external services in the test path. The same playbook runs through SOAR and its real connector, now connected to the generated mock. These lightweight, stateful environments are designed to be used, discarded, and recreated quickly.',
       'In Pipeline1, I develop an agent-driven process that analyzes a connector’s actions and their state dependencies, then constructs a provider implementation and initial seed data. The environment combines a connector-facing adapter, a stateful backend, and persistent storage.',
       'Splunk SOAR and the designated, unmodified connector remain in the execution path; the generated backend supplies the external-service behavior. A reset restores runtime state from an editable seed baseline. Actions must have consistent consequences: disabling an account, for example, must change what a later query observes. This makes it possible to test different scenarios without acting on production accounts or repeatedly provisioning the full external service.',
       'The architecture defines behavioral acceptance conditions before implementation and separates builder and reviewer agents. Review examines action results and state transitions, with findings feeding subsequent repair. Ongoing work also investigates how persistent knowledge and retrieval can support these engineering cycles.',

@@ -72,12 +72,13 @@
 - IOCRegex-gen's numerical results appear only with their evaluation context
   and a link to the paper, not as personal productivity or production metrics.
 - The interactive research loop is explicitly conceptual, not a live system.
-- The Pipeline1 walkthrough illustrates a generated playbook, the real
-  SOAR/connector path, a disposable service backend, observable state, and
-  rebuilding runtime from seed. The missed-action scenario is illustrative;
-  neither outcome represents a recorded experiment or an execution guarantee.
-  The production boundary depicts the intended test setup, not a security
-  isolation certification. The VM setup strip makes no quantitative comparison.
+- Following the user's clarification, the Pipeline1 visual centers on service
+  replacement: the same playbook/SOAR/connector calls a real service before,
+  and an agent-generated software-defined mock for testing after. Connector
+  source and documentation feed Pipeline1's agent, which generates the mock.
+  Both paths remain visible without interaction. Animation and mock instance
+  rebuilding are conceptual, not live executions or measured performance.
+  The visual no longer uses a playbook success/failure scenario as its main story.
 - The printable CV is generated from the same content as the website. The
   supplied PDF remains a source document rather than an automatically published
   download. Its phone number is not included in website content.

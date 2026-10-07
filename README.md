@@ -30,10 +30,10 @@ npm run preview
   and generated project pages.
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.
 - `site/src/components/AgentField.astro`: conceptual research-loop visualization.
-- `site/src/components/PipelineLab.astro`: interactive Pipeline1 concept with
-  play/pause, alternate outcomes, and a disposable-environment lifecycle.
-- `site/src/data/pipelineDemo.ts`: walkthrough narration; the demonstration
-  simulates outcomes and does not execute playbooks or contact security tools.
+- `site/src/components/PipelineLab.astro`: before/after service-replacement diagram,
+  with agent generation, a short animation, and disposable mock rebuilding.
+- `site/src/data/pipelineDemo.ts`: service-replacement narration; the animation
+  illustrates the concept without executing playbooks or contacting services.
 - `site/public/pipeline1-concept.svg`: downloadable, standalone concept diagram.
 - `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
 - `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding

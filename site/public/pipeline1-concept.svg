@@ -1,69 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title desc">
-  <title id="title">Pipeline1: disposable test environments for LLM-generated playbooks</title>
-  <desc id="desc">VM-based service deployments require provisioning, configuration, and maintenance. Pipeline1 aims to reduce this burden with generated, stateful service substitutes. A playbook runs through real SOAR and an unmodified connector into a disposable backend. Observe whether the account changes from active to disabled, then discard runtime and rebuild from seed. Production stays outside the test loop. Lower cost and faster rebuilding are design goals, not measured results.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="850" viewBox="0 0 1400 850" role="img" aria-labelledby="title desc">
+  <title id="title">Pipeline1 agents replace real-service dependencies with generated software mocks</title>
+  <desc id="desc">Before: an LLM-generated playbook connects through SOAR and a real connector to a real service. With Pipeline1: the same playbook and connector connect to a disposable software-defined mock. Pipeline1 agents read connector source and documentation and generate that mock. Lower cost and quick rebuilding are design goals.</desc>
   <defs>
-    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#32382d"/></pattern>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#c8f879" stroke-width="1.5"/></marker>
-    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#f1f1e8}.muted{fill:#a5ad9d}.accent{fill:#c8f879}.label{font-size:13px;letter-spacing:2px}.body{font-size:19px}.small{font-size:15px}.title{font-size:30px;font-weight:600}.mono{font-family:monospace}</style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#c8f879" stroke-width="1.5"/></marker>
+    <marker id="real-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#e7b990" stroke-width="1.5"/></marker>
+    <marker id="agent-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#a0d8e3" stroke-width="1.5"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#f1f1e8}.muted{fill:#a5ad9d}.accent{fill:#c8f879}.label{font-size:13px;letter-spacing:1.6px}.body{font-size:19px}.small{font-size:16px}.node{font-size:23px;font-weight:600}.blue{fill:#a0d8e3}</style>
   </defs>
-  <path fill="#111410" d="M0 0h1440v1000H0z"/>
-  <text x="72" y="60" class="label accent">PIPELINE1 / RESEARCH CONCEPT</text>
-  <text x="72" y="128" font-size="57" font-weight="600" letter-spacing="-2">Room to test. Freedom to rebuild.</text>
-  <text x="74" y="172" class="body muted">Disposable, stateful environments for trying LLM-generated playbooks before production.</text>
-  <rect x="72" y="210" width="1296" height="83" rx="8" fill="#191d17" stroke="#32382d"/>
-  <text x="97" y="242" class="label muted">THE SETUP BURDEN</text>
-  <text x="97" y="270" class="body">VM-based service environments</text>
-  <text x="656" y="258" class="body muted">Provision</text><path d="M754 252h49" stroke="#a5ad9d"/>
-  <text x="827" y="258" class="body muted">Configure</text><path d="M938 252h49" stroke="#a5ad9d"/>
-  <text x="1011" y="258" class="body muted">Maintain &amp; restore</text>
-  <rect x="72" y="319" width="1296" height="517" rx="10" fill="#151913" stroke="#32382d"/>
-  <rect x="72" y="319" width="1296" height="517" rx="10" fill="url(#grid)"/>
-  <circle cx="102" cy="352" r="4" fill="#c8f879"/>
-  <text x="118" y="357" class="label accent">A DISPOSABLE SERVICE WORLD</text>
-  <text x="1160" y="357" class="small muted">CONCEPT DEMO</text>
-  <rect x="101" y="391" width="326" height="290" rx="8" fill="#111410" stroke="#32382d"/>
-  <text x="126" y="426" class="label muted">01 / GENERATE</text>
-  <text x="126" y="478" class="title">LLM playbook</text>
-  <text x="126" y="513" class="small muted">Goal: disable a compromised account.</text>
-  <text x="126" y="565" class="small mono accent">01</text><text x="164" y="565" class="small">Find account</text>
-  <text x="126" y="599" class="small mono accent">02</text><text x="164" y="599" class="small">Disable account</text>
-  <text x="126" y="633" class="small mono accent">03</text><text x="164" y="633" class="small">Read account status</text>
-  <path d="M428 533h87" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="442" y="516" class="small muted">invoke</text>
-  <rect x="527" y="391" width="326" height="290" rx="8" fill="#111410" stroke="#32382d"/>
-  <text x="552" y="426" class="label muted">02 / REAL INTEGRATION</text>
-  <text x="552" y="478" class="title">Splunk SOAR</text>
-  <text x="552" y="513" class="small muted">Existing execution platform.</text>
-  <rect x="551" y="555" width="276" height="55" rx="5" fill="#191d17" stroke="#32382d"/>
-  <circle cx="572" cy="582" r="4" fill="#c8f879"/>
-  <text x="590" y="589" class="body">Real connector</text>
-  <text x="552" y="643" class="small muted">Unmodified action interface</text>
-  <path d="M854 533h90" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="866" y="506" font-size="12" class="muted">act / observe</text>
-  <rect x="957" y="391" width="382" height="290" rx="8" fill="#182013" stroke="#c8f879" stroke-dasharray="5 4"/>
-  <text x="982" y="426" class="label accent">03 / GENERATED SERVICE</text>
-  <g transform="translate(1165 442) scale(.63)" fill="#24351b" stroke="#c8f879" stroke-width="1.4">
-    <path d="m0 80 95-47 95 47-95 47Z"/><path d="m0 53 95-47 95 47-95 47Z"/><path d="m0 26 95-47 95 47-95 47Z"/>
-    <path d="m60 25 30-15 28 14-28 14Z" fill="#c8f879"/>
-  </g>
-  <text x="982" y="483" class="title">Stateful</text><text x="982" y="520" class="title">backend</text>
-  <text x="982" y="563" class="small muted">Account state</text>
-  <text x="982" y="598" class="body">Active</text><path d="M1051 591h40" stroke="#c8f879" marker-end="url(#arrow)"/>
-  <text x="1107" y="598" class="body accent">Disabled</text>
-  <path d="M982 619h332" stroke="#32382d"/>
-  <text x="982" y="648" class="small muted">Seed baseline: active</text>
-  <path d="M1148 686v40H272v-35" fill="none" stroke="#c8f879" stroke-width="1.4" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
-  <rect x="422" y="709" width="574" height="34" rx="5" fill="#151913"/>
-  <text x="438" y="732" class="small accent">04 Inspect the outcome</text>
-  <text x="660" y="732" class="small muted">→</text>
-  <text x="696" y="732" class="small accent">05 Discard &amp; rebuild from seed</text>
-  <path d="m107 771 10-5 10 5v9c0 7-10 12-10 12s-10-5-10-12Z" fill="none" stroke="#a5ad9d"/>
-  <text x="143" y="785" class="small muted">Production services stay outside this test loop.</text>
-  <text x="72" y="886" class="label accent">DESIGN GOALS</text>
-  <text x="72" y="922" class="body">Lower setup cost</text><circle cx="291" cy="915" r="2.5" fill="#a5ad9d"/>
-  <text x="319" y="922" class="body">Faster rebuilding</text><circle cx="530" cy="915" r="2.5" fill="#a5ad9d"/>
-  <text x="558" y="922" class="body">Repeatable state</text><circle cx="768" cy="915" r="2.5" fill="#a5ad9d"/>
-  <text x="796" y="922" class="body">Observable outcomes</text>
-  <text x="72" y="965" font-size="13" class="muted">Illustrative workflow. Cost and speed are design goals, not measured comparisons.</text>
-  <text x="1110" y="965" font-size="13" class="muted">Pei-Yu Tseng · Penn State</text>
+  <path d="M0 0h1400v850H0z" fill="#111410"/>
+  <text x="64" y="53" class="label accent">PIPELINE1 / THE CORE IDEA</text>
+  <text x="64" y="117" font-size="53" font-weight="600" letter-spacing="-1.5">Real service <tspan class="muted">→</tspan><tspan class="accent"> software mock.</tspan></text>
+  <text x="66" y="156" class="body muted">Our agents generate low-cost, disposable software environments for testing LLM-generated playbooks.</text>
+  <rect x="64" y="189" width="1272" height="190" rx="8" fill="#171a15" stroke="#32382d"/>
+  <text x="91" y="219" class="label muted">BEFORE</text>
+  <text x="220" y="219" class="small muted">Connect to the real service</text>
+  <rect x="91" y="240" width="289" height="87" rx="5" fill="#111410" stroke="#32382d"/>
+  <text x="118" y="277" class="node">LLM-generated</text><text x="118" y="306" class="node">playbook</text>
+  <path d="M381 283h62" stroke="#e7b990" stroke-width="1.5" marker-end="url(#real-arrow)"/>
+  <rect x="455" y="240" width="300" height="87" rx="5" fill="#111410" stroke="#32382d"/>
+  <text x="481" y="277" class="node">SOAR +</text><text x="481" y="306" class="node">real connector</text>
+  <path d="M756 283h64" stroke="#e7b990" stroke-width="1.5" marker-end="url(#real-arrow)"/>
+  <rect x="833" y="240" width="476" height="87" rx="5" fill="#282119" stroke="#e7b990"/>
+  <g stroke="#e7b990" fill="none"><rect x="858" y="259" width="32" height="11" rx="1"/><rect x="858" y="277" width="32" height="11" rx="1"/><rect x="858" y="295" width="32" height="11" rx="1"/></g>
+  <text x="914" y="278" class="node" style="fill:#e7b990">Real service</text><text x="914" y="305" class="small muted">Access · Deploy · Maintain</text>
+  <text x="91" y="358" class="small muted">Service access and VM-based test deployments add setup, resource, and maintenance costs.</text>
+  <path d="M1070 384v29" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="796" y="405" class="small accent">Replace the service dependency</text>
+  <rect x="64" y="429" width="1272" height="211" rx="8" fill="#171e13" stroke="#c8f879"/>
+  <text x="91" y="460" class="label accent">WITH PIPELINE1</text><text x="270" y="460" class="small muted">Connect to an agent-generated mock</text>
+  <rect x="91" y="480" width="289" height="94" rx="5" fill="#111410" stroke="#32382d"/>
+  <text x="118" y="535" class="node">Same playbook</text>
+  <path d="M381 527h62" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="455" y="480" width="300" height="94" rx="5" fill="#111410" stroke="#32382d"/>
+  <text x="481" y="519" class="node">Same SOAR +</text><text x="481" y="548" class="node">real connector</text>
+  <path d="M756 527h64" stroke="#c8f879" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="833" y="480" width="476" height="94" rx="5" fill="#1b2614" stroke="#c8f879" stroke-dasharray="5 4"/>
+  <text x="855" y="538" font-family="monospace" font-size="31" class="accent">{ }</text>
+  <text x="920" y="518" class="node accent">Software-defined mock</text><text x="920" y="547" class="small muted">Simulated responses + state</text>
+  <text x="849" y="611" class="small accent">Low-cost by design · Disposable · Rebuildable</text>
+  <text x="91" y="689" class="label muted">INPUT</text><text x="91" y="719" class="body">Connector source</text><text x="91" y="746" class="body">&amp; documentation</text>
+  <path d="M288 716h152" stroke="#a0d8e3" stroke-width="1.5" marker-end="url(#agent-arrow)"/>
+  <text x="343" y="700" class="small muted">read</text>
+  <rect x="455" y="672" width="300" height="89" rx="6" fill="#151d1e" stroke="#a0d8e3"/>
+  <text x="480" y="700" class="label blue">OUR AUTOMATION</text><text x="480" y="737" class="node">Pipeline1 agent</text>
+  <path d="M756 716h568V527h-12" fill="none" stroke="#a0d8e3" stroke-width="2" marker-end="url(#agent-arrow)"/>
+  <text x="823" y="699" class="body blue">generates this mock</text>
+  <path d="M64 792h1272" stroke="#32382d"/>
+  <text x="64" y="820" font-size="13" class="muted">Concept illustration. Lower cost and faster rebuilding are design goals.</text>
+  <text x="1102" y="820" font-size="13" class="muted">Pei-Yu Tseng · Penn State</text>
 </svg>
