@@ -19,6 +19,14 @@
     real SOAR/connector execution path, and independent behavioral review.
     The current knowledge-retrieval experiment supports an ongoing investigation,
     not a claim of improved retrieval or fewer engineering retries.
+    The user clarified the commercial motivation: the cost of VM-based service
+    environments, the need to try LLM-generated playbooks away from production,
+    and low-cost environments that can be quickly discarded and rebuilt.
+    Public copy presents lower cost and faster rebuilds as design goals;
+    no comparative cost or provisioning-time measurements were supplied.
+    The disposable component is the generated external-service environment;
+    the description retains real SOAR and connector execution and does not
+    imply that the entire SOAR platform is replaced or that isolation is certified.
   - Current SOAR planning/RL direction: `minimal_information_50_brief_20260928.md`,
     `information_richness_protocol_v1.md`,
     `shared_dictionary_draft_report_20260927.md`, and
