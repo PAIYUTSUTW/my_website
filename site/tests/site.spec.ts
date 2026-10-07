@@ -19,22 +19,18 @@ test('main pages load with local assets and responsive layouts', async ({ page }
   expect(errors).toEqual([]);
 });
 
-test('theme persists and research loop controls respond', async ({ page }) => {
+test('theme persists and current research links have clear destinations', async ({ page }) => {
   await page.goto('');
   await page.getByRole('button', { name: 'Switch to light theme' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-  await page.getByRole('button', { name: '03 Evaluate' }).click();
-  await expect(page.locator('.field-caption')).toHaveText('Inspect outcomes, not just model outputs.');
-  await expect(page.getByRole('button', { name: '03 Evaluate' })).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('button', { name: 'Pause motion', exact: true }).click();
-  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'paused');
-  await page.getByRole('button', { name: 'Resume motion', exact: true }).click();
-  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'running');
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('.agent-field')).toHaveAttribute('data-motion', 'paused');
-  await expect(page.locator('.field-motion')).toBeHidden();
+  await page.locator('.research-focus').getByRole('link').first().click();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Test AI workflows.');
+  await page.goBack();
+  await page.locator('.research-focus').getByRole('link').last().click();
+  await expect(page).toHaveURL(/projects\/soar-planning\/$/);
+  await expect(page.locator('.project-prose')).toContainText('foundation');
 });
 
 test('research filters work and each project opens', async ({ page }) => {
@@ -49,7 +45,9 @@ test('research filters work and each project opens', async ({ page }) => {
   expect(links).toHaveLength(7);
   for (const href of links) {
     await page.goto(href);
-    await expect(page.locator('.project-prose')).toBeVisible();
+    const prose = page.locator('.project-prose');
+    expect(await prose.count()).toBeGreaterThan(0);
+    for (const section of await prose.all()) await expect(section).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   }
 });
@@ -82,7 +80,7 @@ test('core content works without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://localhost:4321/my_website/');
-  await expect(page.getByRole('heading', { name: /Building agents/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /AI agents for/ })).toBeVisible();
   await page.getByRole('link', { name: 'Explore my research' }).click();
   await expect(page.locator('.project-card')).toHaveCount(7);
   await context.close();

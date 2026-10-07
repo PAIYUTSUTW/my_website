@@ -29,32 +29,32 @@ npm run preview
 - `site/src/pages/`: homepage, research index, publication list, printable CV,
   and generated project pages.
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.
-- `site/src/styles/tech.css`: dark technology theme, light accents, and orbit effects.
-- `site/src/components/AgentField.astro`: conceptual research-loop visualization.
-- `site/src/components/PipelineLab.astro`: before/after service-replacement diagram,
-  with agent generation, a short animation, and disposable mock rebuilding.
-- `site/src/data/pipelineDemo.ts`: service-replacement narration; the animation
-  illustrates the concept without executing playbooks or contacting services.
+- `site/src/styles/tech.css`: dark technology theme, typography, and restrained light accents.
+- `site/src/components/ResearchFocus.astro`: the two current research questions on the homepage.
+- `site/src/components/TestEnvironmentStudy.astro`: complete research story, from
+  the problem and approach to contribution, status, and optional technical detail.
+- `site/src/components/ServiceComparison.astro`: static service-replacement figure.
 - `site/public/pipeline1-concept.svg`: downloadable, standalone concept diagram.
 - `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
 - `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding
   publication metadata to confirm.
-- `docs/DESIGN_REFERENCES.md`: template inspiration, original implementation, and motion behavior.
+- `docs/DESIGN_REFERENCES.md`: visual references and reader-first information architecture.
 
 Publication venues and statuses are explicit. Ongoing projects are described as
 research rather than production deployments. The CV page has a **Print / Save
 PDF** button and shares its content with the rest of the site.
 
-To export an offline, self-contained Pipeline1 walkthrough after building:
+To export an offline, self-contained research story after building:
 
 ```bash
 cd site
 node scripts/export-pipeline-demo.mjs
 ```
 
-Open `.preview/Pipeline1-interactive.html` from the repository root in a browser.
-It embeds the component, fonts, scripts, and downloadable SVG, and needs no
-server or network access. An optional first argument selects the output path.
+Open `.preview/Test-environments.html` from the repository root in a browser.
+It includes the full problem, method, comparison, research status, fonts, and
+downloadable SVG. The story needs no server, network, or JavaScript; its optional
+theme button uses a small inline script. An optional first argument selects the output path.
 
 ## Validate
 

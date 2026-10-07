@@ -19,24 +19,22 @@ export const profile = {
 
 export const projects = [
   {
-    slug: 'stateful-evaluation', number: '01', featured: true, kind: 'Current research · Pipeline1', category: 'Agents & evaluation',
-    title: 'Generate the mock.', subtitle: 'Agent-generated software mocks for SOAR playbooks',
-    description: 'Replacing real-service dependencies with agent-generated, disposable software mocks, designed to make playbook testing cheaper and easier to repeat.',
-    tags: ['Disposable environments', 'SOAR', 'Stateful evaluation'], visual: 'state',
-    question: 'How can teams afford to test generated playbooks before they touch production?',
+    slug: 'stateful-evaluation', number: '01', featured: true, kind: 'Current research', category: 'Agents & evaluation',
+    title: 'AI-built test environments', subtitle: 'Disposable test environments for security automation',
+    description: 'Agents that build test versions of external services, so AI-generated security workflows can be tried without connecting to the real service.',
+    tags: ['Environment generation', 'Security automation'], visual: 'environment',
+    question: 'Where can teams test an AI-generated security workflow before it reaches real systems?',
     body: [
-      'LLMs can generate security playbooks, but teams need somewhere to try them before granting access to production systems. Provisioning and maintaining VM-based deployments of the external services under test adds infrastructure and engineering overhead, especially when experiments need fresh environments.',
-      'Pipeline1 explores a lower-cost approach: our agents generate software-defined mock environments that replace the real external services in the test path. The same playbook runs through SOAR and its real connector, now connected to the generated mock. These lightweight, stateful environments are designed to be used, discarded, and recreated quickly.',
-      'In Pipeline1, I develop an agent-driven process that analyzes a connector’s actions and their state dependencies, then constructs a provider implementation and initial seed data. The environment combines a connector-facing adapter, a stateful backend, and persistent storage.',
-      'Splunk SOAR and the designated, unmodified connector remain in the execution path; the generated backend supplies the external-service behavior. A reset restores runtime state from an editable seed baseline. Actions must have consistent consequences: disabling an account, for example, must change what a later query observes. This makes it possible to test different scenarios without acting on production accounts or repeatedly provisioning the full external service.',
-      'The architecture defines behavioral acceptance conditions before implementation and separates builder and reviewer agents. Review examines action results and state transitions, with findings feeding subsequent repair. Ongoing work also investigates how persistent knowledge and retrieval can support these engineering cycles.',
+      'A security playbook is an automated workflow that queries services and takes actions such as disabling an account. AI can generate these workflows, but trying them against real systems can change real accounts and data. Setting up separate services in virtual machines adds provisioning and maintenance work.',
+      'I am developing agents that read service connector code and documentation, then generate disposable test environments. These environments simulate service responses and data changes while the workflow continues to use the existing security automation platform and connector.',
+      'The aim is to make testing less expensive to set up and easier to repeat. Lower cost and faster environment creation remain research goals, not benchmarked results.',
     ],
-    approach: ['Inventory connector actions and identify relationships between their state changes.', 'Construct the provider and seed data, with resettable runtime state.', 'Review behavior through the real SOAR and connector path, then use evidence to guide repair.'],
+    approach: ['Read the connector code and documentation to identify required service behavior.', 'Generate a service implementation and starting data that can be reset.', 'Review action results and subsequent state changes through the existing connector.'],
     related: [],
   },
   {
     slug: 'soar-planning', number: '02', featured: true, kind: 'Current research · RL foundations', category: 'Agents & evaluation',
-    title: 'A goal is not a plan.', subtitle: 'Knowledge-grounded SOAR planning and reinforcement learning',
+    title: 'Teaching AI to plan security workflows', subtitle: 'Knowledge-grounded SOAR planning and reinforcement learning',
     description: 'Studying how LLMs find missing knowledge and plan security workflows that satisfy requirements, conditions, and policy—with evaluation groundwork for RL.',
     tags: ['LLM post-training', 'Knowledge retrieval', 'Behavioral evaluation'], visual: 'workflow',
     question: 'Can a model turn a sparse security objective into a valid, policy-aware workflow?',
@@ -52,7 +50,7 @@ export const projects = [
   },
   {
     slug: 'workflow-generation', number: '03', featured: false, kind: 'Current research', category: 'Agents & evaluation',
-    title: 'From intent to action.', subtitle: 'LLM-based security workflow generation',
+    title: 'Generating security playbooks', subtitle: 'LLM-based security workflow generation',
     description: 'Turning high-level security objectives into SOAR workflows, with retrieval, execution feedback, and behavioral review.',
     tags: ['LLM agents', 'RAG', 'Workflow generation'], visual: 'workflow',
     question: 'Can an agent preserve the intent behind a security workflow?',
@@ -66,7 +64,7 @@ export const projects = [
   },
   {
     slug: 'threat-intelligence', number: '04', featured: true, kind: 'Research · 2024–2026', category: 'Security & intelligence',
-    title: 'Intelligence into detection.', subtitle: 'LLM agents for CTI operationalization',
+    title: 'Turning threat reports into detections', subtitle: 'LLM agents for CTI operationalization',
     description: 'Connecting unstructured threat reports with log evidence and validated detection patterns.',
     tags: ['Threat intelligence', 'LLMs', 'Detection engineering'], visual: 'regex',
     question: 'How can threat intelligence become something a security team can use?',
@@ -80,7 +78,7 @@ export const projects = [
   },
   {
     slug: 'human-machine-evaluation', number: '05', featured: true, kind: 'Research · 2026', category: 'Agents & evaluation',
-    title: 'Who evaluates the evaluator?', subtitle: 'Human–machine alignment in LLM evaluation',
+    title: 'Comparing human and AI evaluations', subtitle: 'Human–machine alignment in LLM evaluation',
     description: 'Studying how rubrics and evaluation procedures shape the agreement between human judgments and LLM assessments.',
     tags: ['LLM evaluation', 'Multi-agent systems', 'Human–AI alignment'], visual: 'evaluation',
     question: 'What changes when we ask a machine to judge quality?',
@@ -94,7 +92,7 @@ export const projects = [
   },
   {
     slug: 'adversary-emulation', number: '06', featured: false, kind: 'Research background', category: 'Security & intelligence',
-    title: 'Reasoning about the adversary.', subtitle: 'Reinforcement learning for APT defense',
+    title: 'Learning defensive strategies against APTs', subtitle: 'Reinforcement learning for APT defense',
     description: 'Modeling lateral movement and constructing simulation environments for reinforcement-learning-based defensive strategies.',
     tags: ['Reinforcement learning', 'Adversary emulation', 'POMDP'], visual: 'workflow',
     question: 'How can defenders reason about an attacker they can only partially observe?',
@@ -103,7 +101,7 @@ export const projects = [
   },
   {
     slug: 'threat-graphs', number: '07', featured: false, kind: 'Research background', category: 'Security & intelligence',
-    title: 'Following the evidence.', subtitle: 'Graph-based threat detection and provenance',
+    title: 'Connecting attack evidence with graphs', subtitle: 'Graph-based threat detection and provenance',
     description: 'Linking intelligence, kernel audit logs, and attack behavior to investigate multi-stage threats.',
     tags: ['Graph learning', 'Threat hunting', 'System telemetry'], visual: 'state',
     question: 'How can scattered observations reveal a connected attack?',

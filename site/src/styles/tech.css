@@ -12,25 +12,10 @@
   .hero h1 { font-size: clamp(65px, 6.2vw, 88px); line-height: 1.02; letter-spacing: -.07em; }
   .hero h1 em { font-size: 1em; background: linear-gradient(100deg, var(--accent), #a1caff); background-clip: text; color: transparent; }
   [data-theme=light] .hero h1 em { background-image: linear-gradient(100deg, #176550, #2c5792); }
-  .heading-dot { display: none; }
   .hero-kicker { color: var(--accent); letter-spacing: .13em; }
   .hero-intro { max-width: 470px; }
   .hero-affiliation { border: 0; }
   .status-dot { box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 55%, transparent); }
-  .agent-field { border: 1px solid var(--line); border-radius: 24px; padding: 24px 0 18px; background: radial-gradient(ellipse at 50% 45%, #58d7c310, transparent 65%), var(--surface-soft); box-shadow: 0 30px 100px #00000020, inset 0 1px #ffffff08; }
-  .field-visual { height: 355px; margin-top: 4px; }
-  .field-grid { opacity: .4; background-size: 32px 32px; }
-  .field-halo { position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle, #98f4db06 20%, #98f4db18 60%, transparent 71%); filter: blur(16px); }
-  .field-orbit { position: absolute; left: 8%; right: 8%; top: 35%; height: 30%; border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); border-radius: 50%; transform: rotate(-30deg); }
-  .orbit-two { transform: rotate(35deg); border-color: #89bfff35; }
-  .field-orbit:after { content: ''; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 15px 3px #98f4db70; offset-path: ellipse(50% 50%); animation: orbit-travel 9s linear infinite; }
-  .orbit-two:after { background: #a1caff; animation-delay: -4s; animation-duration: 13s; }
-  .agent-field[data-motion=paused] .field-orbit:after { animation-play-state: paused; }
-  .field-label { border-radius: 6px; background: var(--surface-soft); padding: 8px 10px; font-size: 8px; box-shadow: 0 5px 20px #00000010; }
-  .field-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 14px 24px 0; }
-  .field-note { margin: 0; font-size: 8px; text-align: left; }
-  .field-motion { color: var(--muted); border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 3px 9px; font-size: 9px; white-space: nowrap; }
-  .research-strip { background: linear-gradient(90deg, var(--bg), var(--surface), var(--bg)); }
   .project-card { border-radius: 18px; background: var(--surface-soft); position: relative; transition: border-color .25s, transform .25s, box-shadow .25s; }
   .project-card:hover, .project-card:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); box-shadow: 0 0 35px color-mix(in srgb, var(--accent) 8%, transparent); transform: translateY(-4px); }
   .project-card .project-art { border-radius: 17px 17px 0 0; }
@@ -48,12 +33,9 @@
   .page-heading h1, .project-detail-heading h1 { letter-spacing: -.06em; }
   .site-footer { background: radial-gradient(ellipse at 50% 100%, #98f4db08, transparent 70%); }
 }
-@keyframes orbit-travel { to { offset-distance: 100%; } }
 @media screen and (max-width: 1100px) {
   .hero { gap: 24px; min-height: 690px; padding-block: 65px; }
   .hero h1 { font-size: 66px; }
-  .field-visual { height: 320px; }
-  .field-top, .field-controls { margin-inline: 18px; }
   .desktop-nav { padding-inline: 18px; gap: 18px; }
 }
 @media screen and (max-width: 800px) {
@@ -61,22 +43,11 @@
   .hero { gap: 44px; padding-block: 50px; }
   .hero h1 { font-size: clamp(48px, 10vw, 78px); }
   .hero h1 em { font-size: 1em; }
-  .agent-field { padding-top: 24px; }
-  .field-visual { height: 350px; }
 }
 @media screen and (max-width: 540px) {
   .hero h1 { font-size: clamp(44px, 12.5vw, 66px); }
   .hero { padding-top: 46px; }
-  .field-visual { height: 280px; }
-  .field-top, .field-controls { margin-inline: 18px; }
-  .field-bottom { margin-inline: 18px; }
-  .field-step { font-size: 10px; padding-inline: 3px; }
-  .field-step span { font-size: 8px; margin-right: 5px; }
-  .field-label { font-size: 7px; }
-  .label-context { left: 4%; }
-  .label-action { right: 3%; }
 }
 @media(prefers-reduced-motion: reduce) {
-  .field-orbit:after { animation: none; }
   .project-card:hover { transform: none; }
 }

@@ -1,4 +1,4 @@
-# Portfolio content review — 2026-10-06
+# Portfolio content review — 2026-10-07
 
 ## Confirmed
 
@@ -71,14 +71,24 @@
   lateral movement remains labeled as research background.
 - IOCRegex-gen's numerical results appear only with their evaluation context
   and a link to the paper, not as personal productivity or production metrics.
-- The interactive research loop is explicitly conceptual, not a live system.
-- Following the user's clarification, the Pipeline1 visual centers on service
-  replacement: the same playbook/SOAR/connector calls a real service before,
-  and an agent-generated software-defined mock for testing after. Connector
-  source and documentation feed Pipeline1's agent, which generates the mock.
-  Both paths remain visible without interaction. Animation and mock instance
-  rebuilding are conceptual, not live executions or measured performance.
-  The visual no longer uses a playbook success/failure scenario as its main story.
+- The homepage now names the research field and describes two concrete questions:
+  where to test generated workflows, and how models plan valid workflows.
+  The abstract research sphere, research-loop controls, and repeated slogan strip
+  were removed because they did not explain the work.
+- The environment project is presented publicly as **AI-built test environments**.
+  The first paragraph defines a security playbook; the page then explains the
+  testing problem, agent-driven generation, service replacement, intended value,
+  Jerry's contribution, and current research status, in that order.
+- `Pipeline1` appears only inside optional technical detail, where it is explicitly
+  defined as the internal name of the environment-generation workflow. Public
+  copy uses "generated test environment" rather than "software mock".
+- The comparison retains the workflow, existing security automation platform,
+  and service connector while replacing the external service for testing. The
+  agent reads connector code and documentation to generate service behavior and
+  starting data. It does not replace the whole security platform.
+- The earlier animated demo and simulated instance counter were removed. The
+  comparison is now readable without controls or JavaScript, and the portable
+  HTML includes the full research story rather than an isolated diagram.
 - The printable CV is generated from the same content as the website. The
   supplied PDF remains a source document rather than an automatically published
   download. Its phone number is not included in website content.

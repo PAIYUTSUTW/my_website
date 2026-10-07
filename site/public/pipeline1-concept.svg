@@ -1,51 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="850" viewBox="0 0 1400 850" role="img" aria-labelledby="title desc">
-  <title id="title">Pipeline1 agents replace real-service dependencies with generated software mocks</title>
-  <desc id="desc">Before: an LLM-generated playbook connects through SOAR and a real connector to a real service. With Pipeline1: the same playbook and connector connect to a disposable software-defined mock. Pipeline1 agents read connector source and documentation and generate that mock. Lower cost and quick rebuilding are design goals.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980" role="img" aria-labelledby="title desc">
+  <title id="title">AI-built test environments for security automation</title>
+  <desc id="desc">AI-generated security workflows need a place to be tested before they reach real systems. Our agent reads service connector code and documentation to generate a disposable test environment. The workflow keeps its existing security automation platform and connector, while the generated environment stands in for the real external service. Lower setup cost and faster rebuilding are research goals.</desc>
   <defs>
-    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#98f4db" stroke-width="1.5"/></marker>
-    <marker id="real-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#edbb9b" stroke-width="1.5"/></marker>
-    <marker id="agent-arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="#b4c7ff" stroke-width="1.5"/></marker>
-    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#edf3f8}.muted{fill:#a3afbd}.accent{fill:#98f4db}.label{font-size:13px;letter-spacing:1.6px}.body{font-size:19px}.small{font-size:16px}.node{font-size:23px;font-weight:600}.blue{fill:#b4c7ff}</style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="m2 1 5 4-5 4" fill="none" stroke="#98f4db" stroke-width="1.5"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#edf3f8}.muted{fill:#a3afbd}.accent{fill:#98f4db}.label{font-size:14px;letter-spacing:1.5px}.body{font-size:21px}.node{font-size:29px;font-weight:600}.small{font-size:18px}</style>
   </defs>
-  <path d="M0 0h1400v850H0z" fill="#090c11"/>
-  <text x="64" y="53" class="label accent">PIPELINE1 / THE CORE IDEA</text>
-  <text x="64" y="117" font-size="53" font-weight="600" letter-spacing="-1.5">Real service <tspan class="muted">→</tspan><tspan class="accent"> software mock.</tspan></text>
-  <text x="66" y="156" class="body muted">Our agents generate low-cost, disposable software environments for testing LLM-generated playbooks.</text>
-  <rect x="64" y="189" width="1272" height="190" rx="18" fill="#0e141c" stroke="#2c3643"/>
-  <text x="91" y="219" class="label muted">BEFORE</text>
-  <text x="220" y="219" class="small muted">Connect to the real service</text>
-  <rect x="91" y="240" width="289" height="87" rx="12" fill="#090c11" stroke="#2c3643"/>
-  <text x="118" y="277" class="node">LLM-generated</text><text x="118" y="306" class="node">playbook</text>
-  <path d="M381 283h62" stroke="#edbb9b" stroke-width="1.5" marker-end="url(#real-arrow)"/>
-  <rect x="455" y="240" width="300" height="87" rx="12" fill="#090c11" stroke="#2c3643"/>
-  <text x="481" y="277" class="node">SOAR +</text><text x="481" y="306" class="node">real connector</text>
-  <path d="M756 283h64" stroke="#edbb9b" stroke-width="1.5" marker-end="url(#real-arrow)"/>
-  <rect x="833" y="240" width="476" height="87" rx="12" fill="#241c1a" stroke="#edbb9b"/>
-  <g stroke="#edbb9b" fill="none"><rect x="858" y="259" width="32" height="11" rx="1"/><rect x="858" y="277" width="32" height="11" rx="1"/><rect x="858" y="295" width="32" height="11" rx="1"/></g>
-  <text x="914" y="278" class="node" style="fill:#edbb9b">Real service</text><text x="914" y="305" class="small muted">Access · Deploy · Maintain</text>
-  <text x="91" y="358" class="small muted">Service access and VM-based test deployments add setup, resource, and maintenance costs.</text>
-  <path d="M1070 384v29" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="796" y="405" class="small accent">Replace the service dependency</text>
-  <rect x="64" y="429" width="1272" height="211" rx="18" fill="#0e1918" stroke="#98f4db"/>
-  <text x="91" y="460" class="label accent">WITH PIPELINE1</text><text x="270" y="460" class="small muted">Connect to an agent-generated mock</text>
-  <rect x="91" y="480" width="289" height="94" rx="12" fill="#090c11" stroke="#2c3643"/>
-  <text x="118" y="535" class="node">Same playbook</text>
-  <path d="M381 527h62" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <rect x="455" y="480" width="300" height="94" rx="12" fill="#090c11" stroke="#2c3643"/>
-  <text x="481" y="519" class="node">Same SOAR +</text><text x="481" y="548" class="node">real connector</text>
-  <path d="M756 527h64" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <rect x="833" y="480" width="476" height="94" rx="12" fill="#10251f" stroke="#98f4db" stroke-dasharray="5 4"/>
-  <text x="855" y="538" font-family="monospace" font-size="31" class="accent">{ }</text>
-  <text x="920" y="518" class="node accent">Software-defined mock</text><text x="920" y="547" class="small muted">Simulated responses + state</text>
-  <text x="849" y="611" class="small accent">Low-cost by design · Disposable · Rebuildable</text>
-  <text x="91" y="689" class="label muted">INPUT</text><text x="91" y="719" class="body">Connector source</text><text x="91" y="746" class="body">&amp; documentation</text>
-  <path d="M288 716h152" stroke="#b4c7ff" stroke-width="1.5" marker-end="url(#agent-arrow)"/>
-  <text x="343" y="700" class="small muted">read</text>
-  <rect x="455" y="672" width="300" height="89" rx="6" fill="#151d1e" stroke="#b4c7ff"/>
-  <text x="480" y="700" class="label blue">OUR AUTOMATION</text><text x="480" y="737" class="node">Pipeline1 agent</text>
-  <path d="M756 716h568V527h-12" fill="none" stroke="#b4c7ff" stroke-width="2" marker-end="url(#agent-arrow)"/>
-  <text x="823" y="699" class="body blue">generates this mock</text>
-  <path d="M64 792h1272" stroke="#2c3643"/>
-  <text x="64" y="820" font-size="13" class="muted">Concept illustration. Lower cost and faster rebuilding are design goals.</text>
-  <text x="1102" y="820" font-size="13" class="muted">Pei-Yu Tseng · Penn State</text>
+  <rect width="1400" height="980" fill="#090c11"/>
+  <text x="64" y="58" class="label accent">ONGOING RESEARCH / PEI-YU TSENG · PENN STATE</text>
+  <text x="64" y="124" font-size="51" font-weight="600" letter-spacing="-1">AI-built test environments</text>
+  <text x="66" y="169" class="body muted">A place to try AI-generated security workflows before they reach real systems.</text>
+  <text x="66" y="207" class="small muted">Real-service access and separate VM deployments add setup and maintenance work.</text>
+  <rect x="64" y="247" width="1272" height="222" rx="20" fill="#0e141c" stroke="#2c3643"/>
+  <text x="94" y="282" class="label muted">TESTING WITH A REAL SERVICE</text>
+  <rect x="95" y="306" width="443" height="122" rx="12" fill="#090c11" stroke="#2c3643"/>
+  <text x="121" y="357" class="node">AI-generated workflow</text>
+  <text x="121" y="393" class="small muted">Existing automation platform + connector</text>
+  <path d="M557 367h124" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="706" y="306" width="596" height="122" rx="12" fill="#171c24" stroke="#526272"/>
+  <text x="735" y="357" class="node">Real service</text>
+  <text x="735" y="393" class="small muted">A service instance to access, configure, and maintain.</text>
+  <rect x="64" y="492" width="1272" height="249" rx="20" fill="#0d1918" stroke="#6ba998"/>
+  <text x="94" y="529" class="label accent">OUR APPROACH</text>
+  <rect x="95" y="553" width="443" height="140" rx="12" fill="#090c11" stroke="#2c3643"/>
+  <text x="121" y="610" class="node">The same workflow</text>
+  <text x="121" y="648" class="small muted">Existing automation platform + connector</text>
+  <path d="M557 621h124" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="706" y="553" width="596" height="140" rx="12" fill="#10251f" stroke="#98f4db"/>
+  <text x="735" y="599" class="node accent">Generated test environment</text>
+  <text x="735" y="633" class="small muted">Simulated service responses and data changes.</text>
+  <text x="735" y="668" class="small accent">Built by our AI agent · Reset or discard after testing</text>
+  <text x="66" y="796" class="label accent">HOW THE ENVIRONMENT IS BUILT</text>
+  <text x="66" y="838" class="body">Connector code + documentation</text>
+  <path d="M428 831h79" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="838" class="body">Our AI agent</text>
+  <path d="M689 831h79" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="797" y="838" class="body accent">Disposable test environment</text>
+  <path d="M64 888h1272" stroke="#2c3643"/>
+  <text x="66" y="926" class="small muted">Research goals: less setup overhead, repeatable tests, and environments that can be recreated.</text>
 </svg>

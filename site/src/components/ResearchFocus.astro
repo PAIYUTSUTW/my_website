@@ -1,0 +1,33 @@
+---
+import Arrow from './Arrow.astro';
+import { path } from '../data/profile';
+---
+<aside class="research-focus" aria-label="My two current research questions">
+  <span class="eyebrow">TWO QUESTIONS DRIVE MY CURRENT WORK</span>
+  <a href={path('/projects/stateful-evaluation/')}>
+    <span class="focus-number">01 / TESTING</span>
+    <h2>Where can we try<br />an AI-generated workflow?</h2>
+    <p>Let an agent build a disposable test environment in place of the real service.</p>
+    <span class="focus-link">AI-built test environments <Arrow diagonal /></span>
+  </a>
+  <a href={path('/projects/soar-planning/')}>
+    <span class="focus-number">02 / PLANNING</span>
+    <h2>How can AI turn a goal<br />into a valid security workflow?</h2>
+    <p>Study how models use tool documentation and policies, with evaluation groundwork for reinforcement learning.</p>
+    <span class="focus-link">Security workflow planning <Arrow diagonal /></span>
+  </a>
+</aside>
+
+<style>
+  .research-focus{padding:28px 30px 12px;border:1px solid var(--line);border-radius:22px;background:radial-gradient(ellipse at 100% 0%,#90c8ff0c,transparent 60%),var(--surface-soft);align-self:center;min-width:0}
+  .eyebrow{font-size:9px;letter-spacing:.11em;color:var(--muted);margin-bottom:5px}
+  a{display:block;padding:24px 0}a+a{border-top:1px solid var(--line)}
+  .focus-number{font-family:monospace;font-size:10px;color:var(--accent);display:block;margin-bottom:13px}
+  h2{font-size:25px;line-height:1.25;font-weight:500;letter-spacing:-.04em}
+  p{font-size:13px;color:var(--muted);line-height:1.85;margin-top:14px;max-width:400px}
+  .focus-link{font-size:11px;color:var(--accent);display:flex;align-items:center;gap:12px;margin-top:17px}
+  .focus-link :global(svg){width:13px;height:13px}
+  a:hover h2{color:var(--accent)}
+  @media(max-width:1100px){.research-focus{padding:24px}h2{font-size:23px}}
+  @media(max-width:540px){.research-focus{padding:24px 22px 6px}.eyebrow{font-size:8px}h2{font-size:24px}p{font-size:13px}a{padding-block:23px}}
+</style>

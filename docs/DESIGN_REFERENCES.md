@@ -1,20 +1,33 @@
-# Design references
+# Design references and information architecture
 
-The October 2026 visual update follows Jerry's preference for dark surfaces, large typography, light, and flowing animation. The Pipeline1 explanation keeps both service paths visible: the same playbook and real connector can call an agent-generated, disposable software mock in place of a real service.
+The portfolio keeps Jerry's selected dark technology palette, large type, and
+restrained light accents. The October 7 refactor prioritizes a new reader's
+understanding of the research.
 
-Visual references:
+## Reader journey
 
-- [Void, Framer Marketplace](https://www.framer.com/marketplace/templates/void/): dark portfolio framing, strong typography, and small technical labels.
-- [Magic UI — Animated Beam](https://magicui.design/docs/components/animated-beam): light traveling along connections to explain relationships between systems.
+- Homepage: who Jerry is, his research field, and the two current research questions.
+- Environment project: why testing needs an environment → how an agent builds it →
+  which service dependency changes → intended value → contribution and research status.
+- Technical detail: a native expandable section defines the internal project name
+  and retains implementation details for readers who want them.
+
+Project titles describe the work directly. "AI-built test environments" is the
+public description of the environment-generation research. The comparison uses
+"generated test environment" and explains its purpose before displaying the flow.
+
+The rotating sphere, abstract research-loop labels, ornamental moving beams,
+before/after switches, playback controls, and simulated rebuild counter were
+removed. Their scripts and unused styles were also removed. The comparison keeps
+both paths visible and requires no interaction or JavaScript. The offline export
+includes the complete story, not just the figure.
+
+## Visual references
+
+- [Void, Framer Marketplace](https://www.framer.com/marketplace/templates/void/): dark portfolio framing and strong typography.
 - [Aceternity UI — Glowing Effect](https://ui.aceternity.com/components/glowing-effect): restrained light around card edges.
+- [Magic UI — Animated Beam](https://magicui.design/docs/components/animated-beam): a reference for the previous animated version; those beams were removed in this refactor.
 
-These are visual references, not installed templates. All layouts, animation code, and graphics in this update are implemented locally with Astro, CSS, SVG, and canvas. No template source, paid assets, React dependency, or remote animation service is included.
-
-## Interaction and fallback
-
-- The homepage research sphere and its orbit lights have a pause control.
-- Pipeline1 uses measured SVG paths to connect service nodes and the generation agent to the actual mock node, including on mobile.
-- Light effects can pause independently from the three-step explanatory sequence. The replacement sequence runs only when requested.
-- Animation pauses outside the viewport and when the document is hidden. Reduced-motion preferences retain the comparison and mock-rebuild controls without continuous animation.
-- Both service paths and the agent explanation remain readable without JavaScript.
-- The standalone HTML export embeds the built CSS, fonts, component script, and downloadable SVG for offline viewing.
+These were visual references, not installed templates. Layouts and graphics are
+original Astro, CSS, and SVG. No template source, paid assets, animation framework,
+or remote service is included.
