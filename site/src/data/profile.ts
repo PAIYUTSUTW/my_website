@@ -103,7 +103,7 @@ export const publications = [
     url: 'https://www.jove.com/t/71144/a-structured-workflow-for-transforming-cyber-threat-intelligence-into', preprint: '',
   },
   {
-    id: 'human-machine', year: '2026', venue: 'AIED 2026 · Late Breaking Results', type: 'Conference',
+    id: 'human-machine', year: '2026', venue: 'AIED 2026 · CCIS 3031', type: 'Conference',
     title: 'Why Machines Misread Pedagogical Quality: Human–Machine Alignment in LLM-Based Pretest Question Evaluation',
     authors: 'Pei-Yu Tseng, Mahir Akgun, Peng Liu',
     summary: 'How rubric design and evaluation mode affect alignment between human and LLM judgments.',
