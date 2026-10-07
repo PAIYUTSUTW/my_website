@@ -1,0 +1,7 @@
+---
+interface Props { variant: string; }
+const { variant } = Astro.props;
+---
+<div class:list={['project-art', `art-${variant}`]} aria-hidden="true">
+  {variant === 'state' ? <><div class="state-diagram"><div class="mini-node">ACTION<span>revoke access</span></div><div class="diagram-line"></div><div class="state-pair"><span>before<i>active</i></span><span>after<i>revoked</i></span></div></div><span class="art-caption">OBSERVE THE CHANGE</span></> : variant === 'workflow' ? <><div class="workflow-diagram"><div class="flow-dot"></div><div class="flow-line"></div><div class="flow-block">intent</div><div class="flow-line"></div><div class="flow-block flow-diamond"><span>check</span></div><div class="flow-line"></div><div class="flow-block">action</div></div><span class="art-caption">PRESERVE THE OBJECTIVE</span></> : variant === 'regex' ? <><div class="regex-code"><span class="code-comment">// from indicator to pattern</span><span><i>^</i>…<b>(?:</b>context<b>)</b><i>.*</i></span><span class="code-under">extract <em>→</em> generate <em>→</em> validate</span></div><span class="art-caption">GROUND THE DETECTION</span></> : <><div class="eval-diagram"><span>human</span><div class="eval-circle circle-a"></div><div class="eval-circle circle-b"></div><span>model</span></div><span class="art-caption">EXAMINE THE AGREEMENT</span></>}
+</div>

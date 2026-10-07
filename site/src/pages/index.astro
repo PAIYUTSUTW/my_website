@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import AgentField from '../components/AgentField.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/profile.png';
+import { profile, projects, publications, experience, path } from '../data/profile';
+---
+<Base>
+  <section class="hero container">
+    <div class="hero-copy">
+      <div class="hero-kicker"><span class="status-dot"></span> AI AGENTS × SECURITY OPERATIONS</div>
+      <h1>Building agents.<br />Making them<br /><em>reliable.</em><span class="heading-dot" aria-hidden="true">*</span></h1>
+      <p class="hero-intro">I’m <strong>Pei-Yu (Jerry) Tseng</strong>, a Ph.D. candidate at Penn State. I build and evaluate LLM agents that connect security knowledge with real-world action.</p>
+      <div class="hero-actions"><a class="button primary" href={path('/portfolio/')}>Explore my research<Arrow /></a><a class="text-link" href={path('/cv/')}>View CV<Arrow diagonal /></a></div>
+      <div class="hero-affiliation"><span class="affiliation-icon">⌘</span><div>Penn State University<span>Informatics · Advised by Prof. Peng Liu</span></div></div>
+    </div>
+    <AgentField />
+  </section>
+  <div class="research-strip"><div class="container"><span>THE QUESTIONS THAT DRIVE MY WORK</span><p>How do agents act? <i>↗</i> What actually changes? <i>↗</i> How do we know?</p></div></div>
+  <section class="section container" id="research">
+    <div class="section-header"><div><span class="eyebrow">01 / SELECTED WORK</span><h2>From a good idea<br />to a <em>testable system.</em></h2></div><a class="text-link" href={path('/portfolio/')}>All research<Arrow /></a></div>
+    <div class="project-grid">{projects.slice(0, 4).map(project => <ProjectCard project={project} />)}</div>
+  </section>
+  <section class="about-band" id="about"><div class="container about-grid"><div class="portrait-wrap"><Image src={portrait} alt="Pei-Yu Tseng" width={420} height={500} fit="cover" format="webp" loading="lazy" /><div class="portrait-caption"><span>PEI-YU / JERRY</span><span>RESEARCHER & BUILDER</span></div></div><div class="about-copy"><span class="eyebrow">02 / A LITTLE CONTEXT</span><h2>Security is the domain.<br /><em>Reliability is the question.</em></h2><p>{profile.about}</p><p>Before Penn State, I worked at Academia Sinica on threat intelligence, graph-based detection, and attack behavior. That experience shapes my focus on systems that can be grounded in evidence, tested, and improved.</p><div class="about-links"><a class="text-link" href={path('/cv/')}>My background<Arrow /></a><a class="text-link" href={profile.links[2].url} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a></div></div></div></section>
+  <section class="section container">
+    <div class="section-header"><div><span class="eyebrow">03 / SELECTED PUBLICATIONS</span><h2>Ideas, <em>in the open.</em></h2></div><a class="text-link" href={path('/publications/')}>All publications<Arrow /></a></div>
+    <PublicationList items={publications.slice(0, 3)} />
+  </section>
+  <section class="section experience-section container"><div class="section-header"><div><span class="eyebrow">04 / EXPERIENCE</span><h2>Research meets <em>practice.</em></h2></div><a class="text-link" href={path('/cv/')}>Full CV<Arrow /></a></div><div class="experience-list">{experience.slice(0, 2).map(item => <div class="experience-row"><span class="experience-date">{item.date}</span><div><h3>{item.institution}</h3><p>{item.role}</p></div><span class="experience-location">{item.location}</span></div>)}</div></section>
+</Base>

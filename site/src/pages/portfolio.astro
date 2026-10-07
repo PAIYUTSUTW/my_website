@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/profile';
+---
+<Base title="Research">
+  <section class="page-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>Knowledge. Action.<br /><em>Evidence.</em></h1><p>Building AI agents for security operations—and studying what it takes to make their behavior useful, inspectable, and reliable.</p></section>
+  <section class="container research-content" aria-label="Research projects">
+    <div class="filter-bar" role="group" aria-label="Filter research by topic">{['All work', 'Agents & evaluation', 'Security & intelligence'].map((label, i) => <button type="button" class:list={['filter-button', { active: i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-filter={label}>{label}</button>)}<span class="filter-count" aria-live="polite">6 projects</span></div>
+    <div class="project-grid">{projects.map(project => <ProjectCard project={project} />)}</div>
+  </section>
+  <script>
+    document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => button.addEventListener('click', () => {
+      const selected = button.dataset.filter;
+      let count = 0;
+      document.querySelectorAll<HTMLElement>('[data-category]').forEach(card => { card.hidden = selected !== 'All work' && card.dataset.category !== selected; if (!card.hidden) count++; });
+      document.querySelectorAll('[data-filter]').forEach(el => { el.classList.toggle('active', el === button); el.setAttribute('aria-pressed', String(el === button)); });
+      const output = document.querySelector('.filter-count'); if (output) output.textContent = `${count} projects`;
+    }));
+  </script>
+</Base>

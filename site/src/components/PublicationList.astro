@@ -1,0 +1,9 @@
+---
+import Arrow from './Arrow.astro';
+import { publications } from '../data/profile';
+interface Props { items?: typeof publications; detailed?: boolean; }
+const { items = publications, detailed = false } = Astro.props;
+---
+<div class="publication-list">
+  {items.map(p => <article class="publication" id={p.id}><div class="publication-year">{p.year}</div><div class="publication-body"><div class="publication-meta"><span>{p.venue}</span><span class:list={['publication-type', { preprint: p.type === 'Preprint' }]}>{p.type}</span></div><h3><a href={p.url} target="_blank" rel="noreferrer">{p.title}<Arrow diagonal /></a></h3><p class="authors">{p.authors.split(/(Pei-Yu Tseng|PeiYu Tseng)/).map(part => part.includes('Tseng') ? <strong>{part}</strong> : part)}</p>{detailed && <p class="publication-summary">{p.summary}</p>}{detailed && p.preprint && <a class="text-link small" href={p.preprint} target="_blank" rel="noreferrer">{p.preprint.includes('arxiv') ? 'Read preprint' : 'Read at NIST'}<Arrow diagonal /></a>}</div></article>)}
+</div>

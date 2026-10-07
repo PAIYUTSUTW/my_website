@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://paiyutsutw.github.io/my_website/sitemap.xml

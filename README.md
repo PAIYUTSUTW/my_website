@@ -1,31 +1,71 @@
-A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
+# Pei-Yu (Jerry) Tseng — Research Portfolio
 
-I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
+An Astro portfolio for research in LLM agents, security automation, and agent
+behavior evaluation. The modern site lives in **`site/`** and targets
+<https://paiyutsutw.github.io/my_website/>.
 
-### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
+## Develop and preview
 
-# Instructions
+Use Node.js 24 (minimum 22.12):
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+```bash
+cd site
+npm ci
+npm run dev
+```
 
-See more info at https://academicpages.github.io/
+Open <http://localhost:4321/my_website/>. To preview production output:
 
-## To run locally (not on GitHub Pages, to serve on your own computer)
+```bash
+npm run check
+npm run build
+npm run preview
+```
 
-1. Clone the repository and made updates as detailed above
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle clean` to clean up the directory (no need to run `--force`)
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+## Edit content
 
-# Changelog -- bugfixes and enhancements
+- `site/src/data/profile.ts`: biography, experience, education, research projects,
+  publication metadata, and profile links.
+- `site/src/pages/`: homepage, research index, publication list, printable CV,
+  and generated project pages.
+- `site/src/styles/global.css`: colors, typography, responsive and print styles.
+- `site/src/components/AgentField.astro`: conceptual research-loop visualization.
+- `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
+- `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding
+  publication metadata to confirm.
 
-There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
+Publication venues and statuses are explicit. Ongoing projects are described as
+research rather than production deployments. The CV page has a **Print / Save
+PDF** button and shares its content with the rest of the site.
 
-To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+## Validate
+
+```bash
+cd site
+npx playwright install --with-deps chromium
+npm run check
+npm run build
+npm test
+```
+
+Browser checks exercise desktop/mobile layouts, asset loading, research filters,
+theme persistence, the conceptual visualization, navigation, legacy redirects,
+and reading without JavaScript. Motion is disabled for reduced-motion users;
+fonts are hosted locally, and there are no tracking scripts or third-party APIs.
+
+## Publish on GitHub Pages
+
+1. Set repository **Settings → Pages → Source** to **GitHub Actions**.
+2. Merge the reviewed website branch into `master`.
+3. The `Build and publish portfolio` workflow checks and builds the website,
+   runs the browser checks, and deploys `site/dist/` to GitHub Pages.
+
+Pull requests run checks and do **not** deploy. No hosting subscription is needed
+for this public repository. `site/astro.config.mjs` preserves the `/my_website`
+base path and maps the old primary publication and portfolio URLs to their new
+locations. If changing the domain or base path, update the Astro configuration,
+`src/data/profile.ts`, the sitemap, robots.txt, and the legacy `about.html` redirect.
+
+The old Jekyll source remains in the repository for historical reference and
+rollback, but is not included in the Astro build. The original template README
+is preserved at [docs/LEGACY_JEKYLL_README.md](docs/LEGACY_JEKYLL_README.md).

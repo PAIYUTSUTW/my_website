@@ -1,0 +1,70 @@
+---
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/space-grotesk';
+import '../styles/global.css';
+import { profile, path } from '../data/profile';
+import Arrow from '../components/Arrow.astro';
+interface Props { title?: string; description?: string; }
+const { title, description = profile.description } = Astro.props;
+const pageTitle = title ? `${title} — Pei-Yu Tseng` : 'Pei-Yu (Jerry) Tseng — AI Agents & Security Research';
+const nav = [{ title: 'About', href: '/' }, { title: 'Research', href: '/portfolio/' }, { title: 'Publications', href: '/publications/' }, { title: 'CV', href: '/cv/' }];
+const current = Astro.url.pathname.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#111410" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={path('/favicon.svg')} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(path('/social-card.png'), Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      try { const theme = localStorage.getItem('portfolio-theme'); if (theme === 'light') document.documentElement.dataset.theme = 'light'; } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="wordmark" href={path('/')} aria-label="Pei-Yu Tseng home"><span class="mark">p<span>t</span><i></i></span><span>PEI-YU TSENG<span class="wordmark-sub">RESEARCH & ENGINEERING</span></span></a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {nav.map(item => <a href={path(item.href)} aria-current={current === path(item.href).replace(/\/$/, '') ? 'page' : undefined}>{item.title}</a>)}
+        </nav>
+        <div class="header-actions">
+          <button class="theme-toggle icon-button" type="button" aria-label="Switch to light theme" title="Change color theme"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5" stroke="currentColor" stroke-width="1.5"/></svg></button>
+          <a class="contact-nav" href={`mailto:${profile.email}`}>Let’s connect <Arrow diagonal /></a>
+          <button class="menu-toggle icon-button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.5"/></svg></button>
+        </div>
+      </div>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>{nav.map(item => <a href={path(item.href)}>{item.title}<Arrow /></a>)}</nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="site-footer container">
+      <div class="footer-top"><div><span class="eyebrow">LET’S COMPARE NOTES</span><a class="footer-heading" href={`mailto:${profile.email}`}>Good questions.<br />Better systems. <Arrow diagonal /></a></div><div class="footer-links">{profile.links.map(link => <a href={link.url} target="_blank" rel="noreferrer">{link.label}<Arrow diagonal /></a>)}</div></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} Pei-Yu Tseng</span><span>State College, PA <span class="tiny-dot"></span> Taiwan roots</span><a href={`mailto:${profile.email}`}>{profile.email}</a></div>
+    </footer>
+    <script>
+      const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
+      function syncTheme() { themeButton?.setAttribute('aria-label', `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} theme`); }
+      syncTheme();
+      themeButton?.addEventListener('click', () => { const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = next; try { localStorage.setItem('portfolio-theme', next); } catch {} syncTheme(); });
+      const menu = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const mobileNav = document.querySelector<HTMLElement>('#mobile-nav');
+      function closeMenu() { if (mobileNav && menu) { mobileNav.hidden = true; menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Open navigation'); } }
+      menu?.addEventListener('click', () => { if (mobileNav) { const open = menu.getAttribute('aria-expanded') !== 'true'; mobileNav.hidden = !open; menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); } });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu?.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); } });
+      mobileNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      window.matchMedia('(min-width: 801px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
+      document.querySelector<HTMLButtonElement>('.print-cv')?.addEventListener('click', () => window.print());
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PublicationList from '../components/PublicationList.astro';
+import { profile, experience, education, skills } from '../data/profile';
+---
+<Base title="CV">
+  <section class="page-heading container cv-heading"><div><span class="eyebrow">CURRICULUM VITAE</span><h1>Pei-Yu <em>Tseng.</em></h1><p>Ph.D. candidate in Informatics<br />The Pennsylvania State University · State College, PA</p></div><button class="button primary print-cv" type="button">Print / Save PDF <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5" stroke="currentColor" stroke-width="1.6"/></svg></button><div class="print-contact">{profile.email} · paiyutsutw.github.io/my_website</div></section>
+  <div class="container cv-content">
+    <section class="cv-section"><h2>Research interests</h2><div><p class="cv-summary">{profile.about}</p><p>LLM agents · Security automation · Agent evaluation · Threat intelligence · Human–machine alignment</p></div></section>
+    <section class="cv-section"><h2>Experience</h2><div>{experience.map(item => <article class="cv-entry"><div class="cv-entry-top"><h3>{item.institution}</h3><span>{item.date}</span></div><p class="cv-role">{item.role} · {item.location}</p><p>{item.description}</p></article>)}</div></section>
+    <section class="cv-section"><h2>Education</h2><div>{education.map(item => <article class="cv-entry"><div class="cv-entry-top"><h3>{item.school}</h3><span>{item.date}</span></div><p>{item.degree}</p></article>)}</div></section>
+    <section class="cv-section"><h2>Technical focus</h2><div>{skills.map(group => <div class="skill-group"><h3>{group.category}</h3><p>{group.items}</p></div>)}</div></section>
+    <section class="cv-section cv-publications"><h2>Selected publications</h2><PublicationList /></section>
+  </div>
+</Base>
