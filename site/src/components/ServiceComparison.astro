@@ -1,46 +1,198 @@
-<figure class="service-comparison" aria-labelledby="comparison-title">
-  <figcaption id="comparison-title">The workflow stays. The service it calls changes.</figcaption>
+---
+import ResearchIcon from './ResearchIcon.astro';
+---
+<figure class="service-comparison" id="service-visual" aria-labelledby="comparison-title" data-stage="test" data-playing="false">
+  <figcaption class="comparison-heading"><div><span class="visual-eyebrow">THE IDEA, VISUALLY</span><span class="comparison-title" id="comparison-title">Same workflow.<br /><em>A different place to test.</em></span></div><span class="illustration-label">Concept illustration</span></figcaption>
   <p class="comparison-context">Both paths use the existing security automation platform and service connector.</p>
-  <div class="comparison-path original-path" role="group" aria-label="Testing with a real service">
-    <span class="path-label">TESTING WITH A REAL SERVICE</span>
-    <div class="path-flow">
-      <div class="workflow-node"><span class="node-icon" aria-hidden="true">≡</span><strong>AI-generated workflow</strong></div>
-      <span class="path-arrow" aria-hidden="true">→</span>
-      <div class="destination-node"><span class="node-caption">CALLS</span><strong>Real service</strong><p>A service instance to access, configure, and maintain.</p></div>
+
+  <div class="service-scene">
+    <svg class="scene-wires" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="wire-service-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--service-color)" stroke-width="1.4"/></marker>
+        <marker id="wire-test-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--accent)" stroke-width="1.4"/></marker>
+        <marker id="wire-build-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--builder-color)" stroke-width="1.4"/></marker>
+      </defs>
+      <g data-wire-paths></g>
+    </svg>
+    <div class="workflow-node scene-node">
+      <ResearchIcon kind="workflow" />
+      <strong>AI-generated<br />security workflow</strong>
+      <p>Runs through the existing platform and connector.</p>
+      <span class="fixed-label">This part stays the same</span>
     </div>
-  </div>
-  <div class="comparison-path generated-path" role="group" aria-label="Testing with a generated environment">
-    <span class="path-label">OUR APPROACH</span>
-    <div class="path-flow">
-      <div class="workflow-node"><span class="node-icon" aria-hidden="true">≡</span><strong>The same workflow</strong></div>
-      <span class="path-arrow" aria-hidden="true">→</span>
-      <div class="destination-node"><span class="node-caption">CALLS</span><strong>Generated test environment</strong><p>Simulated service responses and data changes.</p><span class="built-by">Built by our AI agent</span></div>
+    <span class="fallback-arrow service-arrow" aria-hidden="true">↗</span>
+    <div class="original-path scene-node" role="group" aria-label="Testing with a real service">
+      <span class="node-label">ORIGINAL DESTINATION</span><ResearchIcon kind="service" />
+      <strong>Real service</strong><p>Access, configure, maintain.</p>
     </div>
+    <span class="fallback-arrow test-arrow" aria-hidden="true">↘</span>
+    <div class="generated-path scene-node" role="group" aria-label="Testing with a generated environment">
+      <span class="node-label">FOR TESTING</span><ResearchIcon kind="environment" />
+      <strong>Generated test environment</strong><p>Simulates service responses<br />and data changes.</p>
+      <span class="built-by">Built by our AI agent · Reset or discard</span>
+    </div>
+    <div class="source-node scene-node"><ResearchIcon kind="documents" /><strong>Connector code<br />& documentation</strong></div>
+    <div class="builder-node scene-node"><ResearchIcon kind="agent" /><strong>Our AI agent</strong><p>Reads the interface.<br />Builds the environment.</p></div>
+    <div class="generation-label" aria-hidden="true"><span>↑</span> Agent builds this environment</div>
   </div>
-  <p class="comparison-note">The generated environment stands in for the external service. The workflow and its existing connector stay in place.</p>
+
+  <div class="explanation-controls" hidden>
+    <ol class="explanation-steps" aria-label="Explanation sequence"><li data-step="service">1. Real service</li><li data-step="build">2. Agent builds</li><li data-step="test">3. Test here</li></ol>
+    <div class="explanation-bottom"><p class="explanation-caption" data-narration aria-live="polite" aria-atomic="true">Our agent builds a test environment. The same workflow can call it in place of the real service.</p><button type="button" data-explain>▶ Play explanation</button></div>
+  </div>
+  <p class="comparison-note">The agent generates the service environment. Your workflow and its existing connector stay in place.</p>
 </figure>
 
+<script>
+  const figure = document.querySelector<HTMLElement>('.service-comparison');
+  if (figure) {
+    const scene = figure.querySelector<HTMLElement>('.service-scene')!;
+    const wires = figure.querySelector<SVGSVGElement>('.scene-wires')!;
+    const paths = figure.querySelector('[data-wire-paths]')!;
+    const button = figure.querySelector<HTMLButtonElement>('[data-explain]')!;
+    const narration = figure.querySelector<HTMLElement>('[data-narration]')!;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const steps = [
+      { id: 'service', text: '1 / The workflow normally calls a real service. Testing needs access to that service or a separate deployment to maintain.' },
+      { id: 'build', text: '2 / Our agent reads connector code and documentation, then generates an environment that simulates the service’s responses and data changes.' },
+      { id: 'test', text: '3 / Point the same workflow at the generated environment for testing. Reset or discard the environment when the test is finished.' },
+    ];
+    let stage = 2, playing = false, started = false, finished = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const render = () => {
+      figure.dataset.stage = steps[stage].id;
+      figure.dataset.playing = String(playing);
+      figure.querySelectorAll('[data-step]').forEach(item => {
+        if (started && item.getAttribute('data-step') === steps[stage].id) item.setAttribute('aria-current', 'step');
+        else item.removeAttribute('aria-current');
+      });
+      button.textContent = playing ? 'Ⅱ Pause explanation' : !started ? '▶ Play explanation' : finished ? '↻ Replay explanation' : '▶ Continue explanation';
+      if (started) narration.textContent = steps[stage].text;
+    };
+    const pause = () => { clearTimeout(timer); playing = false; render(); narration.setAttribute('aria-live', 'polite'); };
+    const schedule = () => {
+      timer = setTimeout(() => {
+        if (stage === 2) { finished = true; pause(); return; }
+        stage++; render(); schedule();
+      }, 4000);
+    };
+    button.addEventListener('click', () => {
+      if (playing) { pause(); return; }
+      if (finished) { stage = 0; finished = false; }
+      started = true;
+      if (motion.matches) return;
+      playing = true; narration.setAttribute('aria-live', 'off'); render(); schedule();
+    });
+    // Connections follow the actual cards, including the mobile layout.
+    const draw = () => {
+      const bounds = scene.getBoundingClientRect();
+      const mobile = matchMedia('(max-width: 640px)').matches;
+      wires.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+      paths.replaceChildren();
+      const box = (selector: string) => {
+        const rect = scene.querySelector(selector)!.getBoundingClientRect();
+        return { l: rect.left - bounds.left, r: rect.right - bounds.left, t: rect.top - bounds.top, b: rect.bottom - bounds.top, x: rect.left - bounds.left + rect.width / 2, y: rect.top - bounds.top + rect.height / 2 };
+      };
+      const add = (d: string, kind: string) => {
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('class', `wire wire-${kind}`);
+        for (const name of ['wire-track', 'wire-packet']) {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', d); path.setAttribute('class', name); path.setAttribute('pathLength', '100');
+          if (name === 'wire-track') path.setAttribute('marker-end', `url(#wire-${kind}-arrow)`);
+          group.append(path);
+        }
+        paths.append(group);
+      };
+      const workflow = box('.workflow-node'), service = box('.original-path'), environment = box('.generated-path'), source = box('.source-node'), agent = box('.builder-node');
+      for (const [kind, target] of [['service', service], ['test', environment]] as const) {
+        add(mobile ? `M${workflow.x} ${workflow.b}C${workflow.x} ${workflow.b+25} ${target.x} ${target.t-25} ${target.x} ${target.t-3}` : `M${workflow.r} ${workflow.y}C${workflow.r+65} ${workflow.y} ${target.l-65} ${target.y} ${target.l-3} ${target.y}`, kind);
+      }
+      add(`M${source.r} ${source.y}C${source.r+20} ${source.y} ${agent.l-20} ${agent.y} ${agent.l-3} ${agent.y}`, 'build');
+      add(mobile ? `M${agent.x} ${agent.t}L${environment.x} ${environment.b+3}` : `M${agent.r} ${agent.y}C${environment.x} ${agent.y} ${environment.x} ${agent.y} ${environment.x} ${environment.b+3}`, 'build');
+      figure.dataset.wires = 'ready';
+    };
+    new ResizeObserver(draw).observe(scene);
+    document.fonts.ready.then(draw);
+    const syncMotion = () => {
+      pause();
+      if (motion.matches) { stage = 2; finished = true; render(); }
+      button.hidden = motion.matches;
+    };
+    motion.addEventListener('change', syncMotion);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+    new IntersectionObserver(entries => { if (!entries[0].isIntersecting && playing) pause(); }).observe(figure);
+    figure.querySelector<HTMLElement>('.explanation-controls')!.hidden = false;
+    syncMotion();
+  }
+</script>
+
 <style>
-  .service-comparison{margin:32px 0 0;border:1px solid var(--line);border-radius:22px;background:radial-gradient(ellipse at 100% 80%,#98f4db0b,transparent 60%),var(--surface-soft);padding:30px}
-  figcaption{font-family:'Space Grotesk Variable',sans-serif;font-size:23px;letter-spacing:-.03em;font-weight:600;line-height:1.3}
-  .comparison-context,.comparison-note{font-size:13px;line-height:1.8;color:var(--muted)}
-  .comparison-context{margin:10px 0 26px;max-width:650px}
-  .comparison-path{padding:22px 24px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
-  .comparison-path+.comparison-path{margin-top:18px}
-  .path-label{font:10px 'DM Sans Variable',sans-serif;font-weight:650;letter-spacing:.12em;color:var(--muted);display:block;margin-bottom:17px}
-  .path-flow{display:grid;grid-template-columns:1fr 60px 1.3fr;align-items:center;gap:15px}
-  .workflow-node{display:flex;align-items:center;gap:15px}.workflow-node strong{font-size:17px;line-height:1.5;font-weight:500}
-  .node-icon{display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;width:42px;height:46px;font-size:26px;color:var(--muted);flex-shrink:0}
-  .path-arrow{font-size:29px;line-height:1;color:var(--muted);text-align:center}
-  .destination-node{padding:20px 23px;border:1px solid var(--line);border-radius:11px;background:var(--surface-soft)}
-  .node-caption{display:block;font-size:9px;letter-spacing:.13em;color:var(--muted);margin-bottom:7px}
-  .destination-node strong{font-family:'Space Grotesk Variable',sans-serif;font-size:24px;font-weight:500;letter-spacing:-.035em;line-height:1.2;display:block}
-  .destination-node p{color:var(--muted);font-size:12px;margin-top:9px;line-height:1.7}
-  .generated-path{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
-  .generated-path .destination-node{background:color-mix(in srgb,var(--accent) 6%,var(--bg));border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 0 30px #98f4db07}
-  .generated-path .path-label,.generated-path .path-arrow,.generated-path .destination-node strong{color:var(--accent)}
-  .built-by{display:inline-block;font-size:10px;color:var(--accent);border-top:1px solid color-mix(in srgb,var(--accent) 25%,transparent);margin-top:13px;padding-top:10px;width:100%}
-  .comparison-note{margin-top:20px;max-width:760px}
-  @media(max-width:740px){.service-comparison{padding:23px 20px}figcaption{font-size:22px}.comparison-context,.comparison-note{font-size:12px}.comparison-path{padding:18px}.path-flow{grid-template-columns:1fr;gap:12px}.workflow-node strong{font-size:16px}.node-icon{width:33px;height:36px}.path-arrow{transform:rotate(90deg);justify-self:center}.destination-node{padding:20px}.destination-node strong{font-size:23px}.path-label{font-size:9px}.comparison-context{margin-bottom:22px}}
-  @media print{.service-comparison{box-shadow:none;background:none;break-inside:avoid}}
+  .service-comparison{--service-color:#d7b698;--builder-color:#b7c5fa;margin:30px 0 0;padding:30px;border:1px solid var(--line);border-radius:22px;background:radial-gradient(ellipse at 90% 55%,#98f4db09,transparent 65%),var(--surface-soft);scroll-margin-top:110px}
+  :global([data-theme=light]) .service-comparison{--service-color:#80512e;--builder-color:#505f9e}
+  .comparison-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .visual-eyebrow{font-size:9px;letter-spacing:.13em;color:var(--muted);display:block;margin-bottom:13px}
+  .comparison-title{display:block;font-family:'Space Grotesk Variable',sans-serif;font-size:32px;font-weight:550;line-height:1.13;letter-spacing:-.035em}.comparison-title em{color:var(--accent);font-style:normal}
+  .illustration-label{font-size:10px;color:var(--muted);border:1px solid var(--line);padding:5px 9px;border-radius:20px;white-space:nowrap}
+  .comparison-context,.comparison-note{color:var(--muted);font-size:13px;line-height:1.8}.comparison-context{margin:16px 0 28px;max-width:650px}
+  .service-scene{display:grid;grid-template-columns:minmax(0,1fr) 165px minmax(0,1.2fr);grid-template-rows:auto auto auto;gap:25px 30px;align-items:center;position:relative;isolation:isolate;padding:15px 0 22px}
+  .scene-node{position:relative;z-index:2;background:var(--bg);border:1px solid var(--line);border-radius:16px;min-width:0;text-align:center;padding:22px 15px;transition:border-color .35s,box-shadow .35s}
+  .scene-node :global(.research-icon){width:46px;height:46px;margin:0 auto 13px;color:var(--muted)}
+  .scene-node strong{font-family:'Space Grotesk Variable',sans-serif;display:block;font-size:21px;line-height:1.25;font-weight:500;letter-spacing:-.03em}
+  .scene-node p{font-size:12px;line-height:1.7;color:var(--muted);margin-top:11px}
+  .workflow-node{grid-column:1;grid-row:1/3;padding:28px 18px}.workflow-node :global(.research-icon){width:59px;height:59px;color:var(--text);margin-bottom:20px}
+  .fixed-label{display:block;font-size:10px;color:var(--muted);padding-top:15px;margin-top:16px;border-top:1px solid var(--line)}
+  .node-label{font-size:9px;letter-spacing:.09em;color:var(--muted);display:block;margin-bottom:14px}
+  .original-path{grid-column:3;grid-row:1}.original-path :global(.research-icon){color:var(--service-color)}
+  .generated-path{grid-column:3;grid-row:2;border-color:color-mix(in srgb,var(--accent) 35%,var(--line));background:color-mix(in srgb,var(--accent) 4%,var(--bg))}
+  .generated-path :global(.research-icon),.generated-path strong{color:var(--accent)}
+  .built-by{display:block;font-size:9px;color:var(--accent);margin-top:16px;line-height:1.6}
+  .source-node{grid-column:1;grid-row:3;display:flex;gap:13px;align-items:center;padding:17px;background:var(--surface-soft);border-style:dashed;text-align:left}
+  .source-node :global(.research-icon){width:34px;height:40px;margin:0;flex-shrink:0;color:var(--builder-color)}.source-node strong{font-size:14px;line-height:1.45}
+  .builder-node{grid-column:2;grid-row:3;padding:17px 12px;border-color:color-mix(in srgb,var(--builder-color) 40%,var(--line))}.builder-node :global(.research-icon){color:var(--builder-color);width:40px;height:40px;margin-bottom:9px}.builder-node strong{font-size:17px}.builder-node p{font-size:10px;margin-top:7px}
+  .generation-label{grid-column:3;grid-row:3;color:var(--builder-color);font-size:11px;line-height:1.8;justify-self:center;padding:4px 9px;background:var(--surface-soft);z-index:2;position:relative;align-self:end;margin-bottom:5px}
+  .generation-label>span{display:inline-block;font-size:18px;margin-right:8px}
+  .fallback-arrow{grid-column:2;text-align:center;font-size:32px;color:var(--muted)}.service-arrow{grid-row:1;color:var(--service-color)}.test-arrow{grid-row:2;color:var(--accent)}
+  [data-wires=ready] .fallback-arrow{visibility:hidden}
+  .service-comparison:not([data-wires=ready]) .source-node:after{content:'→';position:absolute;right:-23px;top:50%;color:var(--builder-color);font-size:20px}
+  .scene-wires{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+  .scene-wires :global(.wire){fill:none;stroke:var(--accent);stroke-linecap:round}.scene-wires :global(.wire-service){stroke:var(--service-color)}.scene-wires :global(.wire-build){stroke:var(--builder-color)}
+  .scene-wires :global(.wire-track){stroke-width:1.3;opacity:.35}.scene-wires :global(.wire-service .wire-track){stroke-dasharray:4 5}
+  .scene-wires :global(.wire-packet){stroke-width:2.6;stroke-dasharray:9 91;stroke-dashoffset:100;opacity:0;filter:drop-shadow(0 0 4px currentColor)}
+  [data-stage=service] .scene-wires :global(.wire-service .wire-track),[data-stage=build] .scene-wires :global(.wire-build .wire-track),[data-stage=test] .scene-wires :global(.wire-test .wire-track){opacity:1;stroke-dasharray:none}
+  [data-stage=service] .original-path{border-color:var(--service-color)}[data-stage=build] .builder-node{border-color:var(--builder-color);box-shadow:0 0 25px #b7c5fa18}[data-stage=test] .generated-path{border-color:var(--accent);box-shadow:0 0 30px #98f4db0c}
+  [data-playing=true][data-stage=service] .scene-wires :global(.wire-service .wire-packet),[data-playing=true][data-stage=build] .scene-wires :global(.wire-build .wire-packet),[data-playing=true][data-stage=test] .scene-wires :global(.wire-test .wire-packet){opacity:1;animation:explanation-packet 1.8s linear infinite}
+  [data-playing=true][data-stage=build] .generated-path :global(.icon-environment){animation:environment-form 2s ease-in-out 2}
+  @keyframes explanation-packet{to{stroke-dashoffset:0}}@keyframes environment-form{0%,100%{opacity:1;transform:scale(1)}45%{opacity:.3;transform:scale(.9)}}
+  .explanation-controls{border-top:1px solid var(--line);padding-top:20px;margin-top:8px}
+  .explanation-steps{list-style:none;margin:0 0 16px;padding:0;display:flex;gap:25px;font-size:11px;color:var(--muted)}.explanation-steps li{padding-bottom:5px;border-bottom:2px solid transparent}.explanation-steps [aria-current=step]{color:var(--accent);border-color:var(--accent)}
+  .explanation-bottom{display:flex;align-items:center;gap:25px;justify-content:space-between}.explanation-caption{font-size:13px;line-height:1.8;max-width:690px;min-height:48px;color:var(--text)}
+  [data-explain]{font-size:11px;padding:11px 16px;background:var(--accent);border:1px solid var(--accent);border-radius:24px;color:var(--ink);white-space:nowrap;min-width:157px}
+  .comparison-note{font-size:10px;border-top:1px solid var(--line);padding-top:16px;margin-top:18px}
+  @media(min-width:641px){
+    .service-scene{gap:20px 30px;padding-block:5px 12px}
+    .original-path,.generated-path{display:grid;grid-template-columns:50px 1fr;text-align:left;column-gap:19px;padding:17px 22px}
+    .original-path .node-label,.generated-path .node-label{grid-column:1/-1;margin-bottom:10px}
+    .original-path :global(.research-icon),.generated-path :global(.research-icon){grid-column:1;grid-row:2/5;width:44px;height:44px;margin:auto}
+    .original-path strong,.generated-path strong,.original-path p,.generated-path p,.built-by{grid-column:2}
+    .original-path strong,.generated-path strong{font-size:21px}.original-path p,.generated-path p{margin-top:6px;font-size:11px}.built-by{margin-top:9px}
+    .builder-node{padding-block:12px}.builder-node :global(.research-icon){width:33px;height:33px;margin-bottom:7px}.builder-node p{margin-top:5px}
+  }
+  @media(max-width:1000px){.service-scene{grid-template-columns:minmax(0,1fr) 135px minmax(0,1.15fr);column-gap:18px}.scene-node strong{font-size:18px}.builder-node strong{font-size:16px}.source-node{display:block;text-align:center}.source-node :global(.research-icon){margin:0 auto 9px}.source-node strong{font-size:13px}.scene-node p{font-size:11px}.generation-label{font-size:10px}}
+  @media(max-width:640px){
+    .service-comparison{padding:23px 18px;border-radius:17px}.comparison-heading{display:block}.illustration-label{display:inline-block;margin-top:14px;font-size:9px}.comparison-title{font-size:28px}.comparison-context{font-size:12px;margin-bottom:20px}.service-scene{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:46px 18px;padding-block:8px 18px}.scene-node{padding:19px 10px;border-radius:12px}.workflow-node{grid-column:1/-1;grid-row:1;width:100%;max-width:260px;justify-self:center}.workflow-node :global(.research-icon){width:44px;height:44px;margin-bottom:12px}.workflow-node strong{font-size:21px}.workflow-node p{font-size:12px}.fixed-label{padding-top:10px;margin-top:12px}.original-path{grid-column:1;grid-row:2;align-self:stretch}.generated-path{grid-column:2;grid-row:2;align-self:stretch}.node-label{font-size:8px;line-height:1.6;min-height:25px}.scene-node strong{font-size:17px}.workflow-node strong{font-size:21px}.scene-node p{font-size:11px;line-height:1.65}.scene-node :global(.research-icon){width:39px;height:39px}.built-by{font-size:9px;margin-top:10px}.source-node{grid-column:1;grid-row:3}.builder-node{grid-column:2;grid-row:3}.source-node strong{font-size:12px}.builder-node strong{font-size:15px}.builder-node p{font-size:10px}.generation-label{display:none}.fallback-arrow{position:absolute;top:236px;grid-row:2;font-size:20px}.service-arrow{grid-column:1;left:50%;transform:rotate(90deg)}.test-arrow{grid-column:2;right:50%}.explanation-steps{gap:0;justify-content:space-between;font-size:9px}.explanation-bottom{flex-direction:column;gap:15px;align-items:flex-start}.explanation-caption{font-size:12px;min-height:88px}[data-explain]{font-size:11px}.comparison-note{font-size:10px}.scene-wires :global(.wire-track){stroke-width:1.2}
+  }
+  @media(prefers-reduced-motion:reduce){.scene-wires :global(.wire-packet){display:none}}
+  @media(max-width:640px){
+    .comparison-heading{position:relative}.illustration-label{position:absolute;right:0;top:0;margin:0;padding:0;border:0;font-size:8px}
+    .comparison-title{font-size:26px}.comparison-context{margin:13px 0 18px}.service-scene{row-gap:30px;padding-bottom:14px}
+    .workflow-node{display:grid;grid-template-columns:38px 1fr;column-gap:12px;text-align:left;padding:17px 16px;max-width:280px}
+    .workflow-node :global(.research-icon){grid-column:1;grid-row:1;margin:0;width:36px;height:36px}.workflow-node strong{grid-column:2;font-size:18px}.workflow-node p{display:none}.fixed-label{grid-column:1/-1;text-align:center;font-size:9px;margin-top:13px;padding-top:9px}
+    .scene-node{padding-block:15px}.node-label{margin-bottom:8px;min-height:24px;font-size:7px}.original-path :global(.research-icon),.generated-path :global(.research-icon){width:30px;height:30px;margin-bottom:10px}.scene-node p{margin-top:8px;font-size:10px}.built-by{font-size:8px}.source-node :global(.research-icon),.builder-node :global(.research-icon){width:29px;height:29px;margin-bottom:8px}.builder-node p{font-size:9px}.source-node strong{font-size:11px}.builder-node strong{font-size:14px}
+    .fallback-arrow{display:none}.service-comparison:not([data-wires=ready]) .original-path:before,.service-comparison:not([data-wires=ready]) .generated-path:before{position:absolute;top:-30px;left:45%;color:var(--accent);font-size:22px;content:'↘'}.service-comparison:not([data-wires=ready]) .original-path:before{content:'↙';color:var(--service-color)}
+    .service-comparison:not([data-wires=ready]) .builder-node:before{content:'↑';position:absolute;left:45%;top:-28px;font-size:22px;color:var(--builder-color)}
+    .explanation-controls{padding-top:16px}.explanation-caption{min-height:70px;font-size:11px}.explanation-steps{font-size:8px;gap:8px;margin-bottom:12px}.comparison-note{font-size:9px}
+  }
+  @media(max-width:360px){.original-path strong,.generated-path strong{font-size:15px}.workflow-node strong{font-size:17px}.node-label{letter-spacing:.03em}}
+  @media print{.explanation-controls{display:none}.service-comparison{box-shadow:none;background:none;break-inside:avoid}}
 </style>

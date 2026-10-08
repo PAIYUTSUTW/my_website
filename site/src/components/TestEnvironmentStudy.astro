@@ -24,11 +24,6 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
     <span class="eyebrow">OUR APPROACH</span>
     <h2 id="approach-heading">Let an agent build<br /><em>a test version of the service.</em></h2>
     <p class="approach-intro">Our agent reads the service connector’s code and documentation, then builds a software-defined environment that simulates the service’s responses and data changes. The playbook can call this environment in place of the real service.</p>
-    <ol class="build-steps" aria-label="How the test environment is generated">
-      <li><span class="step-number">01</span><h3>Read the service interface</h3><p>The connector code and documentation describe the actions the workflow can call.</p></li>
-      <li><span class="step-number">02</span><h3>Generate the environment</h3><p>The agent builds the service behavior and starting data needed for testing.</p></li>
-      <li><span class="step-number">03</span><h3>Run, inspect, start fresh</h3><p>Try the workflow, inspect what changed, then reset or discard the environment for another test.</p></li>
-    </ol>
     <ServiceComparison />
   </section>
 
@@ -79,11 +74,8 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
   .project-prose .problem-question{color:var(--text);font-weight:550;font-size:18px}
   .approach-section{border-top:1px solid var(--line);padding-top:54px;scroll-margin-top:115px}
   .approach-intro{font-size:16px;line-height:1.9;color:var(--muted);max-width:820px;margin-top:22px}
-  .build-steps{list-style:none;padding:0;margin:32px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-  .build-steps li{border-top:1px solid var(--line);padding-top:17px}
-  .step-number{font-family:monospace;font-size:11px;color:var(--accent);display:block;margin-bottom:13px}
   h3{font-size:19px;letter-spacing:-.025em;line-height:1.4}
-  .build-steps p,.value-grid p{font-size:13px;line-height:1.85;color:var(--muted);margin-top:10px}
+  .value-grid p{font-size:13px;line-height:1.85;color:var(--muted);margin-top:10px}
   .value-section{padding-block:55px}
   .value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:30px}
   .value-grid>div{padding-left:17px;border-left:2px solid color-mix(in srgb,var(--accent) 40%,var(--line))}
@@ -94,7 +86,7 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
   .technical-content{padding:0 26px 23px;color:var(--muted);font-size:14px;line-height:1.9;max-width:870px}
   .technical-content ul{padding-left:22px;margin-block:18px}.technical-content li{padding:3px 0}
   .study-download{margin-top:25px}.study-download a{font-size:12px}
-  @media(max-width:800px){.study-section{grid-template-columns:1fr;gap:24px;padding-block:38px}.study-heading{padding:10px 0 40px}.study-lead{font-size:17px}.build-steps{gap:20px}.value-grid{gap:22px}h2{font-size:31px}.study-section h2{font-size:29px}.approach-section{padding-top:40px}}
-  @media(max-width:540px){.study-heading h1{font-size:39px}.eyebrow{font-size:9px;line-height:1.8;margin-bottom:16px}.study-lead{font-size:15px;line-height:1.9}.study-section h2,h2{font-size:28px}.project-prose>p,.approach-intro{font-size:14px}.build-steps{grid-template-columns:1fr;gap:20px}.build-steps li{padding-left:40px;position:relative}.step-number{position:absolute;left:0;top:20px}.build-steps h3{font-size:18px}.build-steps p{margin-top:6px}.value-grid{grid-template-columns:1fr;gap:24px}.value-section{padding-block:40px}.value-grid p{margin-top:6px}.technical-content{font-size:13px;padding-inline:20px}summary{font-size:13px;padding:19px}.study-jump{font-size:12px}}
+  @media(max-width:800px){.study-section{grid-template-columns:1fr;gap:24px;padding-block:38px}.study-heading{padding:10px 0 40px}.study-lead{font-size:17px}.value-grid{gap:22px}h2{font-size:31px}.study-section h2{font-size:29px}.approach-section{padding-top:40px}}
+  @media(max-width:540px){.study-heading h1{font-size:39px}.eyebrow{font-size:9px;line-height:1.8;margin-bottom:16px}.study-lead{font-size:15px;line-height:1.9}.study-section h2,h2{font-size:28px}.project-prose>p,.approach-intro{font-size:14px}.value-grid{grid-template-columns:1fr;gap:24px}.value-section{padding-block:40px}.value-grid p{margin-top:6px}.technical-content{font-size:13px;padding-inline:20px}summary{font-size:13px;padding:19px}.study-jump{font-size:12px}}
   @media print{.study-heading h1{font-size:32px}.study-lead{font-size:12px}.study-jump,.study-download{display:none}.study-section{padding-block:22px;gap:30px}.study-section h2,h2{font-size:22px}.project-prose>p,.approach-intro{font-size:11px}}
 </style>

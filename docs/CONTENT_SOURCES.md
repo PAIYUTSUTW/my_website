@@ -88,7 +88,10 @@
   starting data. It does not replace the whole security platform.
 - The earlier animated demo and simulated instance counter were removed. The
   comparison is now readable without controls or JavaScript, and the portable
-  HTML includes the full research story rather than an isolated diagram.
+  HTML includes the full research story rather than an isolated diagram. A later
+  user request adds illustrated icons and an optional, captioned 12-second
+  explanation of service access, agent generation, and redirection for testing.
+  It changes no research claims and contains no simulated run results.
 - The printable CV is generated from the same content as the website. The
   supplied PDF remains a source document rather than an automatically published
   download. Its phone number is not included in website content.

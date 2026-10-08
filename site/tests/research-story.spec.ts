@@ -70,3 +70,62 @@ test('the complete exported story works offline without JavaScript', async ({ br
     expect(requests).toEqual([]);
   } finally { await context.close(); }
 });
+
+test('explanation shows the service, agent generation, then redirected calls and supports pause', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(`${route}#service-visual`);
+  const figure = page.locator('.service-comparison');
+  const workflow = await figure.locator('.workflow-node').innerText();
+  await figure.getByRole('button', { name: 'Play explanation' }).click();
+  await expect(figure).toHaveAttribute('data-stage', 'service');
+  await expect(figure).toHaveAttribute('data-playing', 'true');
+  await page.clock.fastForward(4100);
+  await expect(figure).toHaveAttribute('data-stage', 'build');
+  await expect(figure.locator('[data-narration]')).toContainText('reads connector code');
+  await figure.getByRole('button', { name: 'Pause explanation' }).click();
+  await page.clock.fastForward(10000);
+  await expect(figure).toHaveAttribute('data-stage', 'build');
+  await expect(figure).toHaveAttribute('data-playing', 'false');
+  await figure.getByRole('button', { name: 'Continue explanation' }).click();
+  await page.clock.fastForward(4100);
+  await expect(figure).toHaveAttribute('data-stage', 'test');
+  await expect(figure.locator('[data-narration]')).toContainText('same workflow');
+  await page.clock.fastForward(4100);
+  await expect(figure).toHaveAttribute('data-playing', 'false');
+  await expect(figure.getByRole('button', { name: 'Replay explanation' })).toBeVisible();
+  expect(await figure.locator('.workflow-node').innerText()).toBe(workflow);
+  await figure.getByRole('button', { name: 'Replay explanation' }).click();
+  await page.locator('footer').scrollIntoViewIfNeeded();
+  await expect(figure).toHaveAttribute('data-playing', 'false');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(figure).toHaveAttribute('data-stage', 'test');
+  await expect(figure.locator('[data-explain]')).toBeHidden();
+});
+
+test('the exported explanation plays offline and respects reduced motion', async ({ browser }, testInfo) => {
+  const output = testInfo.outputPath('animated-test-environments.html');
+  execFileSync(process.execPath, ['scripts/export-pipeline-demo.mjs', output]);
+  const context = await browser.newContext({ offline: true, viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  const errors: string[] = [], requests: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.on('request', request => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
+  try {
+    await page.clock.install();
+    await page.goto(pathToFileURL(output).href);
+    const figure = page.locator('.service-comparison');
+    await figure.getByRole('button', { name: 'Play explanation' }).click();
+    await page.clock.fastForward(4100);
+    await expect(figure).toHaveAttribute('data-stage', 'build');
+    await page.clock.fastForward(4100);
+    await expect(figure).toHaveAttribute('data-stage', 'test');
+    await page.clock.fastForward(4100);
+    await expect(figure).toHaveAttribute('data-playing', 'false');
+    await page.getByRole('button', { name: 'Use light theme' }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect(figure.locator('[data-explain]')).toBeHidden();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect(errors).toEqual([]);expect(requests).toEqual([]);
+  } finally { await context.close(); }
+});

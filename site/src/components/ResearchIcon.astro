@@ -1,0 +1,11 @@
+---
+interface Props { kind: 'workflow' | 'service' | 'environment' | 'documents' | 'agent'; }
+const { kind } = Astro.props;
+---
+<svg class={`research-icon icon-${kind}`} viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {kind === 'workflow' && <><rect x="20" y="5" width="24" height="13" rx="4"/><path d="M32 18v10M15 28h34M15 28v9m34-9v9"/><rect x="5" y="37" width="21" height="18" rx="4"/><rect x="38" y="37" width="21" height="18" rx="4"/><path d="m11 46 3 3 6-7m24 4h9"/></>}
+  {kind === 'service' && <><rect x="11" y="5" width="42" height="16" rx="4"/><rect x="11" y="24" width="42" height="16" rx="4"/><rect x="11" y="43" width="42" height="16" rx="4"/><path d="M19 13h1m-1 19h1m-1 19h1m13-38h12M33 32h12M33 51h12"/></>}
+  {kind === 'environment' && <><rect x="5" y="5" width="54" height="54" rx="10" stroke-dasharray="4 5"/><path d="m15 25 17-10 17 10-17 10-17-10Zm0 0v16l17 10 17-10V25M32 35v16"/><path d="m24 20 17 10"/></>}
+  {kind === 'documents' && <><path d="M19 8h27l9 9v39H19V8Z"/><path d="M46 8v10h9M12 15H7v41h5m18-30-5 5 5 5m14-10 5 5-5 5m-8 4 4-17M27 47h18"/></>}
+  {kind === 'agent' && <><rect x="12" y="16" width="40" height="35" rx="10"/><path d="M32 16V8m-3 0h6M6 29v10m52-10v10M25 43h14"/><rect x="21" y="27" width="5" height="7" rx="2"/><rect x="38" y="27" width="5" height="7" rx="2"/><path d="M22 56v3m20-3v3"/></>}
+</svg>

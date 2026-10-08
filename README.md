@@ -33,7 +33,10 @@ npm run preview
 - `site/src/components/ResearchFocus.astro`: the two current research questions on the homepage.
 - `site/src/components/TestEnvironmentStudy.astro`: complete research story, from
   the problem and approach to contribution, status, and optional technical detail.
-- `site/src/components/ServiceComparison.astro`: static service-replacement figure.
+- `site/src/components/ServiceComparison.astro`: illustrated service-replacement
+  diagram and optional 12-second narrated animation.
+- `site/src/components/ResearchIcon.astro`: local SVG illustrations for the workflow,
+  service, environment, documents, and agent.
 - `site/public/pipeline1-concept.svg`: downloadable, standalone concept diagram.
 - `site/src/assets/profile.png`: portrait, optimized to WebP at build time.
 - `docs/CONTENT_SOURCES.md`: sources, factual qualifications, and outstanding
@@ -53,8 +56,9 @@ node scripts/export-pipeline-demo.mjs
 
 Open `.preview/Test-environments.html` from the repository root in a browser.
 It includes the full problem, method, comparison, research status, fonts, and
-downloadable SVG. The story needs no server, network, or JavaScript; its optional
-theme button uses a small inline script. An optional first argument selects the output path.
+downloadable SVG. The static story needs no server, network, or JavaScript. The optional
+explanation animation and theme control use embedded scripts, so they also work
+offline. Reduced-motion preferences keep the diagram static. An optional first argument selects the output path.
 
 ## Validate
 
