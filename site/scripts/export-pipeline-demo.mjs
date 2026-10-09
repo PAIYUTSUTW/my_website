@@ -15,7 +15,7 @@ const scriptBodies = await Promise.all([...html.matchAll(/<script\b([^>]*)>([\s\
   const asset = match[1].match(/src="\/my_website\/([^\"]+)"/)?.[1];
   return asset ? readFile(resolve(dist, asset), 'utf8') : match[2];
 }));
-const selectors = ['.service-comparison', '.playbook-test-comparison'];
+const selectors = ['.service-comparison'];
 const scripts = [...new Set(scriptBodies.filter(script => selectors.some(selector => script.includes(selector))))];
 for (const selector of selectors) {
   if (scripts.filter(script => script.includes(selector)).length !== 1) throw new Error(`Expected one explanation script for ${selector}.`);

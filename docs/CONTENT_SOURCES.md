@@ -76,9 +76,9 @@
   The abstract research sphere, research-loop controls, and repeated slogan strip
   were removed because they did not explain the work.
 - The environment project is presented publicly as **AI-built test environments**.
-  The first paragraph defines a security playbook; the page then explains the
-  testing problem, agent-driven generation, service replacement, intended value,
-  Jerry's contribution, and current research status, in that order.
+  The headline states the output and use case. The lead explains the intended
+  value, followed by a playbook definition, one core diagram, testing-method
+  tradeoffs, Jerry's contribution, and current research status.
 - `Pipeline1` appears only inside optional technical detail, where it is explicitly
   defined as the internal name of the environment-generation workflow. Public
   copy uses "generated test environment" rather than "software mock".
@@ -92,12 +92,13 @@
   user request adds illustrated icons and an optional, captioned 12-second
   explanation of service access, agent generation, and redirection for testing.
   It changes no research claims and contains no simulated run results.
-- The October 8 testing comparison uses a clearly labeled hypothetical wrong-IP
-  example, not a measured experimental outcome. Its baseline is explicitly fixed
-  action responses that ignore the target argument, not all conventional tests.
-  The generated environment records the action's effects; independent requirements
-  and assertions determine correctness. The site acknowledges that existing
-  end-to-end tests can catch the same bug with suitable environments and checks.
+- The October 8 editorial revision removes the hypothetical wrong-IP comparison
+  and its animation because they distracted from environment generation. A compact
+  table compares review, fixed responses, and real-service execution. The page
+  acknowledges that existing end-to-end tests can verify behavior with suitable
+  environments and checks. Generated environments expose action effects; independent
+  task requirements and assertions are still needed to judge correctness.
+  Writing references and their application are recorded in `DESIGN_REFERENCES.md`.
   Relevant primary references checked during the discussion:
   - [Cortex XSOAR test playbooks](https://xsoar.pan.dev/docs/integrations/test-playbooks)
     support end-to-end command testing and result assertions.

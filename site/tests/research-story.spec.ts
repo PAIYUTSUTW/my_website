@@ -5,19 +5,21 @@ import { pathToFileURL } from 'node:url';
 
 const route = 'projects/stateful-evaluation/';
 
-test('research story explains the problem before the approach and comparison', async ({ page }) => {
+test('research story leads with environment generation and explains the testing tradeoffs', async ({ page }) => {
   await page.goto(route);
-  await expect(page.locator('.study-lead')).toContainText('security playbooks: automated workflows');
-  await expect(page.getByRole('heading', { name: 'Generating a workflow is only the beginning.' })).toBeVisible();
+  await expect(page.locator('h1')).toContainText('AI-built test environments');
+  await expect(page.locator('.study-context')).toContainText('automated sequence of security actions');
+  await expect(page.getByRole('table')).toBeVisible();
   const mainText = await page.locator('main').innerText();
-  expect(mainText.indexOf('THE PROBLEM')).toBeLessThan(mainText.indexOf('OUR APPROACH'));
+  expect(mainText.indexOf('THE APPROACH')).toBeLessThan(mainText.indexOf('THE TESTING GAP'));
+  await expect(page.locator('.playbook-test-comparison')).toHaveCount(0);
   expect(mainText).not.toMatch(/software mock|Pipeline1|MOCK 0\d|Watch the replacement/i);
   await expect(page.getByRole('group', { name: 'Testing with a real service', exact: true })).toContainText('Real service');
   await expect(page.getByRole('group', { name: 'Testing with a generated environment' })).toContainText('Built by our AI agent');
   await expect(page.locator('.comparison-context')).toContainText('existing security automation platform and service connector');
   await expect(page.locator('.contribution-section')).toContainText('design goals');
-  await page.getByRole('link', { name: 'See why a test can miss a bug' }).click();
-  await expect(page).toHaveURL(/#testing-gap$/);
+  await page.getByRole('link', { name: 'See the approach' }).click();
+  await expect(page).toHaveURL(/#concept-demo$/);
 });
 
 test('technical detail is optional and works from the keyboard', async ({ page }) => {
@@ -59,12 +61,10 @@ test('the complete exported story works offline without JavaScript', async ({ br
   page.on('request', request => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
   try {
     await page.goto(pathToFileURL(output).href);
-    await expect(page.locator('h1')).toContainText('Test AI workflows.');
-    await expect(page.locator('.approach-section')).toContainText('virtual machines');
-    await expect(page.locator('.fixed-verdict')).toContainText('Bug missed');
-    await expect(page.locator('.state-verdict')).toContainText('Bug exposed');
-    await expect(page.locator('.generated-path')).toContainText('Generated test environment');
-    await expect(page.locator('.contribution-section')).toContainText('ongoing research');
+    await expect(page.locator('h1')).toContainText('AI-built test environments');
+    await expect(page.getByRole('table')).toContainText('Run against real services');
+    await expect(page.locator('.generated-path')).toContainText('Generated service environment');
+    await expect(page.locator('.contribution-section')).toContainText('Ongoing research');
     await page.locator('summary').click();
     await expect(page.locator('.technical-content')).toBeVisible();
     await expect(page.getByRole('link', { name: 'Download the overview diagram' })).toHaveAttribute('href', /^data:image\/svg\+xml;base64,/);
@@ -91,7 +91,7 @@ test('explanation shows the service, agent generation, then redirected calls and
   await figure.getByRole('button', { name: 'Continue explanation' }).click();
   await page.clock.fastForward(4100);
   await expect(figure).toHaveAttribute('data-stage', 'test');
-  await expect(figure.locator('[data-narration]')).toContainText('same workflow');
+  await expect(figure.locator('[data-narration]')).toContainText('same playbook');
   await page.clock.fastForward(4100);
   await expect(figure).toHaveAttribute('data-playing', 'false');
   await expect(figure.getByRole('button', { name: 'Replay explanation' })).toBeVisible();
@@ -115,15 +115,6 @@ test('the exported explanation plays offline and respects reduced motion', async
   try {
     await page.clock.install();
     await page.goto(pathToFileURL(output).href);
-    const example = page.locator('.playbook-test-comparison');
-    await example.getByRole('button', { name: 'Play example' }).click();
-    await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
-    await page.clock.fastForward(4100);
-    await expect(example.locator('[data-b-state]')).toHaveText('Blocked');
-    await page.clock.fastForward(4100);
-    await expect(example.locator('.state-verdict')).toBeVisible();
-    await page.clock.fastForward(4100);
-    await expect(example).toHaveAttribute('data-playing', 'false');
     const figure = page.locator('.service-comparison');
     await figure.getByRole('button', { name: 'Play explanation' }).click();
     await page.clock.fastForward(4100);
@@ -139,34 +130,4 @@ test('the exported explanation plays offline and respects reduced motion', async
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);expect(requests).toEqual([]);
   } finally { await context.close(); }
-});
-
-test('the example distinguishes an action effect from the checks and can be stepped without motion', async ({ page }) => {
-  await page.clock.install();
-  await page.goto(`${route}#testing-gap`);
-  const example = page.locator('.playbook-test-comparison');
-  await example.getByRole('button', { name: 'Play example' }).click();
-  await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
-  await expect(example.locator('.state-verdict')).toBeHidden();
-  await page.clock.fastForward(4100);
-  await expect(example.locator('[data-b-state]')).toHaveText('Blocked');
-  await example.getByRole('button', { name: 'Pause example' }).click();
-  await page.clock.fastForward(9000);
-  await expect(example).toHaveAttribute('data-phase', 'run');
-  await example.getByRole('button', { name: 'Continue example' }).click();
-  await page.clock.fastForward(4100);
-  await expect(example.locator('.fixed-verdict')).toContainText('Test passes. Bug missed.');
-  await expect(example.locator('.state-verdict')).toBeVisible();
-  await expect(example.locator('.example-takeaway')).toContainText('Separate checks');
-  await page.clock.fastForward(4100);
-  await expect(example.getByRole('button', { name: 'Replay example' })).toBeVisible();
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(example.locator('[data-play-example]')).toBeHidden();
-  const first = example.getByRole('button', { name: '1. Set the goal' });
-  await first.focus();
-  await page.keyboard.press('Enter');
-  await expect(first).toHaveAttribute('aria-pressed', 'true');
-  await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
-  await example.getByRole('button', { name: '3. Check the effect' }).click();
-  await expect(example.locator('.state-verdict')).toBeVisible();
 });

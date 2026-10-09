@@ -35,8 +35,6 @@ npm run preview
   the problem and approach to contribution, status, and optional technical detail.
 - `site/src/components/ServiceComparison.astro`: illustrated service-replacement
   diagram and optional 12-second narrated animation.
-- `site/src/components/PlaybookTestComparison.astro`: illustrative wrong-target
-  test comparison, with optional playback and accessible step controls.
 - `site/src/components/ResearchIcon.astro`: local SVG illustrations for the workflow,
   service, environment, documents, and agent.
 - `site/public/pipeline1-concept.svg`: downloadable, standalone concept diagram.
@@ -59,9 +57,8 @@ node scripts/export-pipeline-demo.mjs
 Open `.preview/Test-environments.html` from the repository root in a browser.
 It includes the full problem, method, comparison, research status, fonts, and
 downloadable SVG. The static story needs no server, network, or JavaScript. The optional
-explanation animations and theme control use embedded scripts, so they also work
-offline. Reduced-motion preferences disable automatic playback; the testing example
-can still be explored with step buttons. An optional first argument selects the output path.
+explanation animation and theme control use embedded scripts, so they also work
+offline. Reduced-motion preferences retain the complete static diagram. An optional first argument selects the output path.
 
 ## Validate
 

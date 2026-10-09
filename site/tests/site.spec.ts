@@ -26,7 +26,7 @@ test('theme persists and current research links have clear destinations', async 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.locator('.research-focus').getByRole('link').first().click();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Test AI workflows.');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('AI-built test environments');
   await page.goBack();
   await page.locator('.research-focus').getByRole('link').last().click();
   await expect(page).toHaveURL(/projects\/soar-planning\/$/);
@@ -45,7 +45,7 @@ test('research filters work and each project opens', async ({ page }) => {
   expect(links).toHaveLength(7);
   for (const href of links) {
     await page.goto(href);
-    const prose = page.locator('.project-prose');
+    const prose = page.locator('.project-prose, .contribution-copy');
     expect(await prose.count()).toBeGreaterThan(0);
     for (const section of await prose.all()) await expect(section).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
