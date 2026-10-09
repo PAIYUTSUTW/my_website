@@ -1,0 +1,32 @@
+<figure class="learning-roadmap" aria-labelledby="learning-plan-title">
+  <figcaption id="learning-plan-title">THE RESEARCH PLAN</figcaption>
+  <ol>
+    <li>
+      <span class="phase">01 <span>IN DEVELOPMENT</span></span>
+      <h2>Build the benchmark</h2>
+      <p>Security scenarios, source documents, and checks for correct workflow behavior.</p>
+    </li>
+    <li>
+      <span class="phase">02 <span>PLANNED</span></span>
+      <h2>Train small models</h2>
+      <p>Learn to generate playbooks using separate training data and reinforcement learning.</p>
+    </li>
+    <li>
+      <span class="phase">03 <span>PLANNED</span></span>
+      <h2>Test generalization</h2>
+      <p>Compare with baselines on held-out scenario families kept out of training.</p>
+    </li>
+  </ol>
+</figure>
+
+<style>
+  .learning-roadmap{margin:38px 0 0;padding:26px 30px 30px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(ellipse at 0 0,#91dfff0d,transparent 65%),var(--surface-soft)}
+  figcaption{font:10px monospace;letter-spacing:.12em;color:var(--muted);margin-bottom:26px}
+  ol{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:38px}
+  li{position:relative;min-width:0}li+li:before{content:'→';position:absolute;left:-28px;top:42px;color:var(--muted)}
+  .phase{display:flex;align-items:center;gap:13px;color:var(--accent);font:11px monospace}
+  .phase>span{color:var(--muted);font-size:9px;letter-spacing:.03em}li:first-child .phase>span{color:var(--accent)}
+  h2{font-size:21px;letter-spacing:-.035em;line-height:1.35;margin:17px 0 10px}
+  p{color:var(--muted);font-size:13px;line-height:1.8;max-width:320px}
+  @media(max-width:800px){.learning-roadmap{padding:24px}ol{grid-template-columns:1fr;gap:24px}li+li{border-top:1px solid var(--line);padding-top:24px}li+li:before{display:none}h2{margin-top:12px}p{max-width:540px}}
+</style>

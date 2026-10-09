@@ -1,0 +1,13 @@
+---
+import ProjectArt from './ProjectArt.astro';
+import Arrow from './Arrow.astro';
+import { path, projects } from '../data/profile';
+interface Props { project: typeof projects[number]; }
+const { project } = Astro.props;
+---
+<article class="project-card" data-category={project.category}>
+  <a href={path(`/projects/${project.slug}/`)} class="project-card-link">
+    <ProjectArt variant={project.visual} />
+    <div class="project-card-content"><div class="project-meta"><span>{project.kind}</span><span>{project.number}</span></div><h3>{project.title}<Arrow diagonal /></h3><p>{project.description}</p><div class="tags">{project.tags.map(tag => <span>{tag}</span>)}</div></div>
+  </a>
+</article>

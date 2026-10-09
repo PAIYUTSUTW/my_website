@@ -1,2 +1,9 @@
 _site/
 
+# Modern Astro site
+site/node_modules/
+site/dist/
+site/.astro/
+site/test-results/
+site/playwright-report/
+.preview/

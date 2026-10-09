@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980" role="img" aria-labelledby="title desc">
+  <title id="title">AI-built test environments for security automation</title>
+  <desc id="desc">AI-generated security workflows need a place to be tested before they reach real systems. Our agent reads service connector code and documentation to generate a disposable test environment. The workflow keeps its existing security automation platform and connector, while the generated environment stands in for the real external service. Lower setup cost and faster rebuilding are research goals.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="m2 1 5 4-5 4" fill="none" stroke="#98f4db" stroke-width="1.5"/></marker>
+    <style>text{font-family:Arial,Helvetica,sans-serif;fill:#edf3f8}.muted{fill:#a3afbd}.accent{fill:#98f4db}.label{font-size:14px;letter-spacing:1.5px}.body{font-size:21px}.node{font-size:29px;font-weight:600}.small{font-size:18px}</style>
+  </defs>
+  <rect width="1400" height="980" fill="#090c11"/>
+  <text x="64" y="58" class="label accent">ONGOING RESEARCH / PEI-YU TSENG · PENN STATE</text>
+  <text x="64" y="124" font-size="51" font-weight="600" letter-spacing="-1">AI-built test environments</text>
+  <text x="66" y="169" class="body muted">A place to try AI-generated security workflows before they reach real systems.</text>
+  <text x="66" y="207" class="small muted">Real-service access and separate VM deployments add setup and maintenance work.</text>
+  <rect x="64" y="247" width="1272" height="222" rx="20" fill="#0e141c" stroke="#2c3643"/>
+  <text x="94" y="282" class="label muted">TESTING WITH A REAL SERVICE</text>
+  <rect x="95" y="306" width="443" height="122" rx="12" fill="#090c11" stroke="#2c3643"/>
+  <text x="121" y="357" class="node">AI-generated workflow</text>
+  <text x="121" y="393" class="small muted">Existing automation platform + connector</text>
+  <path d="M557 367h124" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="706" y="306" width="596" height="122" rx="12" fill="#171c24" stroke="#526272"/>
+  <text x="735" y="357" class="node">Real service</text>
+  <text x="735" y="393" class="small muted">A service instance to access, configure, and maintain.</text>
+  <rect x="64" y="492" width="1272" height="249" rx="20" fill="#0d1918" stroke="#6ba998"/>
+  <text x="94" y="529" class="label accent">OUR APPROACH</text>
+  <rect x="95" y="553" width="443" height="140" rx="12" fill="#090c11" stroke="#2c3643"/>
+  <text x="121" y="610" class="node">The same workflow</text>
+  <text x="121" y="648" class="small muted">Existing automation platform + connector</text>
+  <path d="M557 621h124" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="706" y="553" width="596" height="140" rx="12" fill="#10251f" stroke="#98f4db"/>
+  <text x="735" y="599" class="node accent">Generated test environment</text>
+  <text x="735" y="633" class="small muted">Simulated service responses and data changes.</text>
+  <text x="735" y="668" class="small accent">Built by our AI agent · Reset or discard after testing</text>
+  <text x="66" y="796" class="label accent">HOW THE ENVIRONMENT IS BUILT</text>
+  <text x="66" y="838" class="body">Connector code + documentation</text>
+  <path d="M428 831h79" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="838" class="body">Our AI agent</text>
+  <path d="M689 831h79" fill="none" stroke="#98f4db" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="797" y="838" class="body accent">Disposable test environment</text>
+  <path d="M64 888h1272" stroke="#2c3643"/>
+  <text x="66" y="926" class="small muted">Research goals: less setup overhead, repeatable tests, and environments that can be recreated.</text>
+</svg>

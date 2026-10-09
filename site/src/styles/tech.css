@@ -1,0 +1,53 @@
+/* Original Astro/CSS treatment; visual references are documented in docs/DESIGN_REFERENCES.md. */
+@media screen {
+  h1, h2 { font-weight: 600; }
+  h1 em, h2 em { font-family: inherit; font-style: normal; font-weight: inherit; color: var(--accent); }
+  .header-inner { height: 88px; }
+  .desktop-nav { border: 1px solid var(--line); border-radius: 40px; padding: 5px 24px; background: var(--surface-soft); }
+  .desktop-nav a[aria-current=page]:after { bottom: 3px; }
+  .button { border-radius: 30px; }
+  .button.primary { box-shadow: 0 0 28px color-mix(in srgb, var(--accent) 12%, transparent); }
+  .hero { position: relative; isolation: isolate; min-height: 770px; gap: 40px; padding-block: 85px; }
+  .hero:before { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at 77% 42%, #4babcf13, transparent 55%); pointer-events: none; }
+  .hero h1 { font-size: clamp(65px, 6.2vw, 88px); line-height: 1.02; letter-spacing: -.07em; }
+  .hero h1 em { font-size: 1em; background: linear-gradient(100deg, var(--accent), #a1caff); background-clip: text; color: transparent; }
+  [data-theme=light] .hero h1 em { background-image: linear-gradient(100deg, #176550, #2c5792); }
+  .hero-kicker { color: var(--accent); letter-spacing: .13em; }
+  .hero-intro { max-width: 470px; }
+  .hero-affiliation { border: 0; }
+  .status-dot { box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 55%, transparent); }
+  .project-card { border-radius: 18px; background: var(--surface-soft); position: relative; transition: border-color .25s, transform .25s, box-shadow .25s; }
+  .project-card:hover, .project-card:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--line)); box-shadow: 0 0 35px color-mix(in srgb, var(--accent) 8%, transparent); transform: translateY(-4px); }
+  .project-card .project-art { border-radius: 17px 17px 0 0; }
+  .project-art { background-image: radial-gradient(ellipse at 50% 120%, #91dfff13, transparent 70%), radial-gradient(var(--line) .6px, transparent .6px); background-size: auto, 20px 20px; }
+  .mini-node, .state-pair, .flow-block { border-radius: 8px; }
+  .mini-node, .diagram-line { border-color: var(--accent); }
+  .diagram-line, .diagram-line:after { background-color: var(--line); border-color: var(--accent); }
+  .art-workflow { background-color: #0e1b25; }
+  .art-regex { background-color: #1d1a1e; }
+  .art-evaluation { background-color: #171624; }
+  .project-detail>.project-art { border-radius: 18px; }
+  .portrait-wrap { border-radius: 18px; }
+  .portrait-wrap img { border-radius: 10px; }
+  .about-band { background: radial-gradient(ellipse at 15% 70%, #719fe70b, transparent 70%), var(--surface-soft); }
+  .page-heading h1, .project-detail-heading h1 { letter-spacing: -.06em; }
+  .site-footer { background: radial-gradient(ellipse at 50% 100%, #98f4db08, transparent 70%); }
+}
+@media screen and (max-width: 1100px) {
+  .hero { gap: 24px; min-height: 690px; padding-block: 65px; }
+  .hero h1 { font-size: 66px; }
+  .desktop-nav { padding-inline: 18px; gap: 18px; }
+}
+@media screen and (max-width: 800px) {
+  .header-inner { height: 78px; }
+  .hero { gap: 44px; padding-block: 50px; }
+  .hero h1 { font-size: clamp(48px, 10vw, 78px); }
+  .hero h1 em { font-size: 1em; }
+}
+@media screen and (max-width: 540px) {
+  .hero h1 { font-size: clamp(44px, 12.5vw, 66px); }
+  .hero { padding-top: 46px; }
+}
+@media(prefers-reduced-motion: reduce) {
+  .project-card:hover { transform: none; }
+}

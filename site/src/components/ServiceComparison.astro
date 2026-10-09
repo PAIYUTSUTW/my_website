@@ -1,0 +1,147 @@
+---
+import ResearchIcon from './ResearchIcon.astro';
+---
+<figure class="service-comparison" id="service-visual" aria-labelledby="comparison-title" data-stage="test" data-playing="false">
+  <figcaption class="comparison-heading"><div><span class="visual-eyebrow">THE APPROACH</span><span class="comparison-title" id="comparison-title">Keep the workflow.<br /> <em>Generate its test environment.</em></span></div><span class="illustration-label">Concept illustration</span></figcaption>
+  <p class="comparison-context">Both paths retain the existing security automation platform and service connector.</p>
+
+  <div class="service-scene">
+    <svg class="scene-wires" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="wire-service-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--service-color)" stroke-width="1.4"/></marker>
+        <marker id="wire-test-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--accent)" stroke-width="1.4"/></marker>
+        <marker id="wire-build-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="m1 1 5 3-5 3" fill="none" stroke="var(--builder-color)" stroke-width="1.4"/></marker>
+      </defs>
+      <g data-wire-paths></g>
+    </svg>
+    <div class="workflow-node scene-node">
+      <ResearchIcon kind="workflow" />
+      <strong>Security playbook</strong>
+      <p>Existing SOAR platform + connector</p>
+      <span class="fixed-label">This part stays the same</span>
+    </div>
+    <span class="fallback-arrow service-arrow" aria-hidden="true">↗</span>
+    <div class="original-path scene-node" role="group" aria-label="Testing with a real service">
+      <span class="node-label">IN OPERATION</span><ResearchIcon kind="service" />
+      <strong>Real service</strong><p>Live service data and actions</p>
+    </div>
+    <span class="fallback-arrow test-arrow" aria-hidden="true">↘</span>
+    <div class="generated-path scene-node" role="group" aria-label="Testing with a generated environment">
+      <span class="node-label">FOR TESTING</span><ResearchIcon kind="environment" />
+      <strong>Generated service environment</strong><p>Service responses + state changes</p>
+      <span class="built-by">Built by our AI agent · Reset or discard</span>
+    </div>
+    <div class="source-node scene-node"><ResearchIcon kind="documents" /><strong>Connector code<br />& documentation</strong></div>
+    <div class="builder-node scene-node"><ResearchIcon kind="agent" /><strong>Our AI agent</strong><p>Reads the interface.<br />Builds the environment.</p></div>
+    <div class="generation-label" aria-hidden="true"><span>↑</span> Generates the service environment</div>
+  </div>
+
+  <div class="explanation-controls" hidden>
+    <ol class="explanation-steps" aria-label="Explanation sequence"><li data-step="service">1. Real service</li><li data-step="build">2. Agent builds</li><li data-step="test">3. Test here</li></ol>
+    <div class="explanation-bottom"><p class="explanation-caption" data-narration aria-live="polite" aria-atomic="true">The agent builds the service environment. Run the same playbook against it, then reset or discard the environment.</p><button type="button" data-explain>▶ Play explanation</button></div>
+  </div>
+  <p class="comparison-note">Connector code & documentation → agent → runnable service environment.</p>
+</figure>
+
+<script>
+  const figure = document.querySelector<HTMLElement>('.service-comparison');
+  if (figure) {
+    const scene = figure.querySelector<HTMLElement>('.service-scene')!;
+    const wires = figure.querySelector<SVGSVGElement>('.scene-wires')!;
+    const paths = figure.querySelector('[data-wire-paths]')!;
+    const button = figure.querySelector<HTMLButtonElement>('[data-explain]')!;
+    const narration = figure.querySelector<HTMLElement>('[data-narration]')!;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const steps = [
+      { id: 'service', text: '1 / A playbook normally calls external services through its existing security platform and connector.' },
+      { id: 'build', text: '2 / The agent reads connector code and documentation, then builds service behavior and starting data for testing.' },
+      { id: 'test', text: '3 / Run the same playbook against the generated environment. Change the starting data, reset between tests, or discard it.' },
+    ];
+    let stage = 2, playing = false, started = false, finished = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const render = () => {
+      figure.dataset.stage = steps[stage].id;
+      figure.dataset.playing = String(playing);
+      figure.querySelectorAll('[data-step]').forEach(item => {
+        if (started && item.getAttribute('data-step') === steps[stage].id) item.setAttribute('aria-current', 'step');
+        else item.removeAttribute('aria-current');
+      });
+      button.textContent = playing ? 'Ⅱ Pause explanation' : !started ? '▶ Play explanation' : finished ? '↻ Replay explanation' : '▶ Continue explanation';
+      if (started) narration.textContent = steps[stage].text;
+    };
+    const pause = () => { clearTimeout(timer); playing = false; render(); narration.setAttribute('aria-live', 'polite'); };
+    const schedule = () => {
+      timer = setTimeout(() => {
+        if (stage === 2) { finished = true; pause(); return; }
+        stage++; render(); schedule();
+      }, 4000);
+    };
+    button.addEventListener('click', () => {
+      if (playing) { pause(); return; }
+      if (finished) { stage = 0; finished = false; }
+      started = true;
+      if (motion.matches) return;
+      playing = true; narration.setAttribute('aria-live', 'off'); render(); schedule();
+    });
+    // Connections follow the actual cards, including the mobile layout.
+    const draw = () => {
+      const bounds = scene.getBoundingClientRect();
+      const mobile = matchMedia('(max-width: 640px)').matches;
+      wires.setAttribute('viewBox', `0 0 ${bounds.width} ${bounds.height}`);
+      paths.replaceChildren();
+      const box = (selector: string) => {
+        const rect = scene.querySelector(selector)!.getBoundingClientRect();
+        return { l: rect.left - bounds.left, r: rect.right - bounds.left, t: rect.top - bounds.top, b: rect.bottom - bounds.top, x: rect.left - bounds.left + rect.width / 2, y: rect.top - bounds.top + rect.height / 2 };
+      };
+      const add = (d: string, kind: string) => {
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('class', `wire wire-${kind}`);
+        for (const name of ['wire-track', 'wire-packet']) {
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', d); path.setAttribute('class', name); path.setAttribute('pathLength', '100');
+          if (name === 'wire-track') path.setAttribute('marker-end', `url(#wire-${kind}-arrow)`);
+          group.append(path);
+        }
+        paths.append(group);
+      };
+      const workflow = box('.workflow-node'), service = box('.original-path'), environment = box('.generated-path'), source = box('.source-node'), agent = box('.builder-node');
+      for (const [kind, target] of [['service', service], ['test', environment]] as const) {
+        add(mobile ? `M${workflow.x} ${workflow.b}C${workflow.x} ${workflow.b+25} ${target.x} ${target.t-25} ${target.x} ${target.t-3}` : `M${workflow.r} ${workflow.y}C${workflow.r+65} ${workflow.y} ${target.l-65} ${target.y} ${target.l-3} ${target.y}`, kind);
+      }
+      add(`M${source.r} ${source.y}C${source.r+20} ${source.y} ${agent.l-20} ${agent.y} ${agent.l-3} ${agent.y}`, 'build');
+      add(mobile ? `M${agent.x} ${agent.t}L${environment.x} ${environment.b+3}` : `M${agent.r} ${agent.y}C${environment.x} ${agent.y} ${environment.x} ${agent.y} ${environment.x} ${environment.b+3}`, 'build');
+      figure.dataset.wires = 'ready';
+    };
+    new ResizeObserver(draw).observe(scene);
+    document.fonts.ready.then(draw);
+    const syncMotion = () => {
+      pause();
+      if (motion.matches) { stage = 2; finished = true; render(); }
+      button.hidden = motion.matches;
+    };
+    motion.addEventListener('change', syncMotion);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) pause(); });
+    new IntersectionObserver(entries => { if (!entries[0].isIntersecting && playing) pause(); }).observe(figure);
+    figure.querySelector<HTMLElement>('.explanation-controls')!.hidden = false;
+    syncMotion();
+  }
+</script>
+
+<style>
+  .service-comparison{--service-color:#d7b698;--builder-color:#b7c5fa;margin:0;padding:26px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(ellipse at 90% 55%,#98f4db09,transparent 65%),var(--surface-soft);scroll-margin-top:110px}
+  :global([data-theme=light]) .service-comparison{--service-color:#80512e;--builder-color:#505f9e}
+  .comparison-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.visual-eyebrow{font-size:9px;letter-spacing:.1em;color:var(--muted);display:block;margin-bottom:11px}.comparison-title{display:block;font-family:'Space Grotesk Variable',sans-serif;font-size:27px;font-weight:550;line-height:1.17;letter-spacing:-.035em}.comparison-title em{color:var(--accent);font-style:normal}.illustration-label{font-size:9px;color:var(--muted);border:1px solid var(--line);padding:5px 9px;border-radius:20px;white-space:nowrap}.comparison-context{font-size:12px;line-height:1.8;color:var(--muted);margin:12px 0 22px}.comparison-note{font-size:10px;line-height:1.8;color:var(--muted);margin-top:15px}
+  .service-scene{display:grid;grid-template-columns:minmax(0,1fr) 140px minmax(0,1.3fr);grid-template-rows:auto auto auto;gap:17px 24px;align-items:center;position:relative;isolation:isolate;padding:4px 0 16px}.scene-node{position:relative;z-index:2;background:var(--bg);border:1px solid var(--line);border-radius:12px;min-width:0;text-align:center;padding:14px;transition:border-color .3s,box-shadow .3s}.scene-node :global(.research-icon){width:31px;height:31px;margin:0 auto 10px;color:var(--muted)}.scene-node strong{font-family:'Space Grotesk Variable',sans-serif;display:block;font-size:17px;line-height:1.3;font-weight:500;letter-spacing:-.025em}.scene-node p{font-size:11px;line-height:1.7;color:var(--muted);margin-top:7px}
+  .workflow-node{grid-column:1;grid-row:1/3;padding:22px 16px}.workflow-node :global(.research-icon){width:45px;height:45px;color:var(--text);margin-bottom:13px}.workflow-node strong{font-size:22px}.fixed-label{display:block;font-size:9px;color:var(--muted);padding-top:10px;margin-top:12px;border-top:1px solid var(--line)}.node-label{font-size:8px;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:8px}
+  .original-path{grid-column:3;grid-row:1}.original-path :global(.research-icon){color:var(--service-color)}.generated-path{grid-column:3;grid-row:2;border-color:color-mix(in srgb,var(--accent) 35%,var(--line));background:color-mix(in srgb,var(--accent) 4%,var(--bg))}.generated-path :global(.research-icon),.generated-path strong{color:var(--accent)}.built-by{display:block;font-size:9px;color:var(--accent);margin-top:9px;line-height:1.6}
+  .source-node{grid-column:1;grid-row:3;display:flex;gap:12px;align-items:center;padding:13px;background:var(--surface-soft);border-style:dashed;text-align:left}.source-node :global(.research-icon){width:29px;height:32px;margin:0;flex-shrink:0;color:var(--builder-color)}.source-node strong{font-size:12px;line-height:1.5}.builder-node{grid-column:2;grid-row:3;padding:12px 10px;border-color:color-mix(in srgb,var(--builder-color) 40%,var(--line))}.builder-node :global(.research-icon){color:var(--builder-color);width:29px;height:29px;margin-bottom:7px}.builder-node strong{font-size:15px}.builder-node p{font-size:9px;margin-top:5px}.generation-label{grid-column:3;grid-row:3;color:var(--builder-color);font-size:10px;line-height:1.8;justify-self:center;padding:3px 8px;background:var(--surface-soft);z-index:2;position:relative;align-self:end;margin-bottom:4px}.generation-label>span{font-size:17px;margin-right:6px}
+  .fallback-arrow{grid-column:2;text-align:center;font-size:26px}.service-arrow{grid-row:1;color:var(--service-color)}.test-arrow{grid-row:2;color:var(--accent)}[data-wires=ready] .fallback-arrow{visibility:hidden}.service-comparison:not([data-wires=ready]) .source-node:after{content:'→';position:absolute;right:-20px;color:var(--builder-color)}
+  .scene-wires{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:visible;pointer-events:none}.scene-wires :global(.wire-track){fill:none;stroke-width:1.5;stroke:var(--line)}.scene-wires :global(.wire-service .wire-track){stroke:var(--service-color);stroke-dasharray:5 5;opacity:.45}.scene-wires :global(.wire-test .wire-track){stroke:var(--accent);opacity:.45}.scene-wires :global(.wire-build .wire-track){stroke:var(--builder-color);opacity:.45}.scene-wires :global(.wire-packet){fill:none;stroke-width:3;stroke-linecap:round;stroke-dasharray:6 94;stroke-dashoffset:100;opacity:0}.scene-wires :global(.wire-service .wire-packet){stroke:var(--service-color)}.scene-wires :global(.wire-test .wire-packet){stroke:var(--accent)}.scene-wires :global(.wire-build .wire-packet){stroke:var(--builder-color)}
+  [data-playing=true][data-stage=service] .scene-wires :global(.wire-service .wire-packet),[data-playing=true][data-stage=build] .scene-wires :global(.wire-build .wire-packet),[data-playing=true][data-stage=test] .scene-wires :global(.wire-test .wire-packet){opacity:1;animation:wire-flow 1.8s linear infinite}[data-playing=true][data-stage=build] .generated-path{box-shadow:0 0 25px #98f4db18}@keyframes wire-flow{to{stroke-dashoffset:0}}
+  .explanation-controls{border-top:1px solid var(--line);padding-top:15px;margin-top:8px}.explanation-controls[hidden]{display:none}.explanation-steps{display:flex;gap:24px;list-style:none;font-size:9px;color:var(--muted);padding:0;margin:0 0 11px}.explanation-steps [aria-current=step]{color:var(--accent)}.explanation-bottom{display:flex;align-items:center;justify-content:space-between;gap:25px}.explanation-caption{font-size:12px;line-height:1.8;color:var(--text);max-width:690px;min-height:44px}[data-explain]{flex-shrink:0;border:1px solid var(--accent);border-radius:6px;background:transparent;color:var(--accent);font-size:10px;padding:10px 13px;cursor:pointer}
+  @media(min-width:641px){.original-path,.generated-path{display:grid;grid-template-columns:37px 1fr;column-gap:15px;text-align:left;padding:13px 18px}.original-path .node-label,.generated-path .node-label{grid-column:1/-1}.original-path :global(.research-icon),.generated-path :global(.research-icon){grid-column:1;grid-row:2/5;margin:auto}.original-path strong,.generated-path strong,.original-path p,.generated-path p,.built-by{grid-column:2}.original-path p,.generated-path p{margin-top:4px;font-size:10px}}
+  @media(max-width:800px){.service-scene{grid-template-columns:minmax(0,1fr) 115px minmax(0,1.3fr);column-gap:18px}.workflow-node strong{font-size:19px}.scene-node strong{font-size:16px}.source-node strong{font-size:11px}.builder-node strong{font-size:14px}.generation-label{font-size:9px}}
+  @media(max-width:640px){.service-comparison{padding:20px 16px;border-radius:15px}.comparison-heading{display:block}.comparison-title{font-size:25px}.illustration-label{display:inline-block;margin-top:12px;font-size:8px}.comparison-context{font-size:11px;margin-bottom:18px}.service-scene{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:29px 16px;padding-bottom:12px}.workflow-node{grid-column:1/-1;grid-row:1;max-width:280px;width:100%;justify-self:center;display:grid;grid-template-columns:34px 1fr;gap:0 12px;text-align:left;padding:14px}.workflow-node :global(.research-icon){grid-column:1;grid-row:1/3;width:33px;height:33px;margin:auto}.workflow-node strong{grid-column:2;font-size:20px}.workflow-node p{grid-column:2;font-size:9px;margin-top:4px}.fixed-label{grid-column:1/-1;text-align:center;font-size:8px;margin-top:11px;padding-top:8px}.original-path{grid-column:1;grid-row:2;align-self:stretch}.generated-path{grid-column:2;grid-row:2;align-self:stretch}.scene-node{padding:13px 9px}.node-label{font-size:7px;line-height:1.7;min-height:12px}.scene-node strong{font-size:16px}.scene-node p{font-size:10px;line-height:1.7}.scene-node :global(.research-icon){width:28px;height:28px}.built-by{font-size:8px}.source-node{grid-column:1;grid-row:3;display:block;text-align:center}.source-node :global(.research-icon){margin:0 auto 8px}.source-node strong{font-size:11px}.builder-node{grid-column:2;grid-row:3}.builder-node strong{font-size:14px}.builder-node p{font-size:9px}.generation-label{display:none}.fallback-arrow{display:none}.service-comparison:not([data-wires=ready]) .original-path:before,.service-comparison:not([data-wires=ready]) .generated-path:before{position:absolute;top:-28px;left:45%;color:var(--accent);font-size:21px;content:'↘'}.service-comparison:not([data-wires=ready]) .original-path:before{content:'↙';color:var(--service-color)}.service-comparison:not([data-wires=ready]) .builder-node:before{content:'↑';position:absolute;left:45%;top:-27px;font-size:21px;color:var(--builder-color)}.service-comparison:not([data-wires=ready]) .source-node:after{right:-15px}.explanation-steps{font-size:8px;gap:8px;justify-content:space-between}.explanation-bottom{flex-direction:column;gap:12px;align-items:flex-start}.explanation-caption{font-size:11px;min-height:65px}.comparison-note{font-size:9px}}
+  @media(prefers-reduced-motion:reduce){.scene-wires :global(.wire-packet){display:none}}
+  @media print{.explanation-controls{display:none}.service-comparison{background:none;break-inside:avoid}}
+</style>
