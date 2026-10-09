@@ -5,7 +5,7 @@ import ResearchFocus from '../components/ResearchFocus.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import PublicationList from '../components/PublicationList.astro';
 import { Image } from 'astro:assets';
-import portrait from '../assets/profile.png';
+import portrait from '../assets/profile-travel.jpg';
 import { profile, currentResearch, publications, experience, path } from '../data/profile';
 ---
 <Base>
@@ -23,7 +23,7 @@ import { profile, currentResearch, publications, experience, path } from '../dat
     <div class="section-header"><div><span class="eyebrow">01 / CURRENT RESEARCH</span><h2>Test environments.<br /><em>Small models for playbooks.</em></h2></div><a class="text-link" href={path('/portfolio/')}>All research<Arrow /></a></div>
     <div class="project-grid">{currentResearch.map(project => <ProjectCard project={project} />)}</div>
   </section>
-  <section class="about-band" id="about"><div class="container about-grid"><div class="portrait-wrap"><Image src={portrait} alt="Pei-Yu Tseng" width={420} height={500} fit="cover" format="webp" loading="lazy" /><div class="portrait-caption"><span>PEI-YU / JERRY</span><span>RESEARCHER & BUILDER</span></div></div><div class="about-copy"><span class="eyebrow">02 / ABOUT ME</span><h2>From threat intelligence<br /><em>to security automation.</em></h2><p>{profile.about}</p><p>{profile.background}</p><div class="about-links"><a class="text-link" href={path('/portfolio/')}>Current research<Arrow /></a><a class="text-link" href={path('/cv/')}>CV & experience<Arrow /></a><a class="text-link" href={profile.links[2].url} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a></div></div></div></section>
+  <section class="about-band" id="about"><div class="container about-grid"><div class="portrait-wrap"><div class="portrait-frame"><Image src={portrait} alt="Pei-Yu Tseng outdoors beside mineral terraces" width={1400} format="webp" loading="lazy" /></div><div class="portrait-caption"><span>PEI-YU / JERRY</span><span>RESEARCHER & BUILDER</span></div></div><div class="about-copy"><span class="eyebrow">02 / ABOUT ME</span><h2>From threat intelligence<br /><em>to security automation.</em></h2><p>{profile.about}</p><p>{profile.background}</p><div class="about-links"><a class="text-link" href={path('/portfolio/')}>Current research<Arrow /></a><a class="text-link" href={path('/cv/')}>CV & experience<Arrow /></a><a class="text-link" href={profile.links[2].url} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a></div></div></div></section>
   <section class="section container">
     <div class="section-header"><div><span class="eyebrow">03 / SELECTED PUBLICATIONS</span><h2>Selected <em>publications.</em></h2></div><a class="text-link" href={path('/publications/')}>All publications<Arrow /></a></div>
     <PublicationList items={publications.slice(0, 3)} />

@@ -28,7 +28,7 @@
   .art-evaluation { background-color: #171624; }
   .project-detail>.project-art { border-radius: 18px; }
   .portrait-wrap { border-radius: 18px; }
-  .portrait-wrap img { border-radius: 10px; }
+  .portrait-frame { border-radius: 10px; }
   .about-band { background: radial-gradient(ellipse at 15% 70%, #719fe70b, transparent 70%), var(--surface-soft); }
   .page-heading h1, .project-detail-heading h1 { letter-spacing: -.06em; }
   .site-footer { background: radial-gradient(ellipse at 50% 100%, #98f4db08, transparent 70%); }
