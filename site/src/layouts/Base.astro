@@ -3,6 +3,7 @@ import '@fontsource-variable/dm-sans';
 import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
 import '../styles/tech.css';
+import '../styles/contact.css';
 import { profile, path } from '../data/profile';
 import Arrow from '../components/Arrow.astro';
 interface Props { title?: string; description?: string; }
@@ -42,16 +43,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         </nav>
         <div class="header-actions">
           <button class="theme-toggle icon-button" type="button" aria-label="Switch to light theme" title="Change color theme"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5" stroke="currentColor" stroke-width="1.5"/></svg></button>
-          <a class="contact-nav" href={`mailto:${profile.email}`}>Let’s connect <Arrow diagonal /></a>
+          <a class="contact-nav" href="#contact">Contact <Arrow diagonal /></a>
           <button class="menu-toggle icon-button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav" type="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.5"/></svg></button>
         </div>
       </div>
-      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>{nav.map(item => <a href={path(item.href)}>{item.title}<Arrow /></a>)}</nav>
+      <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden>{nav.map(item => <a href={path(item.href)}>{item.title}<Arrow /></a>)}<a href={`mailto:${profile.email}`}>Email me<Arrow diagonal /></a><a href={profile.links[2].url} target="_blank" rel="noreferrer">LinkedIn<Arrow diagonal /></a></nav>
     </header>
     <main id="main"><slot /></main>
-    <footer class="site-footer container">
-      <div class="footer-top"><div><span class="eyebrow">COLLABORATIONS & OPPORTUNITIES</span><a class="footer-heading" href={`mailto:${profile.email}`}>Let’s talk<br />AI & security. <Arrow diagonal /></a></div><div class="footer-links">{profile.links.map(link => <a href={link.url} target="_blank" rel="noreferrer">{link.label}<Arrow diagonal /></a>)}</div></div>
-      <div class="footer-bottom"><span>© {new Date().getFullYear()} Pei-Yu Tseng</span><span>State College, PA <span class="tiny-dot"></span> Taiwan roots</span><a href={`mailto:${profile.email}`}>{profile.email}</a></div>
+    <footer class="site-footer container" id="contact">
+      <div class="footer-top"><div><span class="eyebrow">GET IN TOUCH</span><h2 class="footer-heading">Let’s talk<br />AI & security.</h2><p class="footer-contact-note">Research collaborations & career opportunities.</p><a class="footer-email" href={`mailto:${profile.email}`}>{profile.email}<Arrow diagonal /></a></div><div class="footer-links">{[profile.links[2], ...profile.links.filter(link => link.label !== 'LinkedIn')].map(link => <a href={link.url} target="_blank" rel="noreferrer">{link.label}<Arrow diagonal /></a>)}</div></div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} Pei-Yu Tseng</span><span>State College, PA <span class="tiny-dot"></span> Taiwan roots</span></div>
     </footer>
     <script>
       const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle');
@@ -64,6 +65,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       menu?.addEventListener('click', () => { if (mobileNav) { const open = menu.getAttribute('aria-expanded') !== 'true'; mobileNav.hidden = !open; menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); } });
       document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu?.getAttribute('aria-expanded') === 'true') { closeMenu(); menu.focus(); } });
       mobileNav?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      document.querySelector('.contact-nav')?.addEventListener('click', closeMenu);
       window.matchMedia('(min-width: 801px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
       document.querySelector<HTMLButtonElement>('.print-cv')?.addEventListener('click', () => window.print());
     </script>

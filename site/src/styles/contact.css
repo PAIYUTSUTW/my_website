@@ -1,0 +1,59 @@
+/* Keep direct contact details visible at the start and end of the site. */
+@media screen {
+  .header-actions { gap: 14px; }
+  .contact-nav {
+    display: inline-flex;
+    flex-shrink: 0;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid var(--accent);
+    border-radius: 30px;
+    background: var(--accent);
+    color: var(--ink);
+  }
+  .contact-nav:hover { box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .hero-contact {
+    max-width: 490px;
+    margin-top: 24px;
+    padding: 16px 18px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--accent) 6%, var(--surface-soft));
+  }
+  .hero-contact > .eyebrow { margin-bottom: 8px; color: var(--muted); font-size: 9px; }
+  .hero-contact-links { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
+  .hero-email, .hero-linkedin { display: inline-flex; align-items: center; gap: 10px; min-height: 36px; }
+  .hero-email { color: var(--accent); font-size: 17px; font-weight: 650; }
+  .hero-email svg { flex-shrink: 0; }
+  .hero-linkedin { margin-left: auto; font-size: 13px; font-weight: 600; }
+  .hero-linkedin .arrow { width: 15px; height: 15px; color: var(--accent); }
+  .hero-email:hover, .hero-linkedin:hover, .footer-email:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .footer-top .eyebrow { color: var(--accent); font-size: 11px; }
+  .footer-contact-note { margin-top: 18px; color: var(--muted); font-size: 14px; }
+  .footer-email { display: inline-flex; align-items: center; gap: 16px; margin-top: 18px; color: var(--accent); font-size: clamp(18px, 2.3vw, 27px); font-weight: 600; }
+  .footer-email .arrow { width: 21px; height: 21px; }
+  .footer-links a { min-height: 36px; font-size: 14px; }
+  .footer-links a:first-child { color: var(--accent); font-weight: 650; }
+}
+@media screen and (max-width: 800px) {
+  .header-inner { gap: 12px; }
+  .header-actions { gap: 8px; }
+  .contact-nav { min-height: 40px; padding: 8px 13px; font-size: 12px; }
+  .contact-nav .arrow { display: none; }
+}
+@media screen and (max-width: 540px) {
+  .hero-contact { padding: 13px 14px; }
+  .hero-contact-links { gap: 4px 12px; }
+  .hero-email { font-size: 15px; gap: 8px; }
+  .hero-linkedin { font-size: 12px; gap: 6px; }
+  .hero-affiliation { margin-top: 24px; }
+}
+@media screen and (max-width: 380px) {
+  .wordmark-sub { display: none; }
+  .wordmark { gap: 8px; font-size: 9px; }
+  .hero-linkedin { margin-left: 27px; }
+}
+@media screen and (max-width: 340px) {
+  .wordmark > span:last-child { display: none; }
+}
