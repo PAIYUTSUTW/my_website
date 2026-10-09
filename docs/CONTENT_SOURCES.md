@@ -1,4 +1,4 @@
-# Portfolio content review — 2026-10-07
+# Portfolio content review — 2026-10-08
 
 ## Confirmed
 
@@ -27,14 +27,25 @@
     The disposable component is the generated external-service environment;
     the description retains real SOAR and connector execution and does not
     imply that the entire SOAR platform is replaced or that isolation is certified.
-  - Current SOAR planning/RL direction: `minimal_information_50_brief_20260928.md`,
-    `information_richness_protocol_v1.md`,
-    `shared_dictionary_draft_report_20260927.md`, and
-    `minimal_information_50_progress_20261006.md` support source-grounded task
-    construction, four information axes, and situation/required/prohibited
-    behavior evaluation. The task collection and vocabulary are in development.
-    `training/README.md` distinguishes earlier SFT from RL; current public copy
-    describes foundations for post-training, not completed RL training or gains.
+  - Current playbook benchmark and small-model training direction: the user's
+    October 8 correction confirms the overall objective is to build a test
+    set/benchmark and train small models to write playbooks. Benchmark construction
+    is the current phase, not the entire research objective.
+    `minimal_information_50_brief_20260928.md` (lines 59–88) supports sparse goals,
+    retrievable source knowledge, behavior-based answers, and held-out separation.
+    `minimal_information_50_semantic_gap_plan_20261009.md` (lines 7–18, 38–55)
+    supports platform-neutral outline generation and the current need to detect
+    omitted work, missing decision branches, and bypassed prerequisites. Formatting
+    is not the capability being measured. Valid alternative workflows are allowed.
+    `minimal_information_50_progress_20261008.md` (latest October 9 UTC entry,
+    October 8 in the user's timezone) confirms ongoing dataset/evaluator work;
+    the approximate 50-scenario goal is not a completed or released benchmark.
+    `training/README.md` describes historical SFT on approval/status evaluation,
+    not completed small-model playbook generation or RL training. Earlier model
+    comparisons are limited subtasks, not general generation benchmarks.
+    Public copy names both benchmark development and small-model generation
+    training, including RL, with explicit current/planned phases. It claims no
+    trained generator, RL gains, deployment savings, or native execution results.
 - The old website supplies the portrait, email, Scholar ID, GitHub, and ORCID.
 - Publication metadata was checked against primary sources:
   - [JoVE protocol article](https://www.jove.com/t/71144/a-structured-workflow-for-transforming-cyber-threat-intelligence-into).
@@ -66,13 +77,13 @@
 - Audience: research collaboration and industry opportunities, as selected by
   the user. English site content preserves the existing site's language.
 - No invented production deployment, leadership, impact, or training claims.
-- Pipeline1 and current SOAR planning/RL work lead the featured research.
+- Pipeline1 and current playbook benchmark/small-model work lead the featured research.
   Workflow generation remains a distinct project; earlier RL work on APT
   lateral movement remains labeled as research background.
 - IOCRegex-gen's numerical results appear only with their evaluation context
   and a link to the paper, not as personal productivity or production metrics.
 - The homepage now names the research field and describes two concrete questions:
-  where to test generated workflows, and how models plan valid workflows.
+  where to test generated workflows, and how small models learn to write playbooks.
   The abstract research sphere, research-loop controls, and repeated slogan strip
   were removed because they did not explain the work.
 - The environment project is presented publicly as **AI-built test environments**.

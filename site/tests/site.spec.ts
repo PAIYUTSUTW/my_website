@@ -30,7 +30,7 @@ test('theme persists and current research links have clear destinations', async 
   await page.goBack();
   await page.locator('.research-focus').getByRole('link').last().click();
   await expect(page).toHaveURL(/projects\/soar-planning\/$/);
-  await expect(page.locator('.project-prose')).toContainText('foundation');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Small models for security playbooks');
 });
 
 test('research filters work and each project opens', async ({ page }) => {
