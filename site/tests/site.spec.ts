@@ -35,13 +35,17 @@ test('theme persists and current research links have clear destinations', async 
 
 test('research filters work and each project opens', async ({ page }) => {
   await page.goto('portfolio/');
+  const highlights = page.getByRole('region', { name: 'Current research highlights' });
+  await expect(highlights.getByRole('heading', { level: 2 })).toHaveText(['AI-built test environments', 'Small models for security playbooks']);
   await page.getByRole('button', { name: 'Agents & evaluation', exact: true }).click();
-  await expect(page.locator('.project-card:visible')).toHaveCount(4);
-  await expect(page.locator('.filter-count')).toHaveText('4 projects');
+  await expect(page.locator('.project-card:visible')).toHaveCount(2);
+  await expect(page.locator('.filter-count')).toHaveText('2 projects');
   await page.getByRole('button', { name: 'Security & intelligence', exact: true }).click();
   await expect(page.locator('.project-card:visible')).toHaveCount(3);
+  await expect(highlights.getByRole('link')).toHaveCount(2);
+  for (const link of await highlights.getByRole('link').all()) await expect(link).toBeVisible();
   await page.getByRole('button', { name: 'All work', exact: true }).click();
-  const links = await page.locator('.project-card-link').evaluateAll(anchors => anchors.map(a => (a as HTMLAnchorElement).href));
+  const links = await page.locator('.research-spotlight-link, .project-card-link').evaluateAll(anchors => anchors.map(a => (a as HTMLAnchorElement).href));
   expect(links).toHaveLength(7);
   for (const href of links) {
     await page.goto(href);
@@ -82,15 +86,18 @@ test('core content works without JavaScript', async ({ browser }) => {
   await page.goto('http://localhost:4321/my_website/');
   await expect(page.getByRole('heading', { name: /AI agents for/ })).toBeVisible();
   await page.getByRole('link', { name: 'Explore my research' }).click();
-  await expect(page.locator('.project-card')).toHaveCount(7);
+  await expect(page.locator('.research-spotlight')).toHaveCount(2);
+  await expect(page.locator('.project-card')).toHaveCount(5);
   await context.close();
 });
 
-test('home page meets automated accessibility checks in both themes', async ({ page }) => {
-  await page.goto('');
-  for (const theme of ['dark', 'light']) {
-    if (theme === 'light') await page.getByRole('button', { name: 'Switch to light theme' }).click();
-    const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
-    expect(scan.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) }))).toEqual([]);
+test('home and research pages meet automated accessibility checks in both themes', async ({ page }) => {
+  for (const route of ['', 'portfolio/']) {
+    await page.goto(route);
+    for (const theme of ['dark', 'light']) {
+      await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+      const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+      expect(scan.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) }))).toEqual([]);
+    }
   }
 });

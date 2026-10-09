@@ -1,21 +1,44 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import ResearchSpotlight from '../components/ResearchSpotlight.astro';
 import { projects } from '../data/profile';
+const currentProjects = projects.filter(project => project.featured && project.kind.startsWith('Current research'));
+const otherProjects = projects.filter(project => !currentProjects.includes(project));
 ---
-<Base title="Research">
-  <section class="page-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>AI agents &<br /><em>security research.</em></h1><p>Building environments that make security actions testable, and studying how LLMs use knowledge to plan workflows that satisfy requirements and policy.</p></section>
-  <section class="container research-content" aria-label="Research projects">
-    <div class="filter-bar" role="group" aria-label="Filter research by topic">{['All work', 'Agents & evaluation', 'Security & intelligence'].map((label, i) => <button type="button" class:list={['filter-button', { active: i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-filter={label}>{label}</button>)}<span class="filter-count" aria-live="polite">{projects.length} projects</span></div>
-    <div class="project-grid">{projects.map(project => <ProjectCard project={project} />)}</div>
+<Base title="Research" description="Explore my current research on AI-built test environments and benchmarks for training small models to generate security playbooks.">
+  <section class="page-heading research-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>Current <em>research.</em></h1><p>Two projects lead my work: agent-generated test environments and benchmarks for training small models to write security playbooks.</p></section>
+  <section class="container research-highlights" aria-label="Current research highlights">
+    <div class="spotlight-grid">{currentProjects.map(project => <ResearchSpotlight project={project} />)}</div>
+  </section>
+  <section class="container research-content" aria-labelledby="more-research-title" data-research-archive>
+    <div class="archive-heading"><span class="eyebrow">EXPLORE FURTHER</span><h2 id="more-research-title">More research</h2><p>Related projects in security automation, threat intelligence, and evaluation.</p></div>
+    <div class="filter-bar" role="group" aria-label="Filter more research by topic">{['All work', 'Agents & evaluation', 'Security & intelligence'].map((label, i) => <button type="button" class:list={['filter-button', { active: i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-filter={label}>{label}</button>)}<span class="filter-count" aria-live="polite">{otherProjects.length} projects</span></div>
+    <div class="project-grid">{otherProjects.map(project => <ProjectCard project={project} />)}</div>
   </section>
   <script>
-    document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => button.addEventListener('click', () => {
+    const archive = document.querySelector('[data-research-archive]');
+    archive?.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button => button.addEventListener('click', () => {
       const selected = button.dataset.filter;
       let count = 0;
-      document.querySelectorAll<HTMLElement>('[data-category]').forEach(card => { card.hidden = selected !== 'All work' && card.dataset.category !== selected; if (!card.hidden) count++; });
-      document.querySelectorAll('[data-filter]').forEach(el => { el.classList.toggle('active', el === button); el.setAttribute('aria-pressed', String(el === button)); });
-      const output = document.querySelector('.filter-count'); if (output) output.textContent = `${count} projects`;
+      archive.querySelectorAll<HTMLElement>('[data-category]').forEach(card => { card.hidden = selected !== 'All work' && card.dataset.category !== selected; if (!card.hidden) count++; });
+      archive.querySelectorAll('[data-filter]').forEach(el => { el.classList.toggle('active', el === button); el.setAttribute('aria-pressed', String(el === button)); });
+      const output = archive.querySelector('.filter-count'); if (output) output.textContent = `${count} projects`;
     }));
   </script>
 </Base>
+
+<style>
+  .research-heading{padding-top:62px;padding-bottom:38px}
+  .research-heading h1{font-size:64px}
+  .research-heading .eyebrow{margin-bottom:19px}
+  .research-heading p{max-width:720px;margin-top:21px}
+  .spotlight-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+  .research-highlights{padding-bottom:74px}
+  .archive-heading{border-top:1px solid var(--line);padding-top:42px;margin-bottom:30px}
+  .archive-heading .eyebrow{font-size:10px;color:var(--muted);margin-bottom:15px}
+  .archive-heading h2{font-size:32px}
+  .archive-heading p{font-size:14px;color:var(--muted);margin-top:12px}
+  @media(max-width:800px){.research-heading{padding-top:46px}.research-heading h1{font-size:56px}.spotlight-grid{grid-template-columns:1fr;gap:24px}.research-highlights{padding-bottom:52px}}
+  @media(max-width:540px){.research-heading{padding-top:38px;padding-bottom:30px}.research-heading h1{font-size:48px}.research-heading p{font-size:15px}.archive-heading{padding-top:30px}.archive-heading h2{font-size:29px}}
+</style>

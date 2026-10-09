@@ -31,6 +31,8 @@ npm run preview
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.
 - `site/src/styles/tech.css`: dark technology theme, typography, and restrained light accents.
 - `site/src/components/ResearchFocus.astro`: the two current research questions on the homepage.
+- `site/src/components/ResearchSpotlight.astro`: the two prominent current-project
+  cards at the top of the Research index, above the other five projects.
 - `site/src/components/PlaybookLearningRoadmap.astro`: current benchmark development
   and planned small-model training and held-out evaluation.
 - `site/src/components/TestEnvironmentStudy.astro`: complete research story, from

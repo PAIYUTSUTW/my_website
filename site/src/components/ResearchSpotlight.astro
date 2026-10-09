@@ -1,0 +1,39 @@
+---
+import ProjectArt from './ProjectArt.astro';
+import Arrow from './Arrow.astro';
+import { path, projects } from '../data/profile';
+interface Props { project: typeof projects[number]; }
+const { project } = Astro.props;
+---
+<article class:list={['research-spotlight', { 'model-spotlight': project.visual === 'benchmark' }]}>
+  <a class="research-spotlight-link" href={path(`/projects/${project.slug}/`)} aria-labelledby={`spotlight-${project.slug}`}>
+    <div class="spotlight-copy">
+      <div class="spotlight-meta"><span>{project.number} / CURRENT FOCUS</span><span class="spotlight-status">In development</span></div>
+      <h2 id={`spotlight-${project.slug}`}>{project.title}</h2>
+      <p>{project.description}</p>
+      <span class="spotlight-link">Explore the project <Arrow diagonal /></span>
+    </div>
+    <div class="spotlight-art"><ProjectArt variant={project.visual} /></div>
+  </a>
+</article>
+
+<style>
+  .research-spotlight{--spotlight-accent:var(--accent);min-width:0;border:1px solid color-mix(in srgb,var(--spotlight-accent) 35%,var(--line));border-radius:22px;background:radial-gradient(ellipse at 0 0,color-mix(in srgb,var(--spotlight-accent) 7%,transparent),transparent 65%),var(--surface-soft);overflow:hidden;transition:border-color .2s,box-shadow .2s}
+  .model-spotlight{--spotlight-accent:#a1caff}
+  :global([data-theme=light]) .model-spotlight{--spotlight-accent:#2c5792}
+  .research-spotlight:hover,.research-spotlight:focus-within{border-color:var(--spotlight-accent);box-shadow:0 0 35px color-mix(in srgb,var(--spotlight-accent) 8%,transparent)}
+  .research-spotlight-link{display:flex;flex-direction:column;height:100%}
+  .research-spotlight-link:focus-visible{outline-offset:-5px;border-radius:22px}
+  .spotlight-copy{padding:32px 34px;flex:1;display:flex;flex-direction:column}
+  .spotlight-meta{display:flex;align-items:center;justify-content:space-between;gap:14px;font:10px monospace;letter-spacing:.04em;color:var(--spotlight-accent);margin-bottom:26px}
+  .spotlight-status{color:var(--muted);font:11px 'DM Sans Variable',sans-serif;letter-spacing:0;white-space:nowrap}
+  h2{font-size:36px;line-height:1.15;letter-spacing:-.045em;max-width:420px;text-wrap:balance}
+  p{color:var(--muted);font-size:15px;line-height:1.8;max-width:450px;margin-top:20px;margin-bottom:26px}
+  .spotlight-link{display:flex;align-items:center;gap:12px;color:var(--spotlight-accent);font-size:12px;font-weight:600;margin-top:auto}
+  .spotlight-link :global(svg){width:15px;height:15px}
+  .spotlight-art{border-top:1px solid var(--line)}
+  .spotlight-art :global(.project-art){height:200px;padding-bottom:28px;border-bottom:0;background-color:transparent}
+  @media(max-width:1100px){.spotlight-copy{padding:27px}h2{font-size:31px}.spotlight-meta{font-size:9px}.spotlight-status{font-size:10px}}
+  @media(max-width:800px){.spotlight-copy{padding:30px}h2{font-size:36px;max-width:480px}.spotlight-art :global(.project-art){height:190px}p{max-width:540px}}
+  @media(max-width:540px){.spotlight-copy{padding:25px}h2{font-size:31px}.spotlight-meta{gap:10px;margin-bottom:22px}p{font-size:14px;margin-top:17px}.spotlight-art :global(.project-art){height:185px}}
+</style>

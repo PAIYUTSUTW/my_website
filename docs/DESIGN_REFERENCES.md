@@ -55,6 +55,12 @@ and without JavaScript. The table becomes labeled rows on narrow screens.
 The homepage still explains Jerry's research field and two current questions.
 Project names remain descriptive; implementation detail stays on project pages.
 
+The Research index gives these two projects a dedicated opening section with
+larger titles, concise descriptions, illustrations, and direct project links.
+The other five projects appear under "More research" with topic filters. The
+two highlighted projects remain visible when those filters change and are not
+duplicated in the filtered collection.
+
 Earlier visual references remain:
 
 - [Void, Framer Marketplace](https://www.framer.com/marketplace/templates/void/): dark framing and strong typography.
