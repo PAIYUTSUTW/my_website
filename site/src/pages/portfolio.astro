@@ -2,14 +2,13 @@
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ResearchSpotlight from '../components/ResearchSpotlight.astro';
-import { projects } from '../data/profile';
-const currentProjects = projects.filter(project => project.featured && project.kind.startsWith('Current research'));
-const otherProjects = projects.filter(project => !currentProjects.includes(project));
+import { projects, currentResearch } from '../data/profile';
+const otherProjects = projects.filter(project => !currentResearch.includes(project));
 ---
 <Base title="Research" description="Explore my current research on AI-built test environments and benchmarks for training small models to generate security playbooks.">
   <section class="page-heading research-heading container"><span class="eyebrow">RESEARCH & SELECTED PROJECTS</span><h1>Current <em>research.</em></h1><p>Two projects lead my work: agent-generated test environments and benchmarks for training small models to write security playbooks.</p></section>
   <section class="container research-highlights" aria-label="Current research highlights">
-    <div class="spotlight-grid">{currentProjects.map(project => <ResearchSpotlight project={project} />)}</div>
+    <div class="spotlight-grid">{currentResearch.map(project => <ResearchSpotlight project={project} />)}</div>
   </section>
   <section class="container research-content" aria-labelledby="more-research-title" data-research-archive>
     <div class="archive-heading"><span class="eyebrow">EXPLORE FURTHER</span><h2 id="more-research-title">More research</h2><p>Related projects in security automation, threat intelligence, and evaluation.</p></div>

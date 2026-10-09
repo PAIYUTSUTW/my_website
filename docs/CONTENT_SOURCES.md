@@ -123,3 +123,14 @@
 - The printable CV is generated from the same content as the website. The
   supplied PDF remains a source document rather than an automatically published
   download. Its phone number is not included in website content.
+- The cross-page review aligns the homepage, About, CV, Penn State experience,
+  and search/share descriptions with the two current research directions.
+  About connects the current work to the confirmed Academia Sinica, penetration
+  testing, and network administration background. The CV names the two projects
+  with method-focused summaries and keeps small-model generation training as a
+  future objective. Supervised fine-tuning in the skills list refers to the
+  documented earlier SFT work, not completed generator training.
+- The separate systems project is titled "Agent-based playbook generation" to
+  distinguish its retrieval and test-feedback approach from the benchmark and
+  small-model research. Publication records and statuses retain their verified
+  facts; the Publications heading and page description simply state the content.

@@ -25,7 +25,8 @@ npm run preview
 ## Edit content
 
 - `site/src/data/profile.ts`: biography, experience, education, research projects,
-  publication metadata, and profile links.
+  publication metadata, and profile links. The homepage, Research index, and CV
+  share the `currentResearch` selection; each highlighted project has a CV summary.
 - `site/src/pages/`: homepage, research index, publication list, printable CV,
   and generated project pages.
 - `site/src/styles/global.css`: colors, typography, responsive and print styles.

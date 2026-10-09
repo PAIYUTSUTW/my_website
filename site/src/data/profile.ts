@@ -7,8 +7,9 @@ export const profile = {
   title: 'Ph.D. candidate · Penn State',
   email: 'jerry950909@gmail.com',
   location: 'State College, Pennsylvania',
-  description: 'Pei-Yu (Jerry) Tseng researches LLM agents, security automation, and the evaluation of agent behavior at Penn State.',
-  about: 'I’m a Ph.D. candidate in Informatics at Penn State, advised by Professor Peng Liu. I research LLM-based agents for security operations: how they turn knowledge into action, work with existing tools, and demonstrate that their actions achieve the intended outcome.',
+  description: 'Pei-Yu (Jerry) Tseng, Penn State Ph.D. candidate, researches AI-built test environments and benchmarks for training small models to generate security playbooks.',
+  about: 'I’m a Ph.D. candidate in Informatics at Penn State, advised by Professor Peng Liu. I develop AI agents that generate disposable test environments for security workflows. I am also building a benchmark for playbook generation, with the goal of training small language models to write those workflows.',
+  background: 'Before Penn State, I worked at Academia Sinica on threat intelligence, graph-based attack detection, and system telemetry. Earlier roles in penetration testing and network administration shape how I approach the tools and infrastructure that security automation needs to work with.',
   links: [
     { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=GwHvncIAAAAJ' },
     { label: 'GitHub', url: 'https://github.com/PAIYUTSUTW' },
@@ -17,11 +18,30 @@ export const profile = {
   ],
 };
 
-export const projects = [
+interface ResearchProject {
+  slug: string;
+  number: string;
+  featured: boolean;
+  kind: string;
+  category: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  cvSummary?: string;
+  tags: string[];
+  visual: string;
+  question: string;
+  body: string[];
+  approach: string[];
+  related: string[];
+}
+
+export const projects: ResearchProject[] = [
   {
     slug: 'stateful-evaluation', number: '01', featured: true, kind: 'Current research', category: 'Agents & evaluation',
     title: 'AI-built test environments', subtitle: 'Disposable test environments for security automation',
     description: 'Agents that build test versions of external services, so AI-generated security workflows can be tried without connecting to the real service.',
+    cvSummary: 'Developing agents that read service connector code and documentation to generate resettable test environments. The workflow retains the existing SOAR platform and connector while using a generated external service.',
     tags: ['Environment generation', 'Security automation'], visual: 'environment',
     question: 'Where can teams test an AI-generated security workflow before it reaches real systems?',
     body: [
@@ -36,6 +56,7 @@ export const projects = [
     slug: 'soar-planning', number: '02', featured: true, kind: 'Current research', category: 'Agents & evaluation',
     title: 'Small models for security playbooks', subtitle: 'Benchmarks and reinforcement learning for playbook generation',
     description: 'Building a benchmark for security playbook generation, with the goal of training small language models to write workflows that meet task requirements and policies.',
+    cvSummary: 'Constructing source-grounded scenarios and behavioral scoring for playbook generation from natural-language goals and retrievable documentation. Benchmark development is underway; small-model training, including reinforcement learning, is the next research objective.',
     tags: ['Benchmark development', 'Small language models', 'Reinforcement learning'], visual: 'benchmark',
     question: 'What does it mean for a model to write a correct playbook?',
     body: [
@@ -49,8 +70,8 @@ export const projects = [
   },
   {
     slug: 'workflow-generation', number: '03', featured: false, kind: 'Current research', category: 'Agents & evaluation',
-    title: 'Generating security playbooks', subtitle: 'LLM-based security workflow generation',
-    description: 'Turning high-level security objectives into SOAR workflows, with retrieval, execution feedback, and behavioral review.',
+    title: 'Agent-based playbook generation', subtitle: 'Retrieval and testing for SOAR workflow generation',
+    description: 'An agent system that uses retrieved context and test feedback to turn security objectives into SOAR workflows.',
     tags: ['LLM agents', 'RAG', 'Workflow generation'], visual: 'workflow',
     question: 'Can an agent preserve the intent behind a security workflow?',
     body: [
@@ -109,6 +130,8 @@ export const projects = [
   },
 ];
 
+export const currentResearch = projects.filter(project => project.featured && project.kind.startsWith('Current research'));
+
 export const publications = [
   {
     id: 'jove-cti', year: '2026', venue: 'JoVE', type: 'Journal',
@@ -155,7 +178,7 @@ export const publications = [
 ];
 
 export const experience = [
-  { date: '2023 — Present', institution: 'Penn State University', role: 'Research Assistant', location: 'State College, PA', description: 'LLM agents for threat intelligence, security workflow generation, and stateful evaluation. Research advised by Professor Peng Liu.' },
+  { date: '2023 — Present', institution: 'Penn State University', role: 'Research Assistant', location: 'State College, PA', description: 'Research on LLM agents for threat intelligence and security automation, including generated test environments and benchmarks for playbook generation. Advised by Professor Peng Liu.' },
   { date: '2021 — 2023', institution: 'Academia Sinica', role: 'Research Assistant', location: 'Taipei, Taiwan', description: 'Graph-based APT detection, threat knowledge bases, kernel audit logs, and representation learning for honeypot traffic.' },
   { date: '2020', institution: 'Chiayi County Government', role: 'Penetration Tester', location: 'Taiwan', description: 'Security assessments of government web applications and IoT infrastructure, with remediation guidance.' },
   { date: '2019 — 2020', institution: 'National Chung Cheng University', role: 'Network Administrator', location: 'Taiwan', description: 'Network infrastructure, firewalls, VPN, DNS, and web hosting for the College of Engineering.' },
@@ -168,7 +191,7 @@ export const education = [
 ];
 
 export const skills = [
-  { category: 'AI & evaluation', items: 'LLM agents, retrieval-augmented generation, multi-agent systems, reinforcement learning, graph learning' },
+  { category: 'AI & evaluation', items: 'LLM agents, retrieval-augmented generation, benchmark design, supervised fine-tuning, reinforcement learning, multi-agent systems, graph learning' },
   { category: 'Security', items: 'SOAR, SIEM, Splunk, ELK, threat intelligence, threat hunting, MITRE ATT&CK, detection engineering' },
   { category: 'Engineering', items: 'Python, PyTorch, TensorFlow, Bash, regular expressions, Linux, Windows, Docker, graph databases' },
 ];

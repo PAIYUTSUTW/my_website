@@ -4,7 +4,7 @@ import PublicationList from '../components/PublicationList.astro';
 import Arrow from '../components/Arrow.astro';
 import { profile } from '../data/profile';
 ---
-<Base title="Publications">
-  <section class="page-heading container"><span class="eyebrow">PUBLICATIONS</span><h1>Questions explored.<br /><em>Findings shared.</em></h1><p>Selected work on security automation, LLM evaluation, vulnerability repair, and applied machine learning.</p><a class="text-link" href={profile.links[0].url} target="_blank" rel="noreferrer">Google Scholar<Arrow diagonal /></a></section>
+<Base title="Publications" description="Selected publications and preprints by Pei-Yu Tseng on threat intelligence, security automation, LLM evaluation, vulnerability repair, and applied machine learning.">
+  <section class="page-heading container"><span class="eyebrow">PUBLICATIONS</span><h1>Selected <em>publications.</em></h1><p>Journal articles, conference papers, and preprints on threat intelligence, security automation, LLM evaluation, and applied machine learning.</p><a class="text-link" href={profile.links[0].url} target="_blank" rel="noreferrer">Google Scholar<Arrow diagonal /></a></section>
   <section class="container publications-content" aria-label="Publication list"><PublicationList detailed /></section>
 </Base>
