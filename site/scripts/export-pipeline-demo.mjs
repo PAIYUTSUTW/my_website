@@ -15,8 +15,11 @@ const scriptBodies = await Promise.all([...html.matchAll(/<script\b([^>]*)>([\s\
   const asset = match[1].match(/src="\/my_website\/([^\"]+)"/)?.[1];
   return asset ? readFile(resolve(dist, asset), 'utf8') : match[2];
 }));
-const scripts = scriptBodies.filter(script => script.includes('.service-comparison'));
-if (scripts.length !== 1) throw new Error('Expected one service-comparison explanation script.');
+const selectors = ['.service-comparison', '.playbook-test-comparison'];
+const scripts = [...new Set(scriptBodies.filter(script => selectors.some(selector => script.includes(selector))))];
+for (const selector of selectors) {
+  if (scripts.filter(script => script.includes(selector)).length !== 1) throw new Error(`Expected one explanation script for ${selector}.`);
+}
 // A nested Astro component may emit its script inside the extracted story.
 // Remove that tag before adding the self-contained module once below.
 component = component.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, '');
@@ -36,7 +39,7 @@ const document = `<!doctype html>
 <style>${css}
 body{padding:24px}main,.portable-heading{max-width:1160px;margin:auto}.portable-heading{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:0 0 22px}.portable-heading .portable-title{font-size:17px;letter-spacing:-.03em}.portable-heading p{font-size:11px;color:var(--muted);margin-top:6px}.portable-heading button{font-size:11px;padding:9px 13px;background:var(--surface);border:1px solid var(--line);border-radius:4px}.environment-study{padding-block:15px}.approach-section{scroll-margin-top:20px}@media(max-width:540px){body{padding:12px}.portable-heading .portable-title{font-size:14px}.portable-heading button{font-size:10px}.portable-heading p{font-size:10px}}
 </style></head><body><header class="portable-heading"><div><p class="portable-title">Research / Pei-Yu Tseng</p><p>Penn State · Ongoing research</p></div><button type="button" id="portable-theme" hidden>Use light theme</button></header><main>${component}</main>
-<script type="module">${scripts[0]}</script>
+${scripts.map(script => `<script type="module">${script}</script>`).join('\n')}
 <script>document.getElementById('portable-theme').hidden=false;document.getElementById('portable-theme').addEventListener('click',function(){const light=document.documentElement.dataset.theme!=='light';document.documentElement.dataset.theme=light?'light':'dark';this.textContent=light?'Use dark theme':'Use light theme';});</script>
 </body></html>`;
 await mkdir(dirname(output), { recursive: true });

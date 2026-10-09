@@ -7,7 +7,7 @@ understanding of the research.
 ## Reader journey
 
 - Homepage: who Jerry is, his research field, and the two current research questions.
-- Environment project: why testing needs an environment → how an agent builds it →
+- Environment project: why a test can miss incorrect behavior → a concrete comparison → how an agent builds the environment →
   which service dependency changes → intended value → contribution and research status.
 - Technical detail: a native expandable section defines the internal project name
   and retains implementation details for readers who want them.
@@ -31,8 +31,21 @@ starts only on request, runs once in 12 seconds, and supports pause and replay.
 It pauses when hidden or offscreen. Reduced-motion mode keeps a readable static
 illustration. No simulated run metrics or success outcomes are shown.
 
+An October 8 addition places a separate **illustrative playbook test** before the
+environment-generation diagram. The requirement is to block malicious IP A and
+leave allowlisted IP B alone; the same buggy workflow blocks B in both lanes.
+Fixed responses report the expected outcome, while an action-dependent environment
+records B's changed state. Independent requirement checks then expose the mismatch.
+Matching A/B rows keep the comparison readable on desktop and mobile. An optional
+12-second animation follows goal, execution, and checking; direct step buttons also
+work with reduced motion. The default and no-JavaScript view show the complete
+comparison. This is an authored example, not evidence from a research run or a claim
+that every existing testing tool misses the bug. Existing end-to-end tests can
+detect it with suitable environments and checks. Environment generation remains
+distinct from defining the requirements and deciding playbook correctness.
+
 The whole diagram remains readable without JavaScript. Its layout adapts on
-mobile, and the offline export embeds the same animation script exactly once.
+mobile, and the offline export embeds each explanation script exactly once.
 The full research story remains available above and below the visual.
 
 ## Visual references

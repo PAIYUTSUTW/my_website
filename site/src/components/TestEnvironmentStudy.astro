@@ -1,5 +1,6 @@
 ---
 import ServiceComparison from './ServiceComparison.astro';
+import PlaybookTestComparison from './PlaybookTestComparison.astro';
 import { projects, path } from '../data/profile';
 const project = projects.find(project => project.slug === 'stateful-evaluation')!;
 ---
@@ -8,22 +9,27 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
     <span class="eyebrow">CURRENT RESEARCH / AI-BUILT TEST ENVIRONMENTS</span>
     <h1>Test AI workflows.<br /><em>Before they reach real systems.</em></h1>
     <p class="study-lead">I’m developing AI agents that build disposable test environments for security playbooks: automated workflows that query services and take actions such as disabling an account.</p>
-    <a class="text-link study-jump" href="#concept-demo">See how it works <span aria-hidden="true">↓</span></a>
+    <a class="text-link study-jump" href="#testing-gap">See why a test can miss a bug <span aria-hidden="true">↓</span></a>
   </header>
 
   <section class="study-section problem-section" aria-labelledby="problem-heading">
     <div><span class="eyebrow">THE PROBLEM</span><h2 id="problem-heading">Generating a workflow is only the beginning.</h2></div>
     <div class="project-prose">
-      <p>Before using an AI-generated playbook, a team needs to try it. Does it call the right service? Do its actions change the right data?</p>
-      <p>Testing against a real service can affect real accounts and records. Creating a separate service deployment avoids that exposure, but virtual machines, configuration, and maintenance add work every time a fresh setup is needed.</p>
-      <p class="problem-question">What if an agent could build the test environment, too?</p>
+      <p>A playbook can use valid commands and finish without errors while changing the wrong account, IP address, or record. Checking the file or a successful API reply alone does not establish that it did the right thing.</p>
+      <p>Testing its behavior requires a known starting state, an environment that responds to its actions, and checks against the task’s requirements.</p>
+      <p class="problem-question">Watch what happens when a workflow blocks the wrong IP.</p>
     </div>
+  </section>
+
+  <section class="testing-gap-section" aria-label="An example of a missed playbook bug">
+    <PlaybookTestComparison />
   </section>
 
   <section class="approach-section" id="concept-demo" aria-labelledby="approach-heading">
     <span class="eyebrow">OUR APPROACH</span>
     <h2 id="approach-heading">Let an agent build<br /><em>a test version of the service.</em></h2>
-    <p class="approach-intro">Our agent reads the service connector’s code and documentation, then builds a software-defined environment that simulates the service’s responses and data changes. The playbook can call this environment in place of the real service.</p>
+    <p class="approach-intro">Running these tests against real services requires access and suitable test data. Separate deployments can involve virtual machines, configuration, and cleanup. Handwritten substitutes also take work to build and maintain.</p>
+    <p class="approach-intro">Our agent reads the service connector’s code and documentation, then builds an environment that simulates its responses and data changes. The same playbook and connector can use it for testing, with editable starting data and a reset between runs.</p>
     <ServiceComparison />
   </section>
 
@@ -41,7 +47,7 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
     <div><span class="eyebrow">MY WORK & CURRENT STATUS</span><h2 id="contribution-heading">Building the environment-generation process.</h2></div>
     <div class="project-prose">
       <p>I develop the agent process that analyzes connector actions, generates the service implementation and starting data, and reviews whether actions produce consistent state changes.</p>
-      <p>For example, if a test action disables an account, a later query should report that account as disabled. This consistency is what makes the environment useful for testing a multi-step workflow.</p>
+      <p>If an action blocks an IP, a later query should reflect the change to that IP. Independent test requirements are still needed to judge whether the workflow chose the right target; generating the environment does not establish playbook correctness.</p>
       <p>This is ongoing research. Lower setup cost and faster rebuilding are design goals; comparative cost and provisioning-time results are not yet reported here.</p>
     </div>
   </section>
@@ -73,6 +79,7 @@ const project = projects.find(project => project.slug === 'stateful-evaluation')
   .project-prose>p:last-child{margin-bottom:0}
   .project-prose .problem-question{color:var(--text);font-weight:550;font-size:18px}
   .approach-section{border-top:1px solid var(--line);padding-top:54px;scroll-margin-top:115px}
+  .testing-gap-section{padding-bottom:54px}
   .approach-intro{font-size:16px;line-height:1.9;color:var(--muted);max-width:820px;margin-top:22px}
   h3{font-size:19px;letter-spacing:-.025em;line-height:1.4}
   .value-grid p{font-size:13px;line-height:1.85;color:var(--muted);margin-top:10px}

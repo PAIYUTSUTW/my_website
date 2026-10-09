@@ -92,6 +92,22 @@
   user request adds illustrated icons and an optional, captioned 12-second
   explanation of service access, agent generation, and redirection for testing.
   It changes no research claims and contains no simulated run results.
+- The October 8 testing comparison uses a clearly labeled hypothetical wrong-IP
+  example, not a measured experimental outcome. Its baseline is explicitly fixed
+  action responses that ignore the target argument, not all conventional tests.
+  The generated environment records the action's effects; independent requirements
+  and assertions determine correctness. The site acknowledges that existing
+  end-to-end tests can catch the same bug with suitable environments and checks.
+  Relevant primary references checked during the discussion:
+  - [Cortex XSOAR test playbooks](https://xsoar.pan.dev/docs/integrations/test-playbooks)
+    support end-to-end command testing and result assertions.
+  - [WireMock stateful behavior](https://wiremock.org/docs/stateful-behaviour/)
+    supports stateful scenarios and reset; neither capability alone is presented
+    as a unique research contribution.
+  - [From Legacy to Standard](https://arxiv.org/html/2508.03342v1)
+    evaluates transformation with syntax and similarity metrics. This supports
+    distinguishing structural evaluation from execution, not a claim that all
+    playbook research or all commercial tools use only static checks.
 - The printable CV is generated from the same content as the website. The
   supplied PDF remains a source document rather than an automatically published
   download. Its phone number is not included in website content.

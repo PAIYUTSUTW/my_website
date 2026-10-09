@@ -16,8 +16,8 @@ test('research story explains the problem before the approach and comparison', a
   await expect(page.getByRole('group', { name: 'Testing with a generated environment' })).toContainText('Built by our AI agent');
   await expect(page.locator('.comparison-context')).toContainText('existing security automation platform and service connector');
   await expect(page.locator('.contribution-section')).toContainText('design goals');
-  await page.getByRole('link', { name: 'See how it works' }).click();
-  await expect(page).toHaveURL(/#concept-demo$/);
+  await page.getByRole('link', { name: 'See why a test can miss a bug' }).click();
+  await expect(page).toHaveURL(/#testing-gap$/);
 });
 
 test('technical detail is optional and works from the keyboard', async ({ page }) => {
@@ -60,7 +60,9 @@ test('the complete exported story works offline without JavaScript', async ({ br
   try {
     await page.goto(pathToFileURL(output).href);
     await expect(page.locator('h1')).toContainText('Test AI workflows.');
-    await expect(page.locator('.problem-section')).toContainText('virtual machines');
+    await expect(page.locator('.approach-section')).toContainText('virtual machines');
+    await expect(page.locator('.fixed-verdict')).toContainText('Bug missed');
+    await expect(page.locator('.state-verdict')).toContainText('Bug exposed');
     await expect(page.locator('.generated-path')).toContainText('Generated test environment');
     await expect(page.locator('.contribution-section')).toContainText('ongoing research');
     await page.locator('summary').click();
@@ -113,6 +115,15 @@ test('the exported explanation plays offline and respects reduced motion', async
   try {
     await page.clock.install();
     await page.goto(pathToFileURL(output).href);
+    const example = page.locator('.playbook-test-comparison');
+    await example.getByRole('button', { name: 'Play example' }).click();
+    await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
+    await page.clock.fastForward(4100);
+    await expect(example.locator('[data-b-state]')).toHaveText('Blocked');
+    await page.clock.fastForward(4100);
+    await expect(example.locator('.state-verdict')).toBeVisible();
+    await page.clock.fastForward(4100);
+    await expect(example).toHaveAttribute('data-playing', 'false');
     const figure = page.locator('.service-comparison');
     await figure.getByRole('button', { name: 'Play explanation' }).click();
     await page.clock.fastForward(4100);
@@ -128,4 +139,34 @@ test('the exported explanation plays offline and respects reduced motion', async
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);expect(requests).toEqual([]);
   } finally { await context.close(); }
+});
+
+test('the example distinguishes an action effect from the checks and can be stepped without motion', async ({ page }) => {
+  await page.clock.install();
+  await page.goto(`${route}#testing-gap`);
+  const example = page.locator('.playbook-test-comparison');
+  await example.getByRole('button', { name: 'Play example' }).click();
+  await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
+  await expect(example.locator('.state-verdict')).toBeHidden();
+  await page.clock.fastForward(4100);
+  await expect(example.locator('[data-b-state]')).toHaveText('Blocked');
+  await example.getByRole('button', { name: 'Pause example' }).click();
+  await page.clock.fastForward(9000);
+  await expect(example).toHaveAttribute('data-phase', 'run');
+  await example.getByRole('button', { name: 'Continue example' }).click();
+  await page.clock.fastForward(4100);
+  await expect(example.locator('.fixed-verdict')).toContainText('Test passes. Bug missed.');
+  await expect(example.locator('.state-verdict')).toBeVisible();
+  await expect(example.locator('.example-takeaway')).toContainText('Separate checks');
+  await page.clock.fastForward(4100);
+  await expect(example.getByRole('button', { name: 'Replay example' })).toBeVisible();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(example.locator('[data-play-example]')).toBeHidden();
+  const first = example.getByRole('button', { name: '1. Set the goal' });
+  await first.focus();
+  await page.keyboard.press('Enter');
+  await expect(first).toHaveAttribute('aria-pressed', 'true');
+  await expect(example.locator('[data-b-state]')).toHaveText('Allowed');
+  await example.getByRole('button', { name: '3. Check the effect' }).click();
+  await expect(example.locator('.state-verdict')).toBeVisible();
 });
