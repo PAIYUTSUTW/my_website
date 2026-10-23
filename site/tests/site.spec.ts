@@ -21,10 +21,15 @@ test('main pages load with local assets and responsive layouts', async ({ page }
 
 test('theme persists and current research links have clear destinations', async ({ page }) => {
   await page.goto('');
-  await page.getByRole('button', { name: 'Switch to light theme' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-  await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  for (const theme of ['dark', 'light']) {
+    await page.getByRole('button', { name: `Switch to ${theme} theme` }).click();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+    await page.reload();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+    await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', theme === 'dark' ? '#090c11' : '#ffffff');
+  }
   await page.locator('.research-focus').getByRole('link').first().click();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('AI-built test environments');
   await page.goBack();
@@ -84,6 +89,7 @@ test('core content works without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('http://localhost:4321/my_website/');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   await expect(page.getByRole('heading', { name: /AI agents for/ })).toBeVisible();
   await page.getByRole('link', { name: 'Explore my research' }).click();
   await expect(page.locator('.research-spotlight')).toHaveCount(2);

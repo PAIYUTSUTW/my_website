@@ -44,7 +44,7 @@ test('research story is accessible in both themes with reduced motion', async ({
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto(route);
   for (const theme of ['dark', 'light']) {
-    if (theme === 'light') await page.getByRole('button', { name: 'Switch to light theme' }).click();
+    if (await page.locator('html').getAttribute('data-theme') !== theme) await page.getByRole('button', { name: `Switch to ${theme} theme` }).click();
     await page.locator('.technical-details summary').click();
     const scan = await new AxeBuilder({ page }).include('main').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(scan.violations.map(v => ({ id: v.id, targets: v.nodes.map(n => n.target) }))).toEqual([]);
